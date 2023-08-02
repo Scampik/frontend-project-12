@@ -19,5 +19,5 @@ How Its Work?:
 ------------------------------------------------------
 <img align="left" src="" alt="" style="width:230px;height:130px;">
 
-# <a href="frontend-project-12-production-7b2d.up.railway.app" size="20" target=_blank> deployed app</a>
+# <a href="https://frontend-project-12-production-7b2d.up.railway.app" size="20" target=_blank> deployed app</a>
 
