@@ -4,7 +4,6 @@ import { Link, Outlet } from 'react-router-dom';
 const MainPage = () => {
   return (
     <>
-    <Outlet />
       <nav>
         <ul>
           <li>
