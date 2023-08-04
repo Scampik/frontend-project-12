@@ -1,29 +1,19 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-const SignupSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, 'Минимум 2 буквы')
-    .max(50, 'Максимум 50 букв')
-    .required('Обязательное поле'),
-  lastName: Yup.string()
-    .min(2, 'Минимум 2 буквы')
-    .max(50, 'Максимум 50 букв')
-    .required('Обязательное поле'),
-  email: Yup.string().email('Неверный email').required('Обязательное поле'),
-});
-
-
+import loginImage from '../assets/login.jpeg';
 
 const Login = () => (
   <div>
     <h1>Signup</h1>
+    <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+          <img src={loginImage}
+          className="rounded-circle" alt="Войти"/>
+    </div>
     <Formik
       initialValues={{
-        firstName: '',
-        lastName: '',
-        email: '',
+        name: '',
+        password: '',
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, { setSubmitting }) => {
@@ -35,21 +25,20 @@ const Login = () => (
     >
       {({ errors, touched }) => (
         <Form>
-          <Field name="firstName" />
-          {errors.firstName && touched.firstName ? (
-            <div>{errors.firstName}</div>
-          ) : null}
-          <Field name="lastName" />
-          {errors.lastName && touched.lastName ? (
-            <div>{errors.lastName}</div>
+          <Field 
+          name="name"
+          placeholder="Ваш ник" />
+          {errors.name && touched.name ? (
+            <div>{errors.name}</div>
           ) : null}
           <Field 
-           type="email"
-           name="email"
+           type="password"
+           name="password"
+           placeholder="Пароль"
            className={`form-control ${
-             touched.email && errors.email ? "is-invalid" : ""
+             touched.password && errors.password ? "is-invalid" : ""
            }`}/>
-          {errors.email && touched.email ? <div>{errors.email}</div> : null}
+          {errors.password && touched.password ? <div>{errors.password}</div> : null}
           <button type="submit">Submit</button>
         </Form>
       )}
