@@ -15,7 +15,7 @@ const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Неверный email').required('Обязательное поле'),
 });
 
-const Login = () => (
+const SignUp = () => (
   <div>
     <h1>Signup</h1>
     <Formik
@@ -48,4 +48,4 @@ const Login = () => (
   </div>
 );
 
-export default Login;
+export default SignUp;

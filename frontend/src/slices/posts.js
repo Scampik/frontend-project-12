@@ -16,4 +16,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reduser;
-export const { action } = postsSlice.action;
+export const { action } = postsSlice;
