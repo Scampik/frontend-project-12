@@ -27,13 +27,14 @@ const LoginPage = () => {
     },
     onSubmit: async (values) => {
       setAuthFailed(false);
-
+      // console.log(values)
       try {
         const res = await axios.post(routes.loginPath(), values);
+        console.log(res)
         localStorage.setItem('userId', JSON.stringify(res.data));
         auth.logIn();
         const { from } = location.state;
-        navigate(from);
+        navigate('/');
       } catch (err) {
         formik.setSubmitting(false);
         if (err.isAxiosError && err.response.status === 401) {
@@ -63,7 +64,6 @@ const LoginPage = () => {
                   <h1 className='text-center mb-4'>Войти</h1>
                   <fieldset disabled={formik.isSubmitting}>
                     <Form.Group className='form-floating mb-3'>
-                      <Form.Label htmlFor="username">Ваш ник</Form.Label>
                       <Form.Control
                         onChange={formik.handleChange}
                         value={formik.values.username}
@@ -75,9 +75,9 @@ const LoginPage = () => {
                         required
                         ref={inputRef}
                       />
+                      <Form.Label htmlFor="username">Ваш ник</Form.Label>
                     </Form.Group>
                     <Form.Group className='form-floating mb-3'>
-                      <Form.Label htmlFor="password">Пароль</Form.Label>
                       <Form.Control
                         type="password"
                         onChange={formik.handleChange}
@@ -89,9 +89,10 @@ const LoginPage = () => {
                         isInvalid={authFailed}
                         required
                       />
+                      <Form.Label htmlFor="password">Пароль</Form.Label>
                       <Form.Control.Feedback type="invalid">the username or password is incorrect</Form.Control.Feedback>
                     </Form.Group>
-                    <Button type="submit" className='w-100 mb-3 btn btn-outline-primary' variant="outline-primary">Submit</Button>
+                    <Button type="submit" className='w-100 mb-3 btn btn-outline-primary' variant="outline-primary">Войти</Button>
                   </fieldset>
                 </Form>
                 </div>

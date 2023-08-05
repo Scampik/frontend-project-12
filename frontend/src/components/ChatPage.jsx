@@ -4,32 +4,30 @@ import React, { useEffect, useState } from 'react';
 
 import routes from '../routes.js';
 
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
+// const getAuthHeader = () => {
+//   const userId = JSON.parse(localStorage.getItem('userId'));
 
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
+//   if (userId && userId.token) {
+//     return { Authorization: `Bearer ${userId.token}` };
+//   }
 
-  return {};
-};
+//   return {};
+// };
 
 const PrivatePage = () => {
-// BEGIN (write your solution here)
-  const [content, setContent] = useState('');
-  useEffect(() => {
-    const fetchContent = async () => {
-      const { data } = await axios.get(routes.usersPath(), { headers: getAuthHeader() });
-      setContent(data);
-    };
+//   const [content, setContent] = useState('');
+//   useEffect(() => {
+//     const fetchContent = async () => {
+//       const { data } = await axios.get(routes.usersPath(), { headers: getAuthHeader() });
+//       setContent(data);
+//     };
 
-    fetchContent();
-  }, []);
+//     fetchContent();
+//   }, []);
 
-  return content && <p>{content}</p>;
-// END
+  return <p>loool</p>;
 };
-
+// return content && <p>{content}</p>;
 export default PrivatePage;
 
  // {posts.map((post) => {

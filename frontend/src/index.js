@@ -7,7 +7,7 @@ import 'bootstrap';
 // import { Provider } from 'react-redux';
 // import { store } from './slices/index'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
   <React.StrictMode>
      <App />

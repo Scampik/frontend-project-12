@@ -22,16 +22,16 @@ import useAuth from '../hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
-
+  // console.log(children)
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
     localStorage.removeItem('userId');
     setLoggedIn(false);
   };
-
+  // console.log(loggedIn)
   return (
     <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
-      {children}
+      {children}  
     </AuthContext.Provider>
   );
 };
@@ -39,44 +39,51 @@ const AuthProvider = ({ children }) => {
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
   const location = useLocation();
+  return (
+    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+  );
+};
+
+const AuthButton = () => {
+  const auth = useAuth();
+  const location = useLocation();
 
   return (
-    auth.loggedIn ? children : <Navigate to="login" state={{ from: location }} />
+    auth.loggedIn
+      ? <Button onClick={auth.logOut}>Log out</Button>
+      : <Button as={Link} to="/login" state={{ from: location }}>Log in</Button>
   );
 };
 
 const App = () => {
-  // const dispatch = useDispatch();
   
-
-  // useEffect(() => {
-  //   dispatch(getPostThunk())
-  // }, []);
-
   return (
-    <Router>
-      <div className="d-flex flex-column h-100">
-      <Navbar className='shadow-sm navbar navbar-expand-lg navbar-light bg-white' bg="light" expand="lg">
-        <div className="container">
-        <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+    <AuthProvider>
+      <Router>
+        <div className="d-flex flex-column h-100">
+        <Navbar className='shadow-sm' bg="white" expand="lg">
+          <div className="container">
+          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+          <AuthButton />
+          </div>
+          
+        </Navbar>
+          <Routes>
+                <Route element={<div>No page is selected.</div> } />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="*" element={<PageNotFound />} />
+                <Route path="signup" element={<SignUp />} />
+                <Route path="/" element={(
+                    <PrivateRoute>
+                      <PrivatePage />
+                    </PrivateRoute>
+                  )}
+                  />
+          </Routes>
         </div>
-      </Navbar>
-        <Routes>
-              <Route element={<div>No page is selected.</div> } />
-              <Route path="login" element={<LoginPage />} />
-              <Route path="*" element={<PageNotFound />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route
-                path="/"
-                element={(
-                  <PrivateRoute>
-                    <PrivatePage />
-                  </PrivateRoute>
-                )}
-                />
-        </Routes>
-        </div>
-    </Router>
+        <div className='Toastify'></div>
+      </Router>
+    </AuthProvider>
   );
 }
 
