@@ -4,13 +4,15 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import './styles.scss';
 import 'bootstrap';
-// import { Provider } from 'react-redux';
-// import { store } from './slices/index'
+import { Provider } from 'react-redux';
+import { store } from './slices/index'
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
   <React.StrictMode>
-     <App />
+    <Provider store={store}> 
+      <App />
+    </Provider> 
   </React.StrictMode>
 );
 
