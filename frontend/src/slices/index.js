@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './user.js';
-import messageReduser from '/.messages.js';
-import channelsReduser from '/.messages.js';
-import postsReduser from '/.posts.js';
+import userReducer from './usersSlice';
+import messageReducer from './messagesSlice';
+import channelsReducer from './channelsSlice';
  
-export const store = {
-    reduser: {
+export default configureStore({
+    reducer: {  
+        channels: channelsReducer,
+        message: messageReducer,
         user: userReducer,
-        message: messageReduser,
-        posts: postsReduser,
-        channels: channelsReduser,
     }
-}
+});

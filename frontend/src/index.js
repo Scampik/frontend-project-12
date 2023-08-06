@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import './styles.scss';
 import 'bootstrap';
 import { Provider } from 'react-redux';
-import { store } from './slices/index'
+import store from './slices/index'
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
