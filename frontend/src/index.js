@@ -1,12 +1,15 @@
+import './styles.scss';
+import 'bootstrap';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import './styles.scss';
-import 'bootstrap';
 import { Provider } from 'react-redux';
 import store from './slices/index'
+import { io } from "socket.io-client";
 
+const socket = io();
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
     <Provider store={store}> 
