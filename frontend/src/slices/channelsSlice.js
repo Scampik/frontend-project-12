@@ -15,7 +15,7 @@ export const getChannels = createAsyncThunk(
     async () => {
         const { data } = await axios.get(routes.usersPath(), { headers: getAuthHeader() });
         const result = data.channels;
-        console.log(data)
+        // console.log(result)
         return result;
     },
 );
@@ -24,11 +24,18 @@ const channelsAdapter = createEntityAdapter();
 
 const channelsSlice = createSlice({
     name: 'channels',
-    initialState: channelsAdapter.getInitialState(),
+    initialState: channelsAdapter.getInitialState({
+        currentChannel: { id: 1, name: 'general'}
+    }),
     reducers: {
         addChannels: channelsAdapter.addMany,
         addChannel: channelsAdapter.addOne,
         removeChannel: channelsAdapter.removeOne,
+        setCurrentChannel(state, { payload }) {
+            console.log(payload,'payload')
+            
+            state.currentChannel = payload;
+          },
     },
     extraReducers: (builder) => {
         builder

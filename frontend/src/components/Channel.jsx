@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectors } from "../slices/channelsSlice";
-import ModalChannel from './ModalChannel';
-import { actions, getChannels } from '../slices/channelsSlice.js'
+// import ModalChannel from './ModalChannel';
+import { actions as channelsActions, getChannels, selectors } from '../slices/channelsSlice.js'
 
 const Channel = () => {
-    // const [show, setShow] = useState(false);
     const dispatch = useDispatch();
 
     const channels = useSelector(selectors.selectAll);
-
+    const { currentChannel } = useSelector((state) => state.channels);
+    console.log(currentChannel, 'currentChannelId')
     useEffect(() =>{
         dispatch(getChannels())
       }, [dispatch]);
 
-    const chooseTask = () => {
-
+    const chooseTask = (event) => {
+        event.preventDefault();
+        const curChannelName = event.target.innerText.slice(1);
+        const getCurrentChannel = channels.find(item => item.name === curChannelName);
+        dispatch(channelsActions.setCurrentChannel({id:getCurrentChannel.id, name: curChannelName}))
     };
-
+    
     const handleAddTask = (event) => {
         event.preventDefault(); 
-        // alert('lol')
-        dispatch(actions.addChannel({name: 'chan', id:4}));
-      };
-    
-//btn btn-secondary active channel
+        dispatch(channelsActions.addChannel({name: 'chan', id:4}));
+    };
+
     return (
         <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
             <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
@@ -41,8 +41,8 @@ const Channel = () => {
             </div>
             <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
                 {channels.map(({ id, name }) => (<li key={id} className="nav-item w-100">
-                    <button type="button" className="w-100 rounded-0 text-start btn"
-                        onSubmit={chooseTask}>
+                    <button type="button" className={`w-100 rounded-0 text-start btn ${id === currentChannel.id ? 'btn-secondary': ''}`}
+                        onClick={chooseTask}>
                         <span className="me-1">#</span>{name}
                     </button>
                 </li>))}
@@ -50,5 +50,5 @@ const Channel = () => {
         </div>
     )
 }
-
+//btn-secondary
 export default Channel;
