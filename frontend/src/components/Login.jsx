@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
 import useAuth from '../hooks/index.jsx';
@@ -13,7 +13,6 @@ const LoginPage = () => {
   const auth = useAuth();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
-  const location = useLocation();
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -29,11 +28,11 @@ const LoginPage = () => {
       setAuthFailed(false);
       // console.log(values)
       try {
-        const res = await axios.post(routes.loginPath(), values);
-        console.log(res)
-        localStorage.setItem('userId', JSON.stringify(res.data));
-        auth.logIn();
-        const { from } = location.state;
+        const response = await axios.post(routes.loginPath(), values);
+        // console.log(response)
+        localStorage.setItem('userId', JSON.stringify(response.data));
+        auth.logIn(response.data);
+        // const { from } = location.state;
         navigate('/');
       } catch (err) {
         formik.setSubmitting(false);

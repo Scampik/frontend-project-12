@@ -32,7 +32,7 @@ const channelsSlice = createSlice({
         addChannel: channelsAdapter.addOne,
         removeChannel: channelsAdapter.removeOne,
         setCurrentChannel(state, { payload }) {
-            console.log(payload,'payload')
+            // console.log(payload,'payload')
             
             state.currentChannel = payload;
           },

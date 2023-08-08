@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
@@ -10,12 +10,12 @@ import useAuth from '../hooks/index.jsx';
 const validationSchema = Yup.object().shape({
   username: Yup.string()
     .trim()
-    .min(3, 'Минимум 2 буквы')
-    .max(10, 'Максимум 10 букв')
-    .required('Обязательное поле'),
+    .required('Обязательное поле')
+    .min(3, 'Минимум 3 буквы')
+    .max(10, 'Максимум 10 букв'),
   password: Yup.string()
     .trim()
-    .min(6, 'Минимум 2 цифры')
+    .min(3, 'Минимум 3 цифры')
     .max(10, 'Максимум 10 цифр')
     .required('Обязательное поле'),
   confirmPassword: Yup.string()
@@ -29,6 +29,8 @@ const SignUp = () => {
   const inputRef = useRef();
   const navigate = useNavigate();
 
+  const [failedMsg, setFailedMsg] = useState(false);
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -41,11 +43,30 @@ const SignUp = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log(values)
+      setFailedMsg('')
+      try {
+        const response = await axios.post(
+          routes.signupPath(),
+          { username: values.username, password: values.password },
+        );
+        auth.logIn(response.data);
+        localStorage.setItem('userId', JSON.stringify(response.data));
+        navigate('/');
+      } catch (err) {
+        if (!err.isAxiosError) {
+          throw err;
+        }
+
+        if (err.response.status === 409) {
+          inputRef.current.select();
+          setFailedMsg('takoi polz est')
+          return;
+        }
+
+        throw err;
+      }
     },
   });
-
-    const { errors, touched, isValid, dirty } = formik;
 
   return (
     <div className="container-fluid h-100">
@@ -66,6 +87,7 @@ const SignUp = () => {
                   <Form.Control
                     onChange={formik.handleChange}
                     value={formik.values.username}
+                    onBlur={formik.handleBlur}
                     placeholder='Имя пользователя'
                     name="username"
                     id="username"
@@ -73,9 +95,10 @@ const SignUp = () => {
                     required
                     ref={inputRef}
                     isInvalid={(formik.errors.username && formik.touched.username)}
+                    
                   />
                   <Form.Label htmlFor="username">Имя пользователя</Form.Label>
-                  <Form.Control.Feedback type="invalid" tooltip placement="right">
+                  <Form.Control.Feedback type="invalid" feedback placement="right">
                     {formik.errors.username}
                   </Form.Control.Feedback>
                 </Form.Group>
@@ -84,6 +107,7 @@ const SignUp = () => {
                     type="password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
+                    onBlur={formik.handleBlur}
                     placeholder='Пароль'
                     name="password"
                     id="password"
@@ -92,7 +116,7 @@ const SignUp = () => {
                     autoComplete="new-password"
                     isInvalid={(formik.errors.password && formik.touched.password)}
                   />
-                  <Form.Control.Feedback type="invalid" tooltip>
+                  <Form.Control.Feedback type="invalid" feedback>
                     {formik.errors.password}
                   </Form.Control.Feedback>
                   <Form.Label htmlFor="password">Пароль</Form.Label>
@@ -108,15 +132,15 @@ const SignUp = () => {
                     id="confirmPassword"
                     required
                     autoComplete="new-password"
-                    isInvalid={(formik.errors.confirmPassword && formik.touched.confirmPassword)}
+                    isInvalid={(formik.errors.confirmPassword && formik.touched.confirmPassword) || failedMsg}
                   />
-                  <Form.Control.Feedback type="invalid" tooltip>
-                    {formik.errors.confirmPassword}
+                  <Form.Control.Feedback type="invalid" feedback> 
+                    {failedMsg? failedMsg: formik.errors.confirmPassword}
                   </Form.Control.Feedback>
                   <Form.Label htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
 
                 </Form.Group>
-                <Button type="submit" variant="outline-primary" className="w-100">{'sda'}</Button>
+                <Button type="submit" variant="outline-primary" className="w-100">Регистрироваться</Button>
               </Form>
             </div>
           </div>

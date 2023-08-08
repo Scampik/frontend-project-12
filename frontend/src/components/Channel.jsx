@@ -8,7 +8,7 @@ const Channel = () => {
 
     const channels = useSelector(selectors.selectAll);
     const { currentChannel } = useSelector((state) => state.channels);
-    console.log(currentChannel, 'currentChannelId')
+    // console.log(currentChannel, 'currentChannelId') nado kak to zadefoltit
     useEffect(() =>{
         dispatch(getChannels())
       }, [dispatch]);

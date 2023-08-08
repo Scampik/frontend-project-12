@@ -9,16 +9,14 @@ const Chat = () => {
     const dispatch = useDispatch();
     const inputRef = useRef(null);
 
-    const [name, setName] = useState(''); 
+    const [body, setBody] = useState(''); 
 
     const { currentChannel, entities } = useSelector((state) => state.channels);
     const allMessages = useSelector(selectors.selectAll);
     const messages = allMessages.filter((el) => el.channelId === currentChannel.id);
     const userId = JSON.parse(localStorage.getItem('userId'))
 
-    console.log(entities)
-
-    const onChange = (e) => setName(e.target.value);
+    const onChange = (e) => setBody(e.target.value);
 
     useEffect(() => {
         inputRef.current.focus();
@@ -26,12 +24,13 @@ const Chat = () => {
 
     const handleAddMessage = (event) => {
         event.preventDefault(); 
-        dispatch(messagesActions.addMessage({
-            text: name, 
-            author: userId.username,
-            id:_.uniqueId(), 
-            channelId: currentChannel.id}));
-        setName('')
+        dispatch(messagesActions.addMessage({ 
+            body: body, 
+            channelId: currentChannel.id, 
+            id: _.uniqueId(), 
+            username: userId.username,
+        }));
+        setBody('')
     };
 
     return (
@@ -46,7 +45,7 @@ const Chat = () => {
                 <div id="messages-box" className="chat-messages overflow-auto px-5 ">
                     {messages.map((mess) => (
                         <div key={mess.id} className="text-break mb-2">
-                            <b>{mess.author}</b>: {mess.text}
+                            <b>{mess.username}</b>: {mess.body}
                         </div>
                     ))}
                 </div>
@@ -58,7 +57,7 @@ const Chat = () => {
                                 name="body"
                                 ref={inputRef}
                                 placeholder="Введите сообщение..." 
-                                value={name}
+                                value={body}
                                 onChange={onChange}
                                 />
                             <button type="submit" className="btn btn-group-vertical" 

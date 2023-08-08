@@ -10,7 +10,6 @@ import {
 import { Button, Navbar, Nav } from 'react-bootstrap';
 
 import LoginPage from './Login';
-import MainPage from './MainPage';
 import PrivatePage from './ChatPage';
 import AuthContext from '../contexts/index.jsx';
 import PageNotFound from './PageNotFound.jsx';
@@ -21,16 +20,15 @@ import useAuth from '../hooks/index.jsx';
 // import { getPostThunk } from '../api/getPost.js';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  // console.log(children)
-  const logIn = () => setLoggedIn(true);
+  const [userName, setUserName] = useState(null);
+  const logIn = (name) => setUserName(name);
   const logOut = () => {
     localStorage.removeItem('userId');
-    setLoggedIn(false);
+    setUserName(null);
   };
   
   return (
-    <AuthContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <AuthContext.Provider value={{ userName, logIn, logOut }}>
       {children}  
     </AuthContext.Provider>
   );
@@ -40,7 +38,7 @@ const PrivateRoute = ({ children }) => {
   const auth = useAuth();
   const location = useLocation();
   return (
-    auth.loggedIn ? children : <Navigate to="/login" state={{ from: location }} />
+    auth.userName ? children : <Navigate to="/login" state={{ from: location }} />
   );
 };
 
@@ -49,7 +47,7 @@ const AuthButton = () => {
   const location = useLocation();
 
   return (
-    auth.loggedIn
+    auth.userName
       ? <Button onClick={auth.logOut}>Log out</Button>
       : <Button as={Link} to="/login" state={{ from: location }}>Log in</Button>
   );
