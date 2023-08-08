@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { actions as channelsActions, getChannels } from '../slices/channelsSlice.js'
+// import { actions as channelsActions, getChannels } from '../slices/channelsSlice.js'
 import { actions as messagesActions, selectors } from '../slices/messagesSlice.js'
 import _ from 'lodash';
 

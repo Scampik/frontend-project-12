@@ -3,14 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-const ModalChannel = (isOpen) => {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    // console.log(isOpen)
+const ModalChannel = (show, set, handle) => {
+  console.log(show, '___',handle)
+    // const [show, setShow] = useState(false);
+    const handleClose = () => (false);
+    // const handleShow = () => setShow(true);
+    // // setShow(modal.value)
+    // console.log(modal,'__tyt11')
     return (
         <>
-          <Modal show={show} onHide={handleClose}>
+          <Modal show={show} onHide={handle}>
             <Modal.Header closeButton>
               <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>

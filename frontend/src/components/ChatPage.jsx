@@ -1,21 +1,23 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import routes from '../routes.js';
+import React from 'react';
+
 
 import Channel from './Channel.jsx';
 import Chat from './Chat.jsx';
 
-const PrivatePage = () => {
+const ChatPage = () => {
   return (
-    <div className="container h-100 my-4 overflow-hidden rounded shadow">
-      <div className="row h-100 bg-white flex-md-row">
-        <Channel />
-        <Chat />
+    <>
+      
+      <div className="container h-100 my-4 overflow-hidden rounded shadow">
+        <div className="row h-100 bg-white flex-md-row">
+          <Channel />
+          <Chat />
+        </div>
       </div>
-    </div>
+    </>
   )
 };
 
-export default PrivatePage;
+export default ChatPage;
 
  

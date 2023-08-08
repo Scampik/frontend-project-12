@@ -5,7 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import * as Yup from 'yup';
 import axios from 'axios';
 import routes from '../routes.js';
-import useAuth from '../hooks/index.jsx';
+import { useAuth, useWSocket } from '../hooks/index.jsx';
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()

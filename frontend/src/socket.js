@@ -1,14 +1,28 @@
-// import { io } from "socket.io-client";
-import { Server } from 'socket.io';
+import { io } from "socket.io-client";
 
-const io = new Server({
-    cors: {
-      origin: "http://localhost:3000"
-    }
-  });
-  
-  io.listen(4000);
 
-const URL = process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:4000';
+export const Test = (socket) => {
+    console.log('test___')
 
-export const socket = io(URL);
+    socket.on("connect", () => {
+        console.log(socket.connected, 'socket connect'); // true
+      });
+    socket.on("disconnect", () => {
+        console.log(socket.connected, 'socket disconnect'); // false
+    });
+
+
+    //   socket.emit('newChannel', { name: "new channel" });
+    //   socket.on('newChannel', (payload) => {
+    //     console.log(payload) // { id: 6, name: "new channel", removable: true }
+    //   });
+
+    //   socket.on('removeChannel', (payload) => {
+    //     console.log(payload); // { id: 6 };
+    //   });
+
+     
+    // socket.on('newMessage', (payload) => {
+    //     console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
+    //   });
+};

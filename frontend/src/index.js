@@ -8,21 +8,26 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './slices/index'
 import { io } from "socket.io-client";
+import { Test } from './socket';
 
-const socket = io();
+import AuthProvider from './contexts/AuthContext';
+import WSocketProvider from './contexts/WScontext';
 
-socket.on('newMessage', (payload) => {
-  console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
-});
+// const socket = io();
+const socket = io().connect("http://localhost:3000");
+Test(socket)
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
     <Provider store={store}> 
-      <App />
+      <WSocketProvider socket={socket}>
+        <AuthProvider>
+         <App />
+        </AuthProvider>
+      </WSocketProvider>     
     </Provider> 
 );
 
-// <Provider store={store}>  
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

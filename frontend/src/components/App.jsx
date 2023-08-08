@@ -8,31 +8,11 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { Button, Navbar, Nav } from 'react-bootstrap';
-
 import LoginPage from './Login';
-import PrivatePage from './ChatPage';
-import AuthContext from '../contexts/index.jsx';
+import ChatPage from './ChatPage';
 import PageNotFound from './PageNotFound.jsx';
 import SignUp from './Registration';
-import useAuth from '../hooks/index.jsx';
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getPostThunk } from '../api/getPost.js';
-
-const AuthProvider = ({ children }) => {
-  const [userName, setUserName] = useState(null);
-  const logIn = (name) => setUserName(name);
-  const logOut = () => {
-    localStorage.removeItem('userId');
-    setUserName(null);
-  };
-  
-  return (
-    <AuthContext.Provider value={{ userName, logIn, logOut }}>
-      {children}  
-    </AuthContext.Provider>
-  );
-};
+import { useAuth, useWSocket } from '../hooks/index.jsx';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -56,32 +36,30 @@ const AuthButton = () => {
 const App = () => {
   
   return (
-    <AuthProvider>
-      <Router>
-        <div className="d-flex flex-column h-100">
-        <Navbar className='shadow-sm' bg="white" expand="lg">
-          <div className="container">
-          <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
-          <AuthButton />
+        <Router>
+          <div className="d-flex flex-column h-100">
+          <Navbar className='shadow-sm' bg="white" expand="lg">
+            <div className="container">
+            <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
+            <AuthButton />
+            </div>
+            
+          </Navbar>
+            <Routes>
+                  <Route element={<div>No page is selected.</div> } />
+                  <Route path="login" element={<LoginPage />} />
+                  <Route path="*" element={<PageNotFound />} />
+                  <Route path="signup" element={<SignUp />} />
+                  <Route path="/" element={(
+                      <PrivateRoute>
+                        <ChatPage />
+                      </PrivateRoute>
+                    )}
+                    />
+            </Routes>
           </div>
-          
-        </Navbar>
-          <Routes>
-                <Route element={<div>No page is selected.</div> } />
-                <Route path="login" element={<LoginPage />} />
-                <Route path="*" element={<PageNotFound />} />
-                <Route path="signup" element={<SignUp />} />
-                <Route path="/" element={(
-                    <PrivateRoute>
-                      <PrivatePage />
-                    </PrivateRoute>
-                  )}
-                  />
-          </Routes>
-        </div>
-        <div className='Toastify'></div>
-      </Router>
-    </AuthProvider>
+          <div className='Toastify'></div>
+        </Router>
   );
 }
 

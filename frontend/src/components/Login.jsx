@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate  } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
-import useAuth from '../hooks/index.jsx';
+import { useAuth, useWSocket } from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 import loginImage from '../assets/login.jpeg';

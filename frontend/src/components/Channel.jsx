@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import ModalChannel from './ModalChannel';
 import { actions as channelsActions, getChannels, selectors } from '../slices/channelsSlice.js'
+import { useAuth, useWSocket } from '../hooks/index.jsx';
+
+import ModalChannel from './ModalChannel';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 const Channel = () => {
     const dispatch = useDispatch();
+    const wsocket = useWSocket();
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const channels = useSelector(selectors.selectAll);
     const { currentChannel } = useSelector((state) => state.channels);
@@ -20,9 +30,14 @@ const Channel = () => {
         dispatch(channelsActions.setCurrentChannel({id:getCurrentChannel.id, name: curChannelName}))
     };
     
-    const handleAddTask = (event) => {
+    const handleAddChannel = (event) => {
         event.preventDefault(); 
-        dispatch(channelsActions.addChannel({name: 'chan', id:4}));
+        // wsocket.sendNewChannel();  // testim
+           //  socket.emit('newChannel', { name: "new channel" });
+    //   socket.on('newChannel', (payload) => {
+    //     console.log(payload) // { id: 6, name: "new channel", removable: true }
+    //   });
+        // dispatch(channelsActions.addChannel({name: 'chan', id:4}));
     };
 
     return (
@@ -30,14 +45,14 @@ const Channel = () => {
             <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
                 <b>Каналы</b>
                 <button type="button" className="p-0 text-primary btn btn-group-vertical" 
-                    onClick={handleAddTask}>
+                    onClick={handleShow}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fillRule="currentColor">
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
                         </svg>
                         <span className="visually-hidden">+</span>
                 </button>
-                {/* <ModalChannel isOpen = {show}/> */}
+               {/* {show && <ModalChannel show={show} set={setShow} handle={handleClose}/>} */}
             </div>
             <ul id="channels-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
                 {channels.map(({ id, name }) => (<li key={id} className="nav-item w-100">
