@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import { Button, Form } from 'react-bootstrap';
-import * as Yup from 'yup';
-import axios from 'axios';
-import routes from '../routes.js';
-import { useAuth, useWSocket } from '../hooks/index.jsx';
+import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import { Button, Form } from 'react-bootstrap'
+import * as Yup from 'yup'
+import axios from 'axios'
+import routes from '../routes.js'
+import { useAuth, useWSocket } from '../hooks/index.jsx'
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -19,27 +19,27 @@ const validationSchema = Yup.object().shape({
     .max(10, 'Максимум 10 цифр')
     .required('Обязательное поле'),
   confirmPassword: Yup.string()
-  .trim()
-  .oneOf([Yup.ref('password'), null], 'Пароль должен совпадать')
-  .required('Обязательное поле'),
-});
+    .trim()
+    .oneOf([Yup.ref('password'), null], 'Пароль должен совпадать')
+    .required('Обязательное поле')
+})
 
 const SignUp = () => {
-  const auth = useAuth();
-  const inputRef = useRef();
-  const navigate = useNavigate();
+  const auth = useAuth()
+  const inputRef = useRef()
+  const navigate = useNavigate()
 
-  const [failedMsg, setFailedMsg] = useState(false);
+  const [failedMsg, setFailedMsg] = useState(false)
 
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    inputRef.current.focus()
+  }, [])
 
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
-      confirmPassword: '',
+      confirmPassword: ''
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -47,108 +47,107 @@ const SignUp = () => {
       try {
         const response = await axios.post(
           routes.signupPath(),
-          { username: values.username, password: values.password },
-        );
-        auth.logIn(response.data);
-        localStorage.setItem('userId', JSON.stringify(response.data));
-        navigate('/');
+          { username: values.username, password: values.password }
+        )
+        auth.logIn(response.data)
+        localStorage.setItem('userId', JSON.stringify(response.data))
+        navigate('/')
       } catch (err) {
         if (!err.isAxiosError) {
-          throw err;
+          throw err
         }
 
         if (err.response.status === 409) {
-          inputRef.current.select();
+          inputRef.current.select()
           setFailedMsg('takoi polz est')
-          return;
+          return
         }
 
-        throw err;
+        throw err
       }
-    },
-  });
+    }
+  })
 
   return (
-    <div className="container-fluid h-100">
-      <div className="row justify-content-center align-content-center h-100">
-        <div className="col-12 col-md-8 col-xxl-6">
-          <div className="card shadow-sm">
-            <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
+    <div className='container-fluid h-100'>
+      <div className='row justify-content-center align-content-center h-100'>
+        <div className='col-12 col-md-8 col-xxl-6'>
+          <div className='card shadow-sm'>
+            <div className='card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5'>
               <div>
                 <img
                   src=''
-                  className="rounded-circle"
+                  className='rounded-circle'
                   alt=''
                 />
               </div>
-              <Form onSubmit={formik.handleSubmit} className="w-50">
-                <h1 className="text-center mb-4">Регистрация</h1>
-                <Form.Group className="form-floating mb-3">
+              <Form onSubmit={formik.handleSubmit} className='w-50'>
+                <h1 className='text-center mb-4'>Регистрация</h1>
+                <Form.Group className='form-floating mb-3'>
                   <Form.Control
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     onBlur={formik.handleBlur}
                     placeholder='Имя пользователя'
-                    name="username"
-                    id="username"
-                    autoComplete="username"
+                    name='username'
+                    id='username'
+                    autoComplete='username'
                     required
                     ref={inputRef}
                     isInvalid={(formik.errors.username && formik.touched.username)}
-                    
+
                   />
-                  <Form.Label htmlFor="username">Имя пользователя</Form.Label>
-                  <Form.Control.Feedback type="invalid" feedback placement="right">
+                  <Form.Label htmlFor='username'>Имя пользователя</Form.Label>
+                  <Form.Control.Feedback type='invalid' feedback placement='right'>
                     {formik.errors.username}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group className="form-floating mb-3">
+                <Form.Group className='form-floating mb-3'>
                   <Form.Control
-                    type="password"
+                    type='password'
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
                     placeholder='Пароль'
-                    name="password"
-                    id="password"
-                    aria-describedby="passwordHelpBlock"
+                    name='password'
+                    id='password'
+                    aria-describedby='passwordHelpBlock'
                     required
-                    autoComplete="new-password"
+                    autoComplete='new-password'
                     isInvalid={(formik.errors.password && formik.touched.password)}
                   />
-                  <Form.Control.Feedback type="invalid" feedback>
+                  <Form.Control.Feedback type='invalid' feedback>
                     {formik.errors.password}
                   </Form.Control.Feedback>
-                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                  <Form.Label htmlFor='password'>Пароль</Form.Label>
                 </Form.Group>
-                <Form.Group className="form-floating mb-4">
+                <Form.Group className='form-floating mb-4'>
                   <Form.Control
-                    type="password"
+                    type='password'
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.confirmPassword}
                     placeholder='Подтвердите пароль'
-                    name="confirmPassword"
-                    id="confirmPassword"
+                    name='confirmPassword'
+                    id='confirmPassword'
                     required
-                    autoComplete="new-password"
+                    autoComplete='new-password'
                     isInvalid={(formik.errors.confirmPassword && formik.touched.confirmPassword) || failedMsg}
                   />
-                  <Form.Control.Feedback type="invalid" feedback> 
-                    {failedMsg? failedMsg: formik.errors.confirmPassword}
+                  <Form.Control.Feedback type='invalid' feedback>
+                    {failedMsg || formik.errors.confirmPassword}
                   </Form.Control.Feedback>
-                  <Form.Label htmlFor="confirmPassword">Подтвердите пароль</Form.Label>
+                  <Form.Label htmlFor='confirmPassword'>Подтвердите пароль</Form.Label>
 
                 </Form.Group>
-                <Button type="submit" variant="outline-primary" className="w-100">Регистрироваться</Button>
+                <Button type='submit' variant='outline-primary' className='w-100'>Регистрироваться</Button>
               </Form>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-};
-                  
+  )
+}
 
-export default SignUp;
+export default SignUp

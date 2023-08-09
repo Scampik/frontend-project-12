@@ -1,14 +1,14 @@
 // import { io } from "socket.io-client";
 
-export default (socket) => {
-  console.log('test___');
+const Test1 = (socket) => {
+  console.log('test___')
 
   socket.on('connect', () => {
-    console.log(socket.connected, 'socket connect'); // true
-  });
+    console.log(socket.connected, 'socket connect') // true
+  })
   socket.on('disconnect', () => {
-    console.log(socket.connected, 'socket disconnect'); // false
-  });
+    console.log(socket.connected, 'socket disconnect') // false
+  })
 
   //   socket.emit('newChannel', { name: "new channel" });
   //   socket.on('newChannel', (payload) => {
@@ -22,4 +22,6 @@ export default (socket) => {
   // socket.on('newMessage', (payload) => {
   //     console.log(payload); // => { body: "new message", channelId: 7, id: 8, username: "admin" }
   //   });
-};
+}
+
+export default Test1;

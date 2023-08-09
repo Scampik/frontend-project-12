@@ -1,32 +1,32 @@
-import React, { createContext } from 'react';
+import React, { createContext } from 'react'
 
-export const WSocketContext = createContext(null);
+export const WSocketContext = createContext(null)
 
 const WSocketProvider = ({ children }) => {
   const sendNewMessage = () => {
-    console.log('sendMessage');
-  };
+    console.log('sendMessage')
+  }
   const sendNewChannel = () => {
-    console.log('sendMessage');
-  };
+    console.log('sendMessage')
+  }
   const sendRemoveChannel = () => {
-    console.log('sendMessage');
-  };
+    console.log('sendMessage')
+  }
   const sendRenameChannel = () => {
-    console.log('sendMessage');
-  };
+    console.log('sendMessage')
+  }
 
   return (
     <WSocketContext.Provider value={{
       sendNewMessage,
       sendNewChannel,
       sendRemoveChannel,
-      sendRenameChannel 
+      sendRenameChannel
     }}
     >
       {children}
     </WSocketContext.Provider>
-  );
-};
+  )
+}
 
-export default WSocketProvider;
+export default WSocketProvider
