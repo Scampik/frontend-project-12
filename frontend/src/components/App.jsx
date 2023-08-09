@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,7 +6,7 @@ import {
   Navigate,
   useLocation,
 } from 'react-router-dom';
-import { Button, Navbar, Nav } from 'react-bootstrap';
+import { Button, Navbar } from 'react-bootstrap';
 import LoginPage from './Login';
 import ChatPage from './ChatPage';
 import PageNotFound from './PageNotFound.jsx';
@@ -34,33 +33,34 @@ const AuthButton = () => {
 };
 
 const App = () => {
-  
+  console.log('test');
   return (
-        <Router>
-          <div className="d-flex flex-column h-100">
-          <Navbar className='shadow-sm' bg="white" expand="lg">
-            <div className="container">
+    <Router>
+      <div className="d-flex flex-column h-100">
+        <Navbar className="shadow-sm" bg="white" expand="lg">
+          <div className="container">
             <Navbar.Brand as={Link} to="/">Hexlet Chat</Navbar.Brand>
             <AuthButton />
-            </div>
-            
-          </Navbar>
-            <Routes>
-                  <Route element={<div>No page is selected.</div> } />
-                  <Route path="login" element={<LoginPage />} />
-                  <Route path="*" element={<PageNotFound />} />
-                  <Route path="signup" element={<SignUp />} />
-                  <Route path="/" element={(
-                      <PrivateRoute>
-                        <ChatPage />
-                      </PrivateRoute>
-                    )}
-                    />
-            </Routes>
           </div>
-          <div className='Toastify'></div>
-        </Router>
+        </Navbar>
+        <Routes>
+          <Route element={<div>No page is selected.</div>} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route
+            path="/"
+            element={(
+              <PrivateRoute>
+                <ChatPage />
+              </PrivateRoute>
+            )}
+          />
+        </Routes>
+      </div>
+      <div className="Toastify" />
+    </Router>
   );
-}
+};
 
 export default App;

@@ -3,29 +3,29 @@ import 'bootstrap';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/App';
-import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './slices/index'
-import { io } from "socket.io-client";
-import { Test } from './socket';
+import { io } from 'socket.io-client';
+// import Test from './socket';
+import store from './slices/index';
+import reportWebVitals from './reportWebVitals';
+import App from './components/App';
 
 import AuthProvider from './contexts/AuthContext';
 import WSocketProvider from './contexts/WScontext';
 
 // const socket = io();
-const socket = io().connect("http://localhost:3000");
-Test(socket)
+const socket = io().connect("http://localhost:5000");
+//  Test(socket);
 
 const root = ReactDOM.createRoot(document.getElementById('chat'));
 root.render(
-    <Provider store={store}> 
-      <WSocketProvider socket={socket}>
-        <AuthProvider>
-         <App />
-        </AuthProvider>
-      </WSocketProvider>     
-    </Provider> 
+  <Provider store={store}>
+    <WSocketProvider socket={socket}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </WSocketProvider>
+  </Provider>,
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,48 +1,86 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import { isOpen, isClose } from '../slices/modalSlice.js'
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+  channelName: Yup.string()
+    .trim()
+    .required('Обязательное поле')
+    .min(3, 'Минимум 3 буквы')
+    .max(10, 'Максимум 10 букв'),
+});
 
 const ModalChannel = (show, set, handle) => {
-  console.log(show, '___',handle)
-    // const [show, setShow] = useState(false);
-    const handleClose = () => (false);
-    // const handleShow = () => setShow(true);
-    // // setShow(modal.value)
-    // console.log(modal,'__tyt11')
+  const dispatch = useDispatch();
+
+  const {modalStatus} = useSelector((state) => state.modal);
+
+  console.log('lol',modalStatus)
+
+  const handleClose = () => {
+    dispatch(isClose());
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+    },
+    validationSchema,
+    onSubmit: (values) => {
+        console.log(values)
+      
+    }
+  })
+    
     return (
         <>
-          <Modal show={show} onHide={handle}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Form>
-                <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="name@example.com"
-                    autoFocus
-                  />
-                </Form.Group>
-                <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlTextarea1"
-                >
-                  <Form.Label>Example textarea</Form.Label>
-                  <Form.Control as="textarea" rows={3} />
-                </Form.Group>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={handleClose}>
-                Save Changes
-              </Button>
-            </Modal.Footer>
+          <Modal 
+            show={modalStatus} 
+            onHide={handleClose} 
+            dialogClassName="modal-dialog-centered">
+              <Modal.Header closeButton>
+                <Modal.Title>Добавить канал</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form onSubmit={formik.handleSubmit}>
+                  <Form.Group >
+                    <Form.Control className='mb-2'
+                      onChange={formik.handleChange}
+                      value={formik.values.name}
+                      onBlur={formik.handleBlur}
+                      name="name"
+                      id='name'
+                      isInvalid={(formik.errors.name && formik.touched.name)}
+                      autoFocus
+                    />
+                    <label class="visually-hidden" for="name">Имя канала</label>
+                    <Form.Control.Feedback type="invalid">
+                      {formik.errors.name}
+                    </Form.Control.Feedback>
+                    <div className="d-flex justify-content-end">
+                      <Button
+                        className="me-2"
+                        variant="secondary"
+                        type="button"
+                        onClick={handleClose}
+                      >
+                        Отменить
+                      </Button>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                      >
+                      Отправить
+                      </Button>
+                    </div>
+                  </Form.Group>
+                </Form>
+              </Modal.Body>
           </Modal>
         </>
       );

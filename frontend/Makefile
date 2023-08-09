@@ -7,5 +7,5 @@ start:
 build:
 	npm build
 
-lint:
-	npx eslint .
+lint: 
+	npx standard
