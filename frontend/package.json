@@ -28,7 +28,6 @@
     "postcss-loader": "^7.3.3",
     "sass": "^1.64.2",
     "sass-loader": "^13.3.2",
-    "standard": "^17.1.0",
     "style-loader": "^3.3.3"
   },
   "scripts": {

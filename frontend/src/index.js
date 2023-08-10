@@ -1,23 +1,23 @@
-import './styles.scss'
-import 'bootstrap'
+import "./styles.scss";
+import "bootstrap";
 
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { Provider } from 'react-redux'
-import { io } from 'socket.io-client'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { io } from "socket.io-client";
 // import Test from './socket';
-import store from './slices/index'
-import reportWebVitals from './reportWebVitals'
-import App from './components/App'
+import store from "./slices/index";
+import reportWebVitals from "./reportWebVitals";
+import App from "./components/App";
 
-import AuthProvider from './contexts/AuthContext'
-import WSocketProvider from './contexts/WScontext'
+import AuthProvider from "./contexts/AuthContext";
+import WSocketProvider from "./contexts/WScontext";
 
 // const socket = io();
-const socket = io().connect('http://localhost:5000')
+const socket = io().connect("http://localhost:5000");
 //  Test(socket);
 
-const root = ReactDOM.createRoot(document.getElementById('chat'))
+const root = ReactDOM.createRoot(document.getElementById("chat"));
 root.render(
   <Provider store={store}>
     <WSocketProvider socket={socket}>
@@ -26,9 +26,9 @@ root.render(
       </AuthProvider>
     </WSocketProvider>
   </Provider>
-)
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+reportWebVitals();
