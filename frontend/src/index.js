@@ -13,8 +13,8 @@ import App from "./components/App";
 import AuthProvider from "./contexts/AuthContext";
 import WSocketProvider from "./contexts/WScontext";
 
-// const socket = io();
-const socket = io().connect("http://localhost:5000");
+const socket = io();
+// const socket = io().connect("http://localhost:5000");
 //  Test(socket);
 
 const root = ReactDOM.createRoot(document.getElementById("chat"));
