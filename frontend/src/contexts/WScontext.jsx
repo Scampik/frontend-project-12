@@ -5,48 +5,34 @@ import { actions as channelsActions } from "../slices/channelsSlice.js";
 export const WSocketContext = createContext(null);
 
 const WSocketProvider = ({ socket, children }) => {
-  const dispatch = useDispatch();
-  const { currentChannel } = useSelector((state) => state.channels);
-
-  // console.log("lol");
-  const sendNewMessage = () => {
-    console.log("sendMessage");
+  const emitNewMessage = (msg) => {
+    // emit new message
+    socket.emit("newMessage", msg);
   };
-  const sendNewChannel = (name) => {
+  const emitNewChannel = (name) => {
     socket.emit("newChannel", { name });
-    console.log("sendNewChannel");
+    // console.log("emitNewChannel");
   };
 
-  const sendRemoveChannel = (id) => {
+  const emitRemoveChannel = (id) => {
+    // console.log("emit", id);
     socket.emit("removeChannel", { id });
-    socket.on("renameChannel", (payload) => {
-      console.log(payload); // { id: 7, name: "new name channel", removable: true }
-      dispatch(channelsActions.removeChannel(payload.id));
-    });
   };
-  const sendRenameChannel = () => {
-    console.log("sendMessage");
+
+  const emitRenameChannel = (id, name) => {
+    // console.log("emitRename");
+    socket.emit("renameChannel", { id, name });
   };
 
   //слушатели в конце
-  socket.on("newChannel", (payload) => {
-    console.log(payload, "dobavlen channel!");
-    dispatch(channelsActions.addChannel(payload));
-    dispatch(
-      channelsActions.setCurrentChannel({
-        id: payload.id,
-        name: payload.name,
-      })
-    );
-  });
 
   return (
     <WSocketContext.Provider
       value={{
-        sendNewMessage,
-        sendNewChannel,
-        sendRemoveChannel,
-        sendRenameChannel,
+        emitNewMessage,
+        emitNewChannel,
+        emitRemoveChannel,
+        emitRenameChannel,
       }}
     >
       {children}

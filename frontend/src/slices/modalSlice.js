@@ -1,22 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 // import axios from 'axios';
 // import routes from '../routes.js';
 
 const initialState = {
-  modalStatus: false
-}
+  isShow: false,
+  type: null,
+  extraData: null,
+};
+
 const modalSlice = createSlice({
-  name: 'modal',
+  name: "modalInfo",
   initialState,
   reducers: {
-    isOpen (state) {
-      state.modalStatus = true
+    isOpen(state, { payload }) {
+      const { type, extraData } = payload;
+      state.isShow = true;
+      state.type = type;
+      state.extraData = extraData;
     },
-    isClose (state) {
-      state.modalStatus = false
-    }
-  }
-})
+    isClose(state) {
+      state.isShow = false;
+      state.type = null;
+      state.extraData = null;
+    },
+  },
+});
 
-export default modalSlice.reducer
-export const { isOpen, isClose } = modalSlice.actions
+export default modalSlice.reducer;
+export const { isOpen, isClose } = modalSlice.actions;

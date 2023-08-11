@@ -3,23 +3,27 @@ import { useFormik } from "formik";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import { isClose } from "../slices/modalSlice.js";
+import React, { useEffect, useRef } from "react";
+import { isClose } from "../../slices/modalSlice.js";
 import * as Yup from "yup";
 import _ from "lodash";
 import {
   actions as channelsActions,
   selectors,
-} from "../slices/channelsSlice.js";
-import { useWSocket } from "../hooks/index.jsx";
+} from "../../slices/channelsSlice.js";
+import { useWSocket } from "../../hooks/index.jsx";
 
-const ModalChannel = (show, set, handle) => {
+const RenameChannel = () => {
   const dispatch = useDispatch();
   const wsocket = useWSocket();
+  const inputRef = useRef(null);
 
-  const { modalStatus } = useSelector((state) => state.modal);
+  const { isShow, type, extraData } = useSelector((state) => state.modalInfo);
   const channels = useSelector(selectors.selectAll);
 
-  // console.log('lol', channels)
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -42,11 +46,12 @@ const ModalChannel = (show, set, handle) => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: "", //extraData?.name || ""
     },
     validationSchema,
     onSubmit: (values) => {
-      wsocket.sendNewChannel(values.name);
+      console.log("tyt rename submit");
+      wsocket.emitRenameChannel(extraData.id, values.name);
       formik.values.name = "";
       handleClose();
     },
@@ -55,26 +60,26 @@ const ModalChannel = (show, set, handle) => {
   return (
     <>
       <Modal
-        show={modalStatus}
+        show={isShow}
         onHide={handleClose}
         dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Добавить канал</Modal.Title>
+          <Modal.Title>Переименовать канал</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group>
               <Form.Control
                 className="mb-2"
+                ref={inputRef}
                 onChange={formik.handleChange}
                 value={formik.values.name}
-                onBlur={formik.handleBlur}
+                // onBlur={formik.handleBlur}
                 name="name"
                 id="name"
                 required
                 isInvalid={formik.errors.name && formik.touched.name}
-                autoFocus
               />
               <label className="visually-hidden" htmlFor="name">
                 Имя канала
@@ -103,4 +108,4 @@ const ModalChannel = (show, set, handle) => {
   );
 };
 
-export default ModalChannel;
+export default RenameChannel;

@@ -1,43 +1,48 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { actions as channelsActions, getChannels } from '../slices/channelsSlice.js'
+import { Form, Button, Modal } from "react-bootstrap";
+import { useFormik } from "formik";
 import _ from "lodash";
+import * as Yup from "yup";
 import {
   actions as messagesActions,
   selectors,
 } from "../slices/messagesSlice.js";
+import { useWSocket } from "../hooks/index.jsx";
 
 const ChatForm = () => {
-  const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const wsocket = useWSocket();
 
-  const [body, setBody] = useState("");
-
-  const { currentChannel, entities } = useSelector((state) => state.channels);
+  const { currentChannel } = useSelector((state) => state.channels);
   const allMessages = useSelector(selectors.selectAll);
   const messages = allMessages.filter(
     (el) => el.channelId === currentChannel.id
   );
   const userId = JSON.parse(localStorage.getItem("userId"));
 
-  const onChange = (e) => setBody(e.target.value);
-
   useEffect(() => {
     inputRef.current.focus();
-  }, [currentChannel]);
+  }, [currentChannel, allMessages]);
 
-  const handleAddMessage = (event) => {
-    event.preventDefault();
-    dispatch(
-      messagesActions.addMessage({
-        body,
+  const validationSchema = Yup.object().shape({
+    body: Yup.string().trim().required("Обязательное поле"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      wsocket.emitNewMessage({
+        body: values.body,
         channelId: currentChannel.id,
-        id: _.uniqueId(),
         username: userId.username,
-      })
-    );
-    setBody("");
-  };
+      });
+      formik.values.body = "";
+    },
+  });
 
   return (
     <div className="col p-0 h-100">
@@ -56,23 +61,23 @@ const ChatForm = () => {
           ))}
         </div>
         <div className="mt-auto px-5 py-3">
-          <form noValidate="" className="py-1 border rounded-2">
-            <div className="input-group has-validation">
-              <input
-                className="border-0 p-0 ps-2 form-control"
-                aria-label="Новое сообщение"
+          <Form
+            onSubmit={formik.handleSubmit}
+            noValidate
+            className="py-1 border rounded-2"
+          >
+            <Form.Group className="input-group has-validation">
+              <Form.Control
+                className="border-0 p-0 ps-2"
                 name="body"
+                aria-label="Новое сообщение"
                 ref={inputRef}
+                onBlur={formik.handleBlur}
                 placeholder="Введите сообщение..."
-                value={body}
-                onChange={onChange}
+                onChange={formik.handleChange}
+                value={formik.values.body}
               />
-              <button
-                type="submit"
-                className="btn btn-group-vertical"
-                onClick={handleAddMessage}
-                disabled=""
-              >
+              <Button type="submit" variant="group-vertical" disabled="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -86,9 +91,9 @@ const ChatForm = () => {
                   />
                 </svg>
                 <span className="visually-hidden">Отправить</span>
-              </button>
-            </div>
-          </form>
+              </Button>
+            </Form.Group>
+          </Form>
         </div>
       </div>
     </div>

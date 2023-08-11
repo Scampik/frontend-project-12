@@ -1,45 +1,37 @@
 import { Button, Dropdown, ButtonGroup } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const Channels = ({
-  id,
-  name,
-  removable,
+  channel,
   handleCurrenChannel,
-  currentChannel,
+  handleRemoveChannel,
+  handleRenameChannel,
 }) => {
-  console.log(currentChannel);
-  const handleRemoveChannel = (id) => {
-    // const curChannelName = event.target.innerText.slice(1)
-    // const getCurrentChannel = channels.find((item) => item.name === curChannelName)
-    // console.log(id, "id");
-    // wsocket.sendRemoveChannel()
-  };
+  const { currentChannel } = useSelector((state) => state.channels);
 
   return (
     <Dropdown as={ButtonGroup} className="d-flex">
       <Button
         type="button"
-        variant={id === currentChannel ? "secondary" : ""}
-        key={id}
+        variant={channel.id === currentChannel.id ? "secondary" : ""}
+        key={channel.id}
         className="w-100 rounded-0 text-start text-truncate"
         onClick={handleCurrenChannel}
       >
         <span className="me-1">#</span>
-        {name}
+        {channel.name}
       </Button>
       <Dropdown.Toggle
         split
         className="flex-grow-0"
-        variant={id === currentChannel ? "secondary" : ""}
+        variant={channel.id === currentChannel.id ? "secondary" : ""}
       >
         <span className="visually-hidden">меню</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleRemoveChannel(id)}>
-          Удалить канал
-        </Dropdown.Item>
-        <Dropdown.Item onClick={handleRemoveChannel}>
-          Переименовать канал
+        <Dropdown.Item onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
+        <Dropdown.Item onClick={handleRenameChannel}>
+          Переименовать
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

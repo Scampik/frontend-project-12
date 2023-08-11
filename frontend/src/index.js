@@ -5,17 +5,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { io } from "socket.io-client";
-// import Test from './socket';
 import store from "./slices/index";
 import reportWebVitals from "./reportWebVitals";
 import App from "./components/App";
 
 import AuthProvider from "./contexts/AuthContext";
 import WSocketProvider from "./contexts/WScontext";
+import ListeningSocket from "./socket";
 
-const socket = io();
-// const socket = io().connect("http://localhost:5000");
-//  Test(socket);
+// const socket = io();
+const socket = io().connect("http://localhost:5000");
+ListeningSocket(socket);
 
 const root = ReactDOM.createRoot(document.getElementById("chat"));
 root.render(

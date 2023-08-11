@@ -11,7 +11,7 @@ import LoginPage from "./Login";
 import ChatPage from "./MainPage";
 import PageNotFound from "./PageNotFound.jsx";
 import SignUp from "./Registration";
-import { useAuth, useWSocket } from "../hooks/index.jsx";
+import { useAuth } from "../hooks/index.jsx";
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -37,7 +37,6 @@ const AuthButton = () => {
 };
 
 const App = () => {
-  console.log("test");
   return (
     <Router>
       <div className="d-flex flex-column h-100">
