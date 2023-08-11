@@ -1,13 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Form, Button, Modal } from "react-bootstrap";
+import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import _ from "lodash";
 import * as Yup from "yup";
-import {
-  actions as messagesActions,
-  selectors,
-} from "../slices/messagesSlice.js";
+import { selectors } from "../slices/messagesSlice.js";
 import { useWSocket } from "../hooks/index.jsx";
 
 const ChatForm = () => {
@@ -31,7 +28,7 @@ const ChatForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      body: "",
     },
     validationSchema,
     onSubmit: (values) => {
@@ -69,13 +66,13 @@ const ChatForm = () => {
             <Form.Group className="input-group has-validation">
               <Form.Control
                 className="border-0 p-0 ps-2"
+                onChange={formik.handleChange}
+                value={formik.values.body}
                 name="body"
                 aria-label="Новое сообщение"
                 ref={inputRef}
                 onBlur={formik.handleBlur}
                 placeholder="Введите сообщение..."
-                onChange={formik.handleChange}
-                value={formik.values.body}
               />
               <Button type="submit" variant="group-vertical" disabled="">
                 <svg
