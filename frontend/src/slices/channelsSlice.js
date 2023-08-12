@@ -47,7 +47,7 @@ const channelsSlice = createSlice({
         console.log("fetching data");
       })
       .addCase(getChannels.fulfilled, (state, { payload }) => {
-        console.log("fetched data successfully!");
+        console.log("fetched data successfully!{channels}");
         const { channels } = payload;
         channelsAdapter.setMany(state, channels);
       })

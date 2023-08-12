@@ -12,6 +12,7 @@ import ChatPage from "./MainPage";
 import PageNotFound from "./PageNotFound.jsx";
 import SignUp from "./Registration";
 import { useAuth } from "../hooks/index.jsx";
+import { useTranslation } from "react-i18next";
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -24,32 +25,30 @@ const PrivateRoute = ({ children }) => {
 };
 
 const AuthButton = () => {
+  const { t } = useTranslation();
   const auth = useAuth();
-  const location = useLocation();
-
   return auth.userName ? (
-    <Button onClick={auth.logOut}>Выйти</Button>
+    <Button onClick={auth.logOut}>{t("exit")}</Button>
   ) : (
-    <Button as={Link} to="/login" state={{ from: location }}>
-      Log in
-    </Button>
+    <></>
   );
 };
 
 const App = () => {
+  const { t } = useTranslation();
   return (
     <Router>
       <div className="d-flex flex-column h-100">
         <Navbar className="shadow-sm" bg="white" expand="lg">
           <div className="container">
             <Navbar.Brand as={Link} to="/">
-              Hexlet Chat
+              {t("siteName")}
             </Navbar.Brand>
             <AuthButton />
           </div>
         </Navbar>
         <Routes>
-          <Route element={<div>No page is selected.</div>} />
+          <Route element={<div>{t("noPageSelected")}</div>} />
           <Route path="login" element={<LoginPage />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="signup" element={<SignUp />} />

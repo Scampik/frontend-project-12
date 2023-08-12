@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { Button, Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import axios from "axios";
 import routes from "../routes.js";
 import { useAuth } from "../hooks/index.jsx";
+
+import registration from "../assets/registration.webp";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string()
@@ -28,6 +31,7 @@ const SignUp = () => {
   const auth = useAuth();
   const inputRef = useRef();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [failedMsg, setFailedMsg] = useState(false);
 
@@ -75,10 +79,16 @@ const SignUp = () => {
           <div className="card shadow-sm">
             <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
               <div>
-                <img src="" className="rounded-circle" alt="" />
+                <img
+                  src={registration}
+                  height={150}
+                  width={150}
+                  className="rounded-circle"
+                  alt=""
+                />
               </div>
               <Form onSubmit={formik.handleSubmit} className="w-50">
-                <h1 className="text-center mb-4">Регистрация</h1>
+                <h1 className="text-center mb-4">{t("registration")}</h1>
                 <Form.Group className="form-floating mb-3">
                   <Form.Control
                     onChange={formik.handleChange}
@@ -95,7 +105,7 @@ const SignUp = () => {
                       failedMsg
                     }
                   />
-                  <Form.Label htmlFor="username">Имя пользователя</Form.Label>
+                  <Form.Label htmlFor="username">{t("username")}</Form.Label>
                   <Form.Control.Feedback type="invalid" placement="right">
                     {formik.errors.username}
                   </Form.Control.Feedback>
@@ -120,7 +130,7 @@ const SignUp = () => {
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.password}
                   </Form.Control.Feedback>
-                  <Form.Label htmlFor="password">Пароль</Form.Label>
+                  <Form.Label htmlFor="password">{t("password")}</Form.Label>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4">
                   <Form.Control
@@ -143,7 +153,7 @@ const SignUp = () => {
                     {failedMsg || formik.errors.confirmPassword}
                   </Form.Control.Feedback>
                   <Form.Label htmlFor="confirmPassword">
-                    Подтвердите пароль
+                    {t("passwordConfirm")}
                   </Form.Label>
                 </Form.Group>
                 <Button

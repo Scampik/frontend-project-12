@@ -1,5 +1,6 @@
 import { Button, Dropdown, ButtonGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const Channels = ({
   channel,
@@ -7,6 +8,7 @@ const Channels = ({
   handleRemoveChannel,
   handleRenameChannel,
 }) => {
+  const { t } = useTranslation();
   const { currentChannel } = useSelector((state) => state.channels);
 
   return (
@@ -29,9 +31,11 @@ const Channels = ({
         <span className="visually-hidden">меню</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
+        <Dropdown.Item onClick={handleRemoveChannel}>
+          {t("delete")}
+        </Dropdown.Item>
         <Dropdown.Item onClick={handleRenameChannel}>
-          Переименовать
+          {t("rename")}
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

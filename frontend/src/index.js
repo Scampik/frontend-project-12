@@ -14,7 +14,7 @@ import WSocketProvider from "./contexts/WScontext";
 import init from "./init";
 
 // const socket = io();
-const socket = io().connect("http://localhost:5000");
+const socket = io().connect("http://localhost:3000");
 init(socket);
 
 const root = ReactDOM.createRoot(document.getElementById("chat"));

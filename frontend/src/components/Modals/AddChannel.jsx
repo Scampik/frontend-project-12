@@ -1,20 +1,18 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { Form, Button, Modal } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import { isClose } from "../../slices/modalSlice.js";
 import * as Yup from "yup";
-import _ from "lodash";
-import {
-  actions as channelsActions,
-  selectors,
-} from "../../slices/channelsSlice.js";
+import { selectors } from "../../slices/channelsSlice.js";
 import { useWSocket } from "../../hooks/index.jsx";
 
 const AddChannel = () => {
   const dispatch = useDispatch();
   const wsocket = useWSocket();
+  const { t } = useTranslation();
 
-  const { isShow, type, extraData } = useSelector((state) => state.modalInfo);
+  const { isShow } = useSelector((state) => state.modalInfo);
   const channels = useSelector(selectors.selectAll);
 
   // console.log('lol', channels)
@@ -58,7 +56,7 @@ const AddChannel = () => {
         dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Добавить канал</Modal.Title>
+          <Modal.Title>{t("addChannel")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
@@ -75,7 +73,7 @@ const AddChannel = () => {
                 autoFocus
               />
               <label className="visually-hidden" htmlFor="name">
-                Имя канала
+                {t("nameChannel")}
               </label>
               <Form.Control.Feedback type="invalid">
                 {formik.errors.name}
@@ -87,10 +85,10 @@ const AddChannel = () => {
                   type="button"
                   onClick={handleClose}
                 >
-                  Отменить
+                  {t("cancel")}
                 </Button>
                 <Button variant="primary" type="submit">
-                  Отправить
+                  {t("send")}
                 </Button>
               </div>
             </Form.Group>
