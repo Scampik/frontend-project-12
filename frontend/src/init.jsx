@@ -2,7 +2,7 @@ import store from "./slices/index";
 import { actions as channelsActions } from "./slices/channelsSlice.js";
 import { actions as messagesActions } from "./slices/messagesSlice.js";
 
-const ListeningSocket = (socket) => {
+const init = (socket) => {
   socket.on("connect", () => {
     console.log(socket.connected, "socket connect"); // true
   });
@@ -30,7 +30,7 @@ const ListeningSocket = (socket) => {
   });
 
   socket.on("removeChannel", (payload) => {
-    console.log(payload, "payloadRemove");
+    // console.log(payload, "payloadRemove");
     store.dispatch(
       channelsActions.setCurrentChannel({
         name: "general",
@@ -51,4 +51,4 @@ const ListeningSocket = (socket) => {
   });
 };
 
-export default ListeningSocket;
+export default init;

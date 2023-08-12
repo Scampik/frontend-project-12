@@ -11,11 +11,11 @@ import App from "./components/App";
 
 import AuthProvider from "./contexts/AuthContext";
 import WSocketProvider from "./contexts/WScontext";
-import ListeningSocket from "./socket";
+import init from "./init";
 
 // const socket = io();
 const socket = io().connect("http://localhost:5000");
-ListeningSocket(socket);
+init(socket);
 
 const root = ReactDOM.createRoot(document.getElementById("chat"));
 root.render(

@@ -28,7 +28,7 @@ const AuthButton = () => {
   const location = useLocation();
 
   return auth.userName ? (
-    <Button onClick={auth.logOut}>Log out</Button>
+    <Button onClick={auth.logOut}>Выйти</Button>
   ) : (
     <Button as={Link} to="/login" state={{ from: location }}>
       Log in

@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import routes from "../routes.js";
+import { actions as messagesActions } from "./messagesSlice.js";
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -17,12 +18,10 @@ const getAuthHeader = () => {
 export const getChannels = createAsyncThunk(
   "channels/getChannels",
   async () => {
-    const { data } = await axios.get(routes.usersPath(), {
+    const { data } = await axios.get(routes.dataPath(), {
       headers: getAuthHeader(),
     });
-    const result = data.channels;
-    // console.log(result)
-    return result;
+    return data;
   }
 );
 
@@ -39,7 +38,6 @@ const channelsSlice = createSlice({
     removeChannel: channelsAdapter.removeOne,
     renameChannel: channelsAdapter.updateOne,
     setCurrentChannel(state, { payload }) {
-      // console.log(payload,'payload')
       state.currentChannel = payload;
     },
   },
@@ -48,10 +46,10 @@ const channelsSlice = createSlice({
       .addCase(getChannels.pending, () => {
         console.log("fetching data");
       })
-      .addCase(getChannels.fulfilled, (state, action) => {
+      .addCase(getChannels.fulfilled, (state, { payload }) => {
         console.log("fetched data successfully!");
-        channelsAdapter.addMany(state, action);
-        return action.payload.result;
+        const { channels } = payload;
+        channelsAdapter.setMany(state, channels);
       })
       .addCase(getChannels.rejected, () => {
         console.log("failed");
