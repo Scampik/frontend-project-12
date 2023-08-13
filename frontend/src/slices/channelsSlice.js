@@ -5,7 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import routes from "../routes.js";
-import { actions as messagesActions } from "./messagesSlice.js";
 
 const getAuthHeader = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));

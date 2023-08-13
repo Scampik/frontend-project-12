@@ -18,7 +18,7 @@ const ChannelForm = () => {
 
   const channels = useSelector(selectors.selectAll);
   const { currentChannel } = useSelector((state) => state.channels);
-  const { isShow, type, extraData } = useSelector((state) => state.modalInfo);
+  const { type } = useSelector((state) => state.modalInfo);
 
   // console.log(isShow, "eto___statsu");
   // console.log(currentChannel, 'currentChannelId') nado kak to zadefoltit
@@ -40,15 +40,6 @@ const ChannelForm = () => {
 
   const handleRenameChannel = (channel) => () => {
     dispatch(isOpen({ type: "renaming", extraData: channel }));
-  };
-
-  const renderModal = ({ isShow, type, extraData }) => {
-    if (!type) {
-      return null;
-    }
-
-    const Component = getModal(type);
-    return <Component />;
   };
 
   const renderMainChannels = (channel) => {
@@ -98,7 +89,7 @@ const ChannelForm = () => {
           </svg>
           <span className="visually-hidden">+</span>
         </button>
-        {renderModal({ isShow, type, extraData })}
+        {getModal({ type })}
       </div>
       <ul
         id="channels-box"

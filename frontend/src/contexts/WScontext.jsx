@@ -1,6 +1,4 @@
 import React, { createContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { actions as channelsActions } from "../slices/channelsSlice.js";
 
 export const WSocketContext = createContext(null);
 
