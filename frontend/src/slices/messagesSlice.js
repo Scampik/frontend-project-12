@@ -1,7 +1,5 @@
 import { createSlice, createEntityAdapter } from "@reduxjs/toolkit";
 import { getChannels, actions as channelsActions } from "./channelsSlice.js";
-// import axios from 'axios';
-// import routes from '../routes.js';
 
 const messagesAdapter = createEntityAdapter();
 

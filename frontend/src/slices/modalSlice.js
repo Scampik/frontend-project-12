@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import axios from 'axios';
-// import routes from '../routes.js';
 
 const initialState = {
   isShow: false,

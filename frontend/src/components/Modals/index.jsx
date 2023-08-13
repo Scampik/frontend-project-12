@@ -9,7 +9,6 @@ const modals = {
 };
 
 const getModal = ({ type }) => {
-  console.log(type);
   if (!type) {
     return null;
   }

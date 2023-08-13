@@ -7,8 +7,8 @@ import { Provider } from "react-redux";
 import { io } from "socket.io-client";
 import store from "./slices/index";
 import reportWebVitals from "./reportWebVitals";
-import App from "./components/App";
 
+import App from "./components/App";
 import AuthProvider from "./contexts/AuthContext";
 import WSocketProvider from "./contexts/WScontext";
 import init from "./init";
