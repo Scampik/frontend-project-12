@@ -79,17 +79,19 @@ const init = async (socket) => {
   });
 
   return (
-    <Provider store={store} config={rollbarConfig}>
-      <ErrorBoundary>
-        <WSocketProvider socket={socket}>
-          <AuthProvider>
-            <I18nextProvider i18n={i18n}>
-              <App />
-            </I18nextProvider>
-          </AuthProvider>
-        </WSocketProvider>
-      </ErrorBoundary>
-    </Provider>
+    <React.StrictMode>
+      <Provider store={store} config={rollbarConfig}>
+        <ErrorBoundary>
+          <WSocketProvider socket={socket}>
+            <AuthProvider>
+              <I18nextProvider i18n={i18n}>
+                <App />
+              </I18nextProvider>
+            </AuthProvider>
+          </WSocketProvider>
+        </ErrorBoundary>
+      </Provider>
+    </React.StrictMode>
   );
 };
 
