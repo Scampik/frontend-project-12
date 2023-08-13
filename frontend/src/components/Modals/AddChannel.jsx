@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import filter from "leo-profanity";
 
 import { isClose } from "../../slices/modalSlice.js";
 import * as Yup from "yup";
@@ -43,7 +44,8 @@ const AddChannel = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      wsocket.emitNewChannel(values.name);
+      const cleanName = filter.clean(values.name);
+      wsocket.emitNewChannel(cleanName);
       formik.values.name = "";
       handleClose();
     },

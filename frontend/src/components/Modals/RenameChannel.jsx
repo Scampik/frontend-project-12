@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import { Form, Button, Modal } from "react-bootstrap";
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import filter from "leo-profanity";
+
 import { isClose } from "../../slices/modalSlice.js";
 import * as Yup from "yup";
 import { selectors } from "../../slices/channelsSlice.js";
@@ -46,8 +48,8 @@ const RenameChannel = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log("tyt rename submit");
-      wsocket.emitRenameChannel(extraData.id, values.name);
+      const cleanName = filter.clean(values.name);
+      wsocket.emitRenameChannel(extraData.id, cleanName);
       formik.values.name = "";
       handleClose();
     },

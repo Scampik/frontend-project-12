@@ -11,7 +11,7 @@ export default {
       createChannel: "Канал создан",
       renameChannel: "Канал переименован",
       removeChannel: "Канал удален",
-      networkProblem: "Ошибка сети",
+      networkProblem: "Ошибка соединения",
       duplicateUser: "Такой пользователь уже существует",
     },
     siteName: "HeXlet Chat",

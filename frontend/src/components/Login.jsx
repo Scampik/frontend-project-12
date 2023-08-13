@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import { useAuth } from "../hooks/index.jsx";
 import routes from "../routes.js";
 
@@ -27,18 +28,23 @@ const LoginPage = () => {
     },
     onSubmit: async (values) => {
       setAuthFailed(false);
+
       try {
         const response = await axios.post(routes.loginPath(), values);
         localStorage.setItem("userId", JSON.stringify(response.data));
         auth.logIn(response.data);
+
         navigate("/");
       } catch (err) {
         formik.setSubmitting(false);
-        if (err.isAxiosError && err.response.status === 401) {
+        console.log(err);
+        // toast.error(t("toast.networkProblem"));
+        if (err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
           return;
         }
+        toast.warn(t("toast.networkProblem"));
         throw err;
       }
     },

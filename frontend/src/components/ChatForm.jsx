@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import filter from "leo-profanity";
 import * as Yup from "yup";
 import { selectors } from "../slices/messagesSlice.js";
 import { useWSocket } from "../hooks/index.jsx";
@@ -11,6 +12,8 @@ const ChatForm = () => {
   const inputRef = useRef(null);
   const wsocket = useWSocket();
   const { t } = useTranslation();
+
+  filter.loadDictionary("ru");
 
   const { currentChannel } = useSelector((state) => state.channels);
   const allMessages = useSelector(selectors.selectAll);
@@ -33,8 +36,9 @@ const ChatForm = () => {
     },
     validationSchema,
     onSubmit: (values) => {
+      const cleanBody = filter.clean(values.body);
       wsocket.emitNewMessage({
-        body: values.body,
+        body: cleanBody,
         channelId: currentChannel.id,
         username: userId.username,
       });
