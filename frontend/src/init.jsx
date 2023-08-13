@@ -1,15 +1,23 @@
-import store from "./slices/index";
+import { Provider } from "react-redux";
+import i18next from "i18next";
+import { I18nextProvider, initReactI18next } from "react-i18next";
+import React from "react";
+
 import { actions as channelsActions } from "./slices/channelsSlice.js";
 import { actions as messagesActions } from "./slices/messagesSlice.js";
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import ru from "./locales/ru.js";
+import store from "./slices/index";
+import App from "./components/App";
+import AuthProvider from "./contexts/AuthContext";
+import WSocketProvider from "./contexts/WScontext";
+import resources from "./locales/index.js";
 
-const init = (socket) => {
-  i18n
+const init = async (socket) => {
+  const i18n = i18next.createInstance();
+
+  await i18n
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
-      resources: { ru },
+      resources,
       lng: "ru",
     });
 
@@ -59,6 +67,18 @@ const init = (socket) => {
       })
     );
   });
+
+  return (
+    <Provider store={store}>
+      <WSocketProvider socket={socket}>
+        <AuthProvider>
+          <I18nextProvider i18n={i18n}>
+            <App />
+          </I18nextProvider>
+        </AuthProvider>
+      </WSocketProvider>
+    </Provider>
+  );
 };
 
 export default init;
