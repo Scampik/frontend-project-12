@@ -2,6 +2,8 @@ import { Provider } from "react-redux";
 import i18next from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import React from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { actions as channelsActions } from "./slices/channelsSlice.js";
 import { actions as messagesActions } from "./slices/messagesSlice.js";
@@ -21,34 +23,14 @@ const init = async (socket) => {
       lng: "ru",
     });
 
-  socket.on("connect", () => {
-    console.log(socket.connected, "socket connect"); // true
-  });
-  socket.on("disconnect", () => {
-    console.log(socket.connected, "socket disconnect"); // false
-  });
-
-  socket.on("newMessage", (payload) => {
-    // console.log(payload, "newPayload");
-    store.dispatch(messagesActions.addMessage(payload));
-  });
-
-  socket.on("newChannel", (payload) => {
-    // console.log(payload, "newPayload");
+  const successAddChannel = (payload) => {
     store.dispatch(channelsActions.addChannel(payload));
-  });
-  socket.on("newChannel", (payload) => {
-    // console.log(payload, "newPayload");
     store.dispatch(channelsActions.setCurrentChannel(payload));
-  });
+    toast(i18n.t("toast.createChannel"));
+  };
 
-  socket.on("removeChannel", (payload) => {
-    // console.log(payload, "payloadRemove");
+  const successRemoveChannel = (payload) => {
     store.dispatch(channelsActions.removeChannel(payload.id));
-  });
-
-  socket.on("removeChannel", (payload) => {
-    // console.log(payload, "payloadRemove");
     store.dispatch(
       channelsActions.setCurrentChannel({
         name: "general",
@@ -56,9 +38,28 @@ const init = async (socket) => {
         id: 1,
       })
     );
+    toast(i18n.t("toast.removeChannel"));
+  };
+
+  socket.on("connect", () => {
+    console.log(socket.connected, "socket connect");
+  });
+  socket.on("disconnect", () => {
+    console.log(socket.connected, "socket disconnect");
   });
 
-  // subscribe rename channel
+  socket.on("newMessage", (payload) => {
+    store.dispatch(messagesActions.addMessage(payload));
+  });
+
+  socket.on("newChannel", (payload) => {
+    successAddChannel(payload);
+  });
+
+  socket.on("removeChannel", (payload) => {
+    successRemoveChannel(payload);
+  });
+
   socket.on("renameChannel", (payload) => {
     store.dispatch(
       channelsActions.renameChannel({
@@ -66,6 +67,7 @@ const init = async (socket) => {
         changes: { name: payload.name },
       })
     );
+    toast(i18n.t("toast.renameChannel"));
   });
 
   return (

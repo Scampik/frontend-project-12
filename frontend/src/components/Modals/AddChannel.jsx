@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+
 import { isClose } from "../../slices/modalSlice.js";
 import * as Yup from "yup";
 import { selectors } from "../../slices/channelsSlice.js";

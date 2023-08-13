@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { Button, Form } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
 import axios from "axios";
 import routes from "../routes.js";
@@ -60,13 +62,12 @@ const SignUp = () => {
         if (!err.isAxiosError) {
           throw err;
         }
-
         if (err.response.status === 409) {
           inputRef.current.select();
           setFailedMsg("Такой пользователь уже существует");
-          return;
+          toast(t("toast.duplicateUser"));
+          throw new Error("Такой пользователь уже существует");
         }
-
         throw err;
       }
     },

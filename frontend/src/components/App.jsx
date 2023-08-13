@@ -7,6 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { Button, Navbar } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
 import LoginPage from "./Login";
 import ChatPage from "./MainPage";
 import PageNotFound from "./PageNotFound.jsx";
@@ -62,7 +63,7 @@ const App = () => {
           />
         </Routes>
       </div>
-      <div className="Toastify" />
+      <ToastContainer />
     </Router>
   );
 };

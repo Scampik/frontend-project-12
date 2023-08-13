@@ -4,9 +4,15 @@ export default {
     errors: {
       badUrl: "Ссылка должна быть валидным URL",
       duplicate: "RSS уже существует",
-      networkProblem: "Ошибка сети",
       invalidRSS: "Ресурс не содержит валидный RSS",
       defect: "Что-то пошло не так",
+    },
+    toast: {
+      createChannel: "Канал создан",
+      renameChannel: "Канал переименован",
+      removeChannel: "Канал удален",
+      networkProblem: "Ошибка сети",
+      duplicateUser: "Такой пользователь уже существует",
     },
     siteName: "HeXlet Chat",
     noPageSelected: "No page is selected.",
