@@ -9,7 +9,7 @@ import {
 } from "../slices/channelsSlice.js";
 import { isOpen } from "../slices/modalSlice.js";
 
-import getModal from "./modals/index.js";
+import getModal from "./modals/index.jsx";
 import Channels from "./Channels.jsx";
 
 const ChannelForm = () => {
