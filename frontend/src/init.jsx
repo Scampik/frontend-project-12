@@ -2,6 +2,7 @@ import { Provider } from "react-redux";
 import i18next from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { Provider as ProviderRoll, ErrorBoundary } from "@rollbar/react";
+import Rollbar from "rollbar";
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -52,16 +53,18 @@ const init = async (socket) => {
   });
 
   const rollbarConfig = {
-    accessToken: "P3dad958a0f474cbeaef55b22e73d3863",
+    accessToken: "308356585bae491da48fc6665de58833",
     captureUncaught: true,
     captureUnhandledRejections: true,
-    environment: "testenv",
+    environment: "production",
   };
+
+  const rollbar = new Rollbar(rollbarConfig);
   //config={rollbarConfig} v Proveder
   //<ErrorBoundary>
   return (
     <React.StrictMode>
-      <ProviderRoll config={rollbarConfig}>
+      <ProviderRoll config={rollbar}>
         <Provider store={store}>
           <ErrorBoundary>
             <WSocketProvider socket={socket}>
