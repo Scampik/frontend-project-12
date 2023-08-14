@@ -36,15 +36,12 @@ const RenameChannel = () => {
     });
 
   const handleClose = () => {
-    formik.values.name = "";
-    formik.errors.name = "";
-    formik.touched.name = false;
     dispatch(isClose());
   };
 
   const formik = useFormik({
     initialValues: {
-      name: extraData?.name || "", //extraData?.name || ""
+      name: extraData?.name || "",
     },
     validationSchema: getValidationSchema(channels),
     onSubmit: async (values, { setSubmitting }) => {

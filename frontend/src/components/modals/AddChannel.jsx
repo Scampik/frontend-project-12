@@ -40,9 +40,6 @@ const AddChannel = () => {
     });
 
   const handleClose = () => {
-    formik.values.name = "";
-    formik.errors.name = "";
-    formik.touched.name = false;
     dispatch(isClose());
   };
 
