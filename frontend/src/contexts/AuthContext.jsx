@@ -6,8 +6,10 @@ const AuthProvider = ({ children }) => {
   const [userName, setUserName] = useState(null);
   const logIn = (name) => setUserName(name);
   const logOut = () => {
-    localStorage.removeItem("userId");
-    setUserName(null);
+    const a = null;
+    return a.hello();
+    // localStorage.removeItem("userId");
+    // setUserName(null);
   };
 
   return (
