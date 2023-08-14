@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 import { isClose } from "../../slices/modalSlice.js";
 import { useWSocket } from "../../hooks/index.jsx";
+import { actions as channelsActions } from "../../slices/channelsSlice.js";
 
 const RemoveChannel = () => {
   const dispatch = useDispatch();
@@ -15,9 +17,21 @@ const RemoveChannel = () => {
     dispatch(isClose());
   };
 
-  const handleRemove = () => {
-    wsocket.emitRemoveChannel(extraData.id);
-    dispatch(isClose());
+  const handleRemove = async () => {
+    try {
+      wsocket.emitRemoveChannel(extraData.id);
+      dispatch(
+        channelsActions.setCurrentChannel({
+          name: "general",
+          removable: false,
+          id: 1,
+        })
+      );
+      dispatch(isClose());
+      toast(t("toast.removeChannel"));
+    } catch (e) {
+      throw e;
+    }
   };
 
   return (

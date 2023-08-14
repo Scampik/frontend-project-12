@@ -1,15 +1,21 @@
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import filter from "leo-profanity";
+import { toast } from "react-toastify";
 
 import { isClose } from "../../slices/modalSlice.js";
 import * as Yup from "yup";
-import { selectors } from "../../slices/channelsSlice.js";
+import {
+  selectors,
+  actions as channelsActions,
+} from "../../slices/channelsSlice.js";
 import { useWSocket } from "../../hooks/index.jsx";
 
 const AddChannel = () => {
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
   const wsocket = useWSocket();
   const { t } = useTranslation();
@@ -18,6 +24,9 @@ const AddChannel = () => {
   const channels = useSelector(selectors.selectAll);
 
   // console.log('lol', channels)
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -26,7 +35,7 @@ const AddChannel = () => {
       .min(3, "Минимум 3 буквы")
       .max(10, "Максимум 10 букв")
       .notOneOf(
-        channels.map((item) => item.name.trim()),
+        channels.map((item) => item.name),
         "Должно быть уникальным"
       ),
   });
@@ -43,11 +52,17 @@ const AddChannel = () => {
       name: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      const cleanName = filter.clean(values.name);
-      wsocket.emitNewChannel(cleanName);
-      formik.values.name = "";
-      handleClose();
+    onSubmit: async (values) => {
+      try {
+        const cleanName = filter.clean(values.name);
+        const data = await wsocket.emitAddChannel(cleanName);
+        await dispatch(channelsActions.setCurrentChannel(data));
+        formik.values.name = "";
+        toast(t("toast.createChannel"));
+        handleClose();
+      } catch (e) {
+        throw e;
+      }
     },
   });
 
@@ -72,8 +87,8 @@ const AddChannel = () => {
                 name="name"
                 id="name"
                 required
+                ref={inputRef}
                 isInvalid={formik.errors.name && formik.touched.name}
-                autoFocus
               />
               <label className="visually-hidden" htmlFor="name">
                 {t("nameChannel")}

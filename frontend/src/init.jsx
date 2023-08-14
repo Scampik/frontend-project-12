@@ -3,7 +3,6 @@ import i18next from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { ErrorBoundary } from "@rollbar/react";
 import React from "react";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { actions as channelsActions } from "./slices/channelsSlice.js";
@@ -24,31 +23,6 @@ const init = async (socket) => {
       lng: "ru",
     });
 
-  const rollbarConfig = {
-    accessToken: "POST_CLIENT_ITEM_ACCESS_TOKEN",
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-    environment: "production",
-  };
-
-  const successAddChannel = (payload) => {
-    store.dispatch(channelsActions.addChannel(payload));
-    store.dispatch(channelsActions.setCurrentChannel(payload));
-    toast(i18n.t("toast.createChannel"));
-  };
-
-  const successRemoveChannel = (payload) => {
-    store.dispatch(channelsActions.removeChannel(payload.id));
-    store.dispatch(
-      channelsActions.setCurrentChannel({
-        name: "general",
-        removable: false,
-        id: 1,
-      })
-    );
-    toast(i18n.t("toast.removeChannel"));
-  };
-
   socket.on("connect", () => {
     console.log(socket.connected, "socket connect");
   });
@@ -61,11 +35,11 @@ const init = async (socket) => {
   });
 
   socket.on("newChannel", (payload) => {
-    successAddChannel(payload);
+    store.dispatch(channelsActions.addChannel(payload));
   });
 
   socket.on("removeChannel", (payload) => {
-    successRemoveChannel(payload);
+    store.dispatch(channelsActions.removeChannel(payload.id));
   });
 
   socket.on("renameChannel", (payload) => {
@@ -75,8 +49,14 @@ const init = async (socket) => {
         changes: { name: payload.name },
       })
     );
-    toast(i18n.t("toast.renameChannel"));
   });
+
+  const rollbarConfig = {
+    accessToken: "POST_CLIENT_ITEM_ACCESS_TOKEN",
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    environment: "production",
+  };
 
   return (
     <React.StrictMode>

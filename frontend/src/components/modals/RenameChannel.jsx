@@ -4,6 +4,7 @@ import { Form, Button, Modal } from "react-bootstrap";
 import React, { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import filter from "leo-profanity";
+import { toast } from "react-toastify";
 
 import { isClose } from "../../slices/modalSlice.js";
 import * as Yup from "yup";
@@ -30,7 +31,7 @@ const RenameChannel = () => {
       .min(3, "Минимум 3 буквы")
       .max(10, "Максимум 10 букв")
       .notOneOf(
-        channels.map((item) => item.name.trim()),
+        channels.map((item) => item.name.trim),
         "Должно быть уникальным"
       ),
   });
@@ -44,14 +45,21 @@ const RenameChannel = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "", //extraData?.name || ""
+      name: extraData?.name || "", //extraData?.name || ""
     },
     validationSchema,
-    onSubmit: (values) => {
-      const cleanName = filter.clean(values.name);
-      wsocket.emitRenameChannel(extraData.id, cleanName);
-      formik.values.name = "";
-      handleClose();
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        const cleanName = filter.clean(values.name);
+        await wsocket.emitRenameChannel(extraData.id, cleanName);
+        formik.values.name = "";
+        toast(t("toast.renameChannel"));
+        handleClose();
+      } catch (e) {
+        // setSubmitting(false);
+        throw e;
+      }
+      // setSubmitting(true);
     },
   });
 
@@ -71,6 +79,7 @@ const RenameChannel = () => {
               <Form.Control
                 className="mb-2"
                 ref={inputRef}
+                disabled={formik.isSubmitting}
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 // onBlur={formik.handleBlur}
@@ -94,7 +103,11 @@ const RenameChannel = () => {
                 >
                   {t("cancel")}
                 </Button>
-                <Button variant="primary" type="submit">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                >
                   {t("send")}
                 </Button>
               </div>
