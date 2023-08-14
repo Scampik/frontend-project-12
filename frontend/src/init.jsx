@@ -51,25 +51,24 @@ const init = async (socket) => {
     );
   });
 
-  const rollbarConfig = {
-    accessToken: "POST_CLIENT_ITEM_ACCESS_TOKEN",
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-    environment: "production",
-  };
-
+  // const rollbarConfig = {
+  //   accessToken: "POST_CLIENT_ITEM_ACCESS_TOKEN",
+  //   captureUncaught: true,
+  //   captureUnhandledRejections: true,
+  //   environment: "production",
+  // };
+  //config={rollbarConfig} v Proveder
+  //<ErrorBoundary>
   return (
     <React.StrictMode>
-      <Provider store={store} config={rollbarConfig}>
-        <ErrorBoundary>
-          <WSocketProvider socket={socket}>
-            <AuthProvider>
-              <I18nextProvider i18n={i18n}>
-                <App />
-              </I18nextProvider>
-            </AuthProvider>
-          </WSocketProvider>
-        </ErrorBoundary>
+      <Provider store={store}>
+        <WSocketProvider socket={socket}>
+          <AuthProvider>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </AuthProvider>
+        </WSocketProvider>
       </Provider>
     </React.StrictMode>
   );
