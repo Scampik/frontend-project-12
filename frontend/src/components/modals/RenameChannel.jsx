@@ -18,23 +18,22 @@ const RenameChannel = () => {
   const { t } = useTranslation();
 
   const { isShow, extraData } = useSelector((state) => state.modalInfo);
-  const channels = useSelector(selectors.selectAll);
+  const channelsData = useSelector(selectors.selectAll);
+  const channels = channelsData.map((el) => el.name);
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .trim()
-      .required("Обязательное поле")
-      .min(3, "Минимум 3 буквы")
-      .max(10, "Максимум 10 букв")
-      .notOneOf(
-        channels.map((item) => item.name.trim),
-        "Должно быть уникальным"
-      ),
-  });
+  const getValidationSchema = (channels) =>
+    Yup.object().shape({
+      name: Yup.string()
+        .trim()
+        .required("Обязательное поле")
+        .min(3, "Минимум 3 буквы")
+        .max(10, "Максимум 10 букв")
+        .notOneOf(channels, "Должно быть уникальным"),
+    });
 
   const handleClose = () => {
     formik.values.name = "";
@@ -47,10 +46,11 @@ const RenameChannel = () => {
     initialValues: {
       name: extraData?.name || "", //extraData?.name || ""
     },
-    validationSchema,
+    validationSchema: getValidationSchema(channels),
     onSubmit: async (values, { setSubmitting }) => {
       try {
         const cleanName = filter.clean(values.name);
+        getValidationSchema(channels).validateSync({ name: cleanName });
         await wsocket.emitRenameChannel(extraData.id, cleanName);
         formik.values.name = "";
         toast(t("toast.renameChannel"));

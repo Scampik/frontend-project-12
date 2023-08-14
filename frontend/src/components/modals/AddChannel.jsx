@@ -21,24 +21,23 @@ const AddChannel = () => {
   const { t } = useTranslation();
 
   const { isShow } = useSelector((state) => state.modalInfo);
-  const channels = useSelector(selectors.selectAll);
+  const channelsData = useSelector(selectors.selectAll);
+  const channels = channelsData.map((el) => el.name);
 
   // console.log('lol', channels)
   useEffect(() => {
     inputRef.current.focus();
   }, []);
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .trim()
-      .required("Обязательное поле")
-      .min(3, "Минимум 3 буквы")
-      .max(10, "Максимум 10 букв")
-      .notOneOf(
-        channels.map((item) => item.name),
-        "Должно быть уникальным"
-      ),
-  });
+  const getValidationSchema = (channels) =>
+    Yup.object().shape({
+      name: Yup.string()
+        .trim()
+        .required("Обязательное поле")
+        .min(3, "Минимум 3 буквы")
+        .max(10, "Максимум 10 букв")
+        .notOneOf(channels, "Должно быть уникальным"),
+    });
 
   const handleClose = () => {
     formik.values.name = "";
@@ -51,10 +50,11 @@ const AddChannel = () => {
     initialValues: {
       name: "",
     },
-    validationSchema,
+    validationSchema: getValidationSchema(channels),
     onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
+        getValidationSchema(channels).validateSync({ name: cleanName });
         const data = await wsocket.emitAddChannel(cleanName);
         await dispatch(channelsActions.setCurrentChannel(data));
         formik.values.name = "";
