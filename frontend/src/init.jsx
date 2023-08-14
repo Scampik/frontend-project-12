@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 import i18next from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
-import { ErrorBoundary } from "@rollbar/react";
+// import { ErrorBoundary } from "@rollbar/react";
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 
