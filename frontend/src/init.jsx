@@ -53,10 +53,10 @@ const init = async (socket) => {
   });
 
   const rollbarConfig = {
-    accessToken: "308356585bae491da48fc6665de58833",
-    captureUncaught: true,
-    captureUnhandledRejections: true,
-    environment: "production",
+    accessToken: "da1964211e164c34af117f89c4a8e41e", //da1964211e164c34af117f89c4a8e41e
+    // captureUncaught: true,
+    // captureUnhandledRejections: true,
+    environment: "testenv",
   };
 
   const rollbar = new Rollbar(rollbarConfig);
