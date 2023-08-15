@@ -31,7 +31,7 @@ const RenameChannel = () => {
         .trim()
         .required(t('modal.required'))
         .min(3, t('modal.min'))
-        .max(10, t('modal.max'))
+        .max(20, t('modal.max'))
         .notOneOf(channels, t('modal.notoneof')),
     });
 
