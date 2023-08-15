@@ -1,6 +1,6 @@
-import { Button, Dropdown, ButtonGroup } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const Channels = ({
   channel,
@@ -12,30 +12,30 @@ const Channels = ({
   const { currentChannel } = useSelector((state) => state.channels);
 
   return (
-    <Dropdown as={ButtonGroup} className="d-flex">
+    <Dropdown as={ButtonGroup} className='d-flex'>
       <Button
-        type="button"
-        variant={channel.id === currentChannel.id ? "secondary" : ""}
+        type='button'
+        variant={channel.id === currentChannel.id ? 'secondary' : ''}
         key={channel.id}
-        className="w-100 rounded-0 text-start text-truncate"
+        className='w-100 rounded-0 text-start text-truncate'
         onClick={handleCurrenChannel}
       >
-        <span className="me-1">#</span>
+        <span className='me-1'>#</span>
         {channel.name}
       </Button>
       <Dropdown.Toggle
         split
-        className="flex-grow-0"
-        variant={channel.id === currentChannel.id ? "secondary" : ""}
+        className='flex-grow-0'
+        variant={channel.id === currentChannel.id ? 'secondary' : ''}
       >
-        <span className="visually-hidden">меню</span>
+        <span className='visually-hidden'>меню</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={handleRemoveChannel}>
-          {t("delete")}
+          {t('delete')}
         </Dropdown.Item>
         <Dropdown.Item onClick={handleRenameChannel}>
-          {t("rename")}
+          {t('rename')}
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>

@@ -1,18 +1,18 @@
-import React, { useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useFormik } from "formik";
-import { Form, Button, Modal } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import filter from "leo-profanity";
-import { toast } from "react-toastify";
+import React, { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
+import { Form, Button, Modal } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
+import { toast } from 'react-toastify';
 
-import { isClose } from "../../slices/modalSlice.js";
-import * as Yup from "yup";
+import { isClose } from '../../slices/modalSlice.js';
+import * as Yup from 'yup';
 import {
   selectors,
   actions as channelsActions,
-} from "../../slices/channelsSlice.js";
-import { useWSocket } from "../../hooks/index.jsx";
+} from '../../slices/channelsSlice.js';
+import { useWSocket } from '../../hooks/index.jsx';
 
 const AddChannel = () => {
   const inputRef = useRef(null);
@@ -33,10 +33,10 @@ const AddChannel = () => {
     Yup.object().shape({
       name: Yup.string()
         .trim()
-        .required("Обязательное поле")
-        .min(3, "Минимум 3 буквы")
-        .max(10, "Максимум 10 букв")
-        .notOneOf(channels, "Должно быть уникальным"),
+        .required(t('modal.required'))
+        .min(3, t('modal.min'))
+        .max(10, t('modal.max'))
+        .notOneOf(channels, t('modal.notoneof')),
     });
 
   const handleClose = () => {
@@ -45,7 +45,7 @@ const AddChannel = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: '',
     },
     validationSchema: getValidationSchema(channels),
     onSubmit: async (values) => {
@@ -54,8 +54,8 @@ const AddChannel = () => {
         getValidationSchema(channels).validateSync({ name: cleanName });
         const data = await wsocket.emitAddChannel(cleanName);
         await dispatch(channelsActions.setCurrentChannel(data));
-        formik.values.name = "";
-        toast.success(t("toast.createChannel"));
+        formik.values.name = '';
+        toast.success(t('toast.createChannel'));
         handleClose();
       } catch (e) {
         throw e;
@@ -68,42 +68,42 @@ const AddChannel = () => {
       <Modal
         show={isShow}
         onHide={handleClose}
-        dialogClassName="modal-dialog-centered"
+        dialogClassName='modal-dialog-centered'
       >
         <Modal.Header closeButton>
-          <Modal.Title>{t("addChannel")}</Modal.Title>
+          <Modal.Title>{t('addChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group>
               <Form.Control
-                className="mb-2"
+                className='mb-2'
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 // onBlur={formik.handleBlur}
-                name="name"
-                id="name"
+                name='name'
+                id='name'
                 required
                 ref={inputRef}
                 isInvalid={formik.errors.name && formik.touched.name}
               />
-              <label className="visually-hidden" htmlFor="name">
-                {t("nameChannel")}
+              <label className='visually-hidden' htmlFor='name'>
+                {t('nameChannel')}
               </label>
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type='invalid'>
                 {formik.errors.name}
               </Form.Control.Feedback>
-              <div className="d-flex justify-content-end">
+              <div className='d-flex justify-content-end'>
                 <Button
-                  className="me-2"
-                  variant="secondary"
-                  type="button"
+                  className='me-2'
+                  variant='secondary'
+                  type='button'
                   onClick={handleClose}
                 >
-                  {t("cancel")}
+                  {t('cancel')}
                 </Button>
-                <Button variant="primary" type="submit">
-                  {t("send")}
+                <Button variant='primary' type='submit'>
+                  {t('send')}
                 </Button>
               </div>
             </Form.Group>

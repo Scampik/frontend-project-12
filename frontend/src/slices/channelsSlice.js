@@ -2,12 +2,12 @@ import {
   createSlice,
   createEntityAdapter,
   createAsyncThunk,
-} from "@reduxjs/toolkit";
-import axios from "axios";
-import routes from "../routes.js";
+} from '@reduxjs/toolkit';
+import axios from 'axios';
+import routes from '../routes.js';
 
 const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem("userId"));
+  const userId = JSON.parse(localStorage.getItem('userId'));
   if (userId && userId.token) {
     return { Authorization: `Bearer ${userId.token}` };
   }
@@ -15,7 +15,7 @@ const getAuthHeader = () => {
 };
 
 export const getChannels = createAsyncThunk(
-  "channels/getChannels",
+  'channels/getChannels',
   async () => {
     const { data } = await axios.get(routes.dataPath(), {
       headers: getAuthHeader(),
@@ -27,9 +27,9 @@ export const getChannels = createAsyncThunk(
 const channelsAdapter = createEntityAdapter();
 
 const channelsSlice = createSlice({
-  name: "channels",
+  name: 'channels',
   initialState: channelsAdapter.getInitialState({
-    currentChannel: { id: 1, name: "general", removable: false },
+    currentChannel: { id: 1, name: 'general', removable: false },
   }),
   reducers: {
     addChannels: channelsAdapter.addMany,
@@ -37,7 +37,7 @@ const channelsSlice = createSlice({
     removeChannel(state, action) {
       channelsAdapter.removeOne(state, action);
       if (state.currentChannel.id === action.payload) {
-        state.currentChannel = { id: 1, name: "general", removable: false };
+        state.currentChannel = { id: 1, name: 'general', removable: false };
       }
     },
     renameChannel: channelsAdapter.updateOne,
@@ -48,15 +48,15 @@ const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getChannels.pending, () => {
-        console.log("fetching data");
+        console.log('fetching data');
       })
       .addCase(getChannels.fulfilled, (state, { payload }) => {
-        console.log("fetched data successfully!{channels}");
+        console.log('fetched data successfully!{channels}');
         const { channels } = payload;
         channelsAdapter.setMany(state, channels);
       })
       .addCase(getChannels.rejected, () => {
-        console.log("failed");
+        console.log('failed');
       });
   },
 });

@@ -5,15 +5,15 @@ import {
   Link,
   Navigate,
   useLocation,
-} from "react-router-dom";
-import { Button, Navbar } from "react-bootstrap";
-import { ToastContainer } from "react-toastify";
-import LoginPage from "./Login";
-import ChatPage from "./MainPage";
-import PageNotFound from "./PageNotFound.jsx";
-import SignUp from "./Registration";
-import { useAuth } from "../hooks/index.jsx";
-import { useTranslation } from "react-i18next";
+} from 'react-router-dom';
+import { Button, Navbar } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
+import LoginPage from './Login';
+import ChatPage from './MainPage';
+import PageNotFound from './PageNotFound.jsx';
+import SignUp from './Registration';
+import { useAuth } from '../hooks/index.jsx';
+import { useTranslation } from 'react-i18next';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -21,7 +21,7 @@ const PrivateRoute = ({ children }) => {
   return auth.userName ? (
     children
   ) : (
-    <Navigate to="/login" state={{ from: location }} />
+    <Navigate to='/login' state={{ from: location }} />
   );
 };
 
@@ -29,7 +29,7 @@ const AuthButton = () => {
   const { t } = useTranslation();
   const auth = useAuth();
   return auth.userName ? (
-    <Button onClick={auth.logOut}>{t("exit")}</Button>
+    <Button onClick={auth.logOut}>{t('exit')}</Button>
   ) : (
     <></>
   );
@@ -39,22 +39,22 @@ const App = () => {
   const { t } = useTranslation();
   return (
     <Router>
-      <div className="d-flex flex-column h-100">
-        <Navbar className="shadow-sm" bg="white" expand="lg">
-          <div className="container">
-            <Navbar.Brand as={Link} to="/">
-              {t("siteName")}
+      <div className='d-flex flex-column h-100'>
+        <Navbar className='shadow-sm' bg='white' expand='lg'>
+          <div className='container'>
+            <Navbar.Brand as={Link} to='/'>
+              {t('siteName')}
             </Navbar.Brand>
             <AuthButton />
           </div>
         </Navbar>
         <Routes>
-          <Route element={<div>{t("noPageSelected")}</div>} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route element={<div>{t('noPageSelected')}</div>} />
+          <Route path='login' element={<LoginPage />} />
+          <Route path='*' element={<PageNotFound />} />
+          <Route path='signup' element={<SignUp />} />
           <Route
-            path="/"
+            path='/'
             element={
               <PrivateRoute>
                 <ChatPage />

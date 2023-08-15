@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext } from 'react';
 
 export const WSocketContext = createContext(null);
 
@@ -7,8 +7,8 @@ const WSocketProvider = ({ socket, children }) => {
     new Promise((resolve, reject) => {
       socket
         .timeout(1000)
-        .emit("newMessage", msg, (error, response) =>
-          response?.status === "ok" ? resolve(response?.data) : reject(error)
+        .emit('newMessage', msg, (error, response) =>
+          response?.status === 'ok' ? resolve(response?.data) : reject(error)
         );
     });
 
@@ -16,7 +16,7 @@ const WSocketProvider = ({ socket, children }) => {
     new Promise((resolve, reject) => {
       return socket
         .timeout(1000)
-        .emit("newChannel", { name }, (error, response) => {
+        .emit('newChannel', { name }, (error, response) => {
           if (error) {
             reject(error);
           }
@@ -28,8 +28,8 @@ const WSocketProvider = ({ socket, children }) => {
     new Promise((resolve, reject) => {
       socket
         .timeout(1000)
-        .emit("removeChannel", { id }, (error, response) =>
-          response?.status === "ok" ? resolve(response?.data) : reject(error)
+        .emit('removeChannel', { id }, (error, response) =>
+          response?.status === 'ok' ? resolve(response?.data) : reject(error)
         );
     });
 
@@ -37,8 +37,8 @@ const WSocketProvider = ({ socket, children }) => {
     new Promise((resolve, reject) => {
       socket
         .timeout(1000)
-        .emit("renameChannel", { id, name }, (error, response) =>
-          response?.status === "ok" ? resolve(response?.data) : reject(error)
+        .emit('renameChannel', { id, name }, (error, response) =>
+          response?.status === 'ok' ? resolve(response?.data) : reject(error)
         );
     });
 
