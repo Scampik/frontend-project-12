@@ -12,6 +12,7 @@ const RemoveChannel = () => {
   const { t } = useTranslation();
 
   const { isShow, extraData } = useSelector((state) => state.modalInfo);
+  const { currentChannel } = useSelector((state) => state.channels);
 
   const handleClose = () => {
     dispatch(isClose());
@@ -20,15 +21,8 @@ const RemoveChannel = () => {
   const handleRemove = async () => {
     try {
       wsocket.emitRemoveChannel(extraData.id);
-      dispatch(
-        channelsActions.setCurrentChannel({
-          name: "general",
-          removable: false,
-          id: 1,
-        })
-      );
       dispatch(isClose());
-      toast(t("toast.removeChannel"));
+      toast.warn(t("toast.removeChannel"));
     } catch (e) {
       throw e;
     }

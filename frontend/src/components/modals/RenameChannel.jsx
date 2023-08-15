@@ -50,7 +50,7 @@ const RenameChannel = () => {
         getValidationSchema(channels).validateSync({ name: cleanName });
         await wsocket.emitRenameChannel(extraData.id, cleanName);
         formik.values.name = "";
-        toast(t("toast.renameChannel"));
+        toast.info(t("toast.renameChannel"));
         handleClose();
       } catch (e) {
         // setSubmitting(false);

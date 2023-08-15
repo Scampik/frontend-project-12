@@ -55,7 +55,7 @@ const AddChannel = () => {
         const data = await wsocket.emitAddChannel(cleanName);
         await dispatch(channelsActions.setCurrentChannel(data));
         formik.values.name = "";
-        toast(t("toast.createChannel"));
+        toast.success(t("toast.createChannel"));
         handleClose();
       } catch (e) {
         throw e;
