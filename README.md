@@ -3,7 +3,7 @@
 [![Actions Status](https://github.com/Scampik/frontend-project-12/workflows/hexlet-check/badge.svg)](https://github.com/Scampik/frontend-project-12/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/e34f26df09602ef2474a/maintainability)](https://codeclimate.com/github/Scampik/frontend-project-12/maintainability)
 
-## Chat! <img align="right" src="frontend/src/assets/chat1.png" alt="" style="width:150px;height:130px;">
+## Chat! <img align="right" src="frontend/src/assets/chat.png" alt="" style="width:150px;height:130px;">
 
 real-time приложение на React/Redux, используя AJAX, REST, websockets, React (с хуками) + Redux (@reduxjs/toolkit) + Formik
 
