@@ -22,7 +22,9 @@ const RenameChannel = () => {
   const channels = channelsData.map((el) => el.name);
 
   useEffect(() => {
-    inputRef.current.focus();
+    setTimeout(() => {
+      inputRef.current.select();
+    }, 0);
   }, []);
 
   const getValidationSchema = (channels) =>

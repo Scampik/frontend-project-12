@@ -28,7 +28,7 @@ const Channels = ({
         className='flex-grow-0'
         variant={channel.id === currentChannel.id ? 'secondary' : ''}
       >
-        <span className='visually-hidden'>меню</span>
+        <span className='visually-hidden'>{t('menu')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Item onClick={handleRemoveChannel}>

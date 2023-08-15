@@ -47,6 +47,7 @@ export default {
     username: 'Имя пользователя',
     passwordConfirm: 'Подтвердите пароль',
     addChannel: 'Добавить канал',
+    menu: 'меню',
     pageNotFound: {
       msg1: 'Страница не найдена',
       msg2: 'Но вы можете перейти',
