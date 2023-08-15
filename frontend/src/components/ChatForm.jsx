@@ -13,8 +13,6 @@ const ChatForm = () => {
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
-  filter.loadDictionary('ru');
-
   const { currentChannel } = useSelector((state) => state.channels);
   const allMessages = useSelector(selectors.selectAll);
   const messages = allMessages.filter(

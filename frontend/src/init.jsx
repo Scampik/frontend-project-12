@@ -4,6 +4,7 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as ProviderRoll, ErrorBoundary } from '@rollbar/react';
 // import Rollbar from "rollbar";
 import React from 'react';
+import filter from 'leo-profanity';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { actions as channelsActions } from './slices/channelsSlice.js';
@@ -23,6 +24,11 @@ const init = async (socket) => {
       resources,
       lng: 'ru',
     });
+
+  const ruDict = filter.getDictionary('ru');
+  const engDict = filter.getDictionary('en');
+  filter.add(ruDict);
+  filter.add(engDict);
 
   socket.on('connect', () => {
     console.log(socket.connected, 'socket connect');
