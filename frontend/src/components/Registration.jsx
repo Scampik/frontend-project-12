@@ -28,8 +28,7 @@ const SignUp = () => {
     password: Yup.string()
       .trim()
       .required(t('signup.password.required'))
-      .min(6, t('signup.password.min'))
-      .max(10, t('signup.password.max')),
+      .min(6, t('signup.password.min')),
     confirmPassword: Yup.string()
       .trim()
       .oneOf([Yup.ref('password'), null], t('signup.password.oneof'))
