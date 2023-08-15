@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { isClose } from "../../slices/modalSlice.js";
 import { useWSocket } from "../../hooks/index.jsx";
-import { actions as channelsActions } from "../../slices/channelsSlice.js";
 
 const RemoveChannel = () => {
   const dispatch = useDispatch();
@@ -12,7 +11,6 @@ const RemoveChannel = () => {
   const { t } = useTranslation();
 
   const { isShow, extraData } = useSelector((state) => state.modalInfo);
-  const { currentChannel } = useSelector((state) => state.channels);
 
   const handleClose = () => {
     dispatch(isClose());
