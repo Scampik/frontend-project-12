@@ -42,24 +42,24 @@ const ChannelForm = () => {
   };
 
   const renderMainChannels = (channel) => (
-      <Button
-        type="button"
-        variant={channel.id === currentChannel.id ? 'secondary' : ''}
-        className="w-100 rounded-0 text-start"
-        onClick={handleCurrenChannel(channel)}
-      >
-        <span className="me-1">#</span>
-        {channel.name}
-      </Button>
+    <Button
+      type="button"
+      variant={channel.id === currentChannel.id ? 'secondary' : ''}
+      className="w-100 rounded-0 text-start"
+      onClick={handleCurrenChannel(channel)}
+    >
+      <span className="me-1">#</span>
+      {channel.name}
+    </Button>
   );
 
   const renderUsersChannels = (channel) => (
-      <Channels
-        handleCurrenChannel={handleCurrenChannel(channel)}
-        handleRemoveChannel={handleRemoveChannel(channel)}
-        handleRenameChannel={handleRenameChannel(channel)}
-        channel={channel}
-      />
+    <Channels
+      handleCurrenChannel={handleCurrenChannel(channel)}
+      handleRemoveChannel={handleRemoveChannel(channel)}
+      handleRenameChannel={handleRenameChannel(channel)}
+      channel={channel}
+    />
   );
 
   return (
