@@ -22,7 +22,7 @@ export default {
     toast: {
       createChannel: 'Канал создан',
       renameChannel: 'Канал переименован',
-      removeChannel: 'Канал удален',
+      removeChannel: 'Канал удалён',
       networkProblem: 'Ошибка соединения',
       duplicateUser: 'Такой пользователь уже существует',
     },
