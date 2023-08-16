@@ -5,9 +5,9 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
 import { isClose } from '../../slices/modalSlice.js';
-import * as Yup from 'yup';
 import {
   selectors,
   actions as channelsActions,
@@ -29,15 +29,15 @@ const AddChannel = () => {
     inputRef.current.focus();
   }, []);
 
-  const getValidationSchema = (channels) =>
-    Yup.object().shape({
-      name: Yup.string()
+  const getValidationSchema = (channels) => Yup.object().shape({
+      name: Yup
+        .string()
         .trim()
         .required(t('modal.required'))
         .min(3, t('modal.min'))
         .max(20, t('modal.max'))
         .notOneOf(channels, t('modal.notoneof')),
-    });
+  });
 
   const handleClose = () => {
     dispatch(isClose());

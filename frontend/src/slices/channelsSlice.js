@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */ 
+
 import {
   createSlice,
   createEntityAdapter,
@@ -21,7 +23,7 @@ export const getChannels = createAsyncThunk(
       headers: getAuthHeader(),
     });
     return data;
-  }
+  },
 );
 
 const channelsAdapter = createEntityAdapter();

@@ -27,15 +27,15 @@ const RenameChannel = () => {
     }, 0);
   }, []);
 
-  const getValidationSchema = (channels) =>
-    Yup.object().shape({
-      name: Yup.string()
+  const getValidationSchema = (channels) => Yup.object().shape({
+      name: Yup
+        .string()
         .trim()
         .required(t('modal.required'))
         .min(3, t('modal.min'))
         .max(20, t('modal.max'))
         .notOneOf(channels, t('modal.notoneof')),
-    });
+  });
 
   const handleClose = () => {
     dispatch(isClose());

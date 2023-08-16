@@ -4,9 +4,7 @@ export const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('userId'));
-  const [userName, setUserName] = useState(
-    currentUser ? { username: currentUser.username } : null
-  );
+  const [userName, setUserName] = useState(currentUser ? { username: currentUser.username } : null);
   const logIn = (name) => setUserName(name);
   const logOut = () => {
     localStorage.removeItem('userId');

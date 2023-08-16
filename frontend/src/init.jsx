@@ -54,7 +54,7 @@ const init = async (socket) => {
       channelsActions.renameChannel({
         id: payload.id,
         changes: { name: payload.name },
-      })
+      }),
     );
   });
 

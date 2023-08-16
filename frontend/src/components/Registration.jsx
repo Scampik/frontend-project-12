@@ -101,8 +101,8 @@ const SignUp = () => {
                     required
                     ref={inputRef}
                     isInvalid={
-                      (formik.errors.username && formik.touched.username) ||
-                      failedMsg
+                      (formik.errors.username && formik.touched.username) 
+                      || failedMsg
                     }
                   />
                   <Form.Label htmlFor="username">{t('username')}</Form.Label>
@@ -123,8 +123,8 @@ const SignUp = () => {
                     required
                     autoComplete="new-password"
                     isInvalid={
-                      (formik.errors.password && formik.touched.password) ||
-                      failedMsg
+                      (formik.errors.password && formik.touched.password)
+                      || failedMsg
                     }
                   />
                   <Form.Control.Feedback type="invalid">
@@ -144,9 +144,9 @@ const SignUp = () => {
                     required
                     autoComplete="new-password"
                     isInvalid={
-                      (formik.errors.confirmPassword &&
-                        formik.touched.confirmPassword) ||
-                      failedMsg
+                      (formik.errors.confirmPassword
+                        && formik.touched.confirmPassword) 
+                        || failedMsg
                     }
                   />
                   <Form.Control.Feedback type="invalid">
