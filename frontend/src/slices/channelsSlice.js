@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign */ 
+/* eslint-disable no-param-reassign */
 
 import {
   createSlice,
@@ -64,7 +64,5 @@ const channelsSlice = createSlice({
 });
 
 export default channelsSlice.reducer;
-export const selectors = channelsAdapter.getSelectors(
-  (state) => state.channels
-);
+export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export const { actions } = channelsSlice;

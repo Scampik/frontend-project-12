@@ -101,7 +101,7 @@ const SignUp = () => {
                     required
                     ref={inputRef}
                     isInvalid={
-                      (formik.errors.username && formik.touched.username) 
+                      (formik.errors.username && formik.touched.username)
                       || failedMsg
                     }
                   />
@@ -145,7 +145,7 @@ const SignUp = () => {
                     autoComplete="new-password"
                     isInvalid={
                       (formik.errors.confirmPassword
-                        && formik.touched.confirmPassword) 
+                        && formik.touched.confirmPassword)
                         || failedMsg
                     }
                   />

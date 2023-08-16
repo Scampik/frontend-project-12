@@ -49,7 +49,8 @@ const ChatForm = () => {
           <div className="bg-light mb-4 p-3 shadow-sm small">
             <p className="m-0">
               <b>
-                # {currentChannel.name}
+                {'# '} 
+                {currentChannel.name}
               </b>
             </p>
             <span className="text-muted">
@@ -60,7 +61,7 @@ const ChatForm = () => {
             {messages.map((mess) => (
               <div key={mess.id} className="text-break mb-2">
                 <b>{mess.username}</b>
-                : 
+                :
                 {mess.body}
               </div>
             ))}

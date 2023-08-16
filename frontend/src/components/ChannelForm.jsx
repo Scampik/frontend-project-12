@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
@@ -21,8 +23,6 @@ const ChannelForm = () => {
   const { currentChannel } = useSelector((state) => state.channels);
   const { type } = useSelector((state) => state.modalInfo);
 
-  // console.log(isShow, "eto___statsu");
-  // console.log(currentChannel, 'currentChannelId') nado kak to zadefoltit
   useEffect(() => {
     dispatch(getChannels());
   }, [dispatch]);
@@ -77,7 +77,7 @@ const ChannelForm = () => {
           className="p-0 text-primary btn btn-group-vertical"
           onClick={handleAddChannel}
         >
-          <PlusSquare width="22" height="22"/>
+          <PlusSquare width="22" height="22" />
           <span className="visually-hidden">+</span>
         </button>
         {getModal({ type })}
