@@ -58,6 +58,7 @@ const AddChannel = () => {
         toast.success(t('toast.createChannel'));
         handleClose();
       } catch (e) {
+        console.log(e);
         throw e;
       }
     },

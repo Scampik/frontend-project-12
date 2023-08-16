@@ -22,6 +22,7 @@ const RemoveChannel = () => {
       dispatch(isClose());
       toast.warn(t('toast.removeChannel'));
     } catch (e) {
+      console.log(e);
       throw e;
     }
   };

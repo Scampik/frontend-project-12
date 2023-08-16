@@ -55,6 +55,7 @@ const RenameChannel = () => {
         toast.info(t('toast.renameChannel'));
         handleClose();
       } catch (e) {
+        console.log(e);
         throw e;
       }
     },

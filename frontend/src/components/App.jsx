@@ -56,11 +56,11 @@ const App = () => {
           <Route path="signup" element={<SignUp />} />
           <Route
             path="/"
-            element={
+            element={(
               <PrivateRoute>
                 <ChatPage />
               </PrivateRoute>
-            }
+            )}
           />
         </Routes>
       </div>
