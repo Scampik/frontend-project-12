@@ -35,6 +35,14 @@ const AuthButton = () => {
   );
 };
 
+const ThemeButton = () => {
+  return (
+    <>
+      <Button className='pull-right'>Switch Theme</Button>
+    </>
+  );
+};
+
 const App = () => {
   const { t } = useTranslation();
   return (
@@ -45,6 +53,7 @@ const App = () => {
             <Navbar.Brand as={Link} to='/'>
               {t('siteName')}
             </Navbar.Brand>
+            <ThemeButton />
             <AuthButton />
           </div>
         </Navbar>
