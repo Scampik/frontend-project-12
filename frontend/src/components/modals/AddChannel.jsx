@@ -68,7 +68,7 @@ const AddChannel = () => {
       <Modal
         show={isShow}
         onHide={handleClose}
-        dialogClassName='modal-dialog-centered'
+        dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>
           <Modal.Title>{t('addChannel')}</Modal.Title>
@@ -77,32 +77,32 @@ const AddChannel = () => {
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group>
               <Form.Control
-                className='mb-2'
+                className="mb-2"
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 // onBlur={formik.handleBlur}
-                name='name'
-                id='name'
+                name="name"
+                id="name"
                 required
                 ref={inputRef}
                 isInvalid={formik.errors.name && formik.touched.name}
               />
-              <label className='visually-hidden' htmlFor='name'>
+              <label className="visually-hidden" htmlFor="name">
                 {t('nameChannel')}
               </label>
-              <Form.Control.Feedback type='invalid'>
+              <Form.Control.Feedback type="invalid">
                 {formik.errors.name}
               </Form.Control.Feedback>
-              <div className='d-flex justify-content-end'>
+              <div className="d-flex justify-content-end">
                 <Button
-                  className='me-2'
-                  variant='secondary'
-                  type='button'
+                  className="me-2"
+                  variant="secondary"
+                  type="button"
                   onClick={handleClose}
                 >
                   {t('cancel')}
                 </Button>
-                <Button variant='primary' type='submit'>
+                <Button variant="primary" type="submit">
                   {t('send')}
                 </Button>
               </div>

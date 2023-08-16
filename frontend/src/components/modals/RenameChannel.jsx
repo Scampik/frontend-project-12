@@ -5,9 +5,9 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
 import { isClose } from '../../slices/modalSlice.js';
-import * as Yup from 'yup';
 import { selectors } from '../../slices/channelsSlice.js';
 import { useWSocket } from '../../hooks/index.jsx';
 
@@ -46,7 +46,7 @@ const RenameChannel = () => {
       name: extraData?.name || '',
     },
     validationSchema: getValidationSchema(channels),
-    onSubmit: async (values, { setSubmitting }) => {
+    onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
         getValidationSchema(channels).validateSync({ name: cleanName });
@@ -55,10 +55,8 @@ const RenameChannel = () => {
         toast.info(t('toast.renameChannel'));
         handleClose();
       } catch (e) {
-        // setSubmitting(false);
         throw e;
       }
-      // setSubmitting(true);
     },
   });
 
@@ -67,7 +65,7 @@ const RenameChannel = () => {
       <Modal
         show={isShow}
         onHide={handleClose}
-        dialogClassName='modal-dialog-centered'
+        dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>
           <Modal.Title>{t('renameChannel')}</Modal.Title>
@@ -76,35 +74,35 @@ const RenameChannel = () => {
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group>
               <Form.Control
-                className='mb-2'
+                className="mb-2"
                 ref={inputRef}
                 disabled={formik.isSubmitting}
                 onChange={formik.handleChange}
                 value={formik.values.name}
                 // onBlur={formik.handleBlur}
-                name='name'
-                id='name'
+                name="name"
+                id="name"
                 required
                 isInvalid={formik.errors.name && formik.touched.name}
               />
-              <label className='visually-hidden' htmlFor='name'>
+              <label className="visually-hidden" htmlFor="name">
                 {t('nameChannel')}
               </label>
-              <Form.Control.Feedback type='invalid'>
+              <Form.Control.Feedback type="invalid">
                 {formik.errors.name}
               </Form.Control.Feedback>
-              <div className='d-flex justify-content-end'>
+              <div className="d-flex justify-content-end">
                 <Button
-                  className='me-2'
-                  variant='secondary'
-                  type='button'
+                  className="me-2"
+                  variant="secondary"
+                  type="button"
                   onClick={handleClose}
                 >
                   {t('cancel')}
                 </Button>
                 <Button
-                  variant='primary'
-                  type='submit'
+                  variant="primary"
+                  type="submit"
                   disabled={formik.isSubmitting}
                 >
                   {t('send')}

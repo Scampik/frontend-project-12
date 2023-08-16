@@ -64,9 +64,8 @@ const init = async (socket) => {
   //   captureUnhandledRejections: true,
   //   environment: 'production',
   // };
-
   // const rollbar = new Rollbar(rollbarConfig);
-  //config={rollbarConfig} v Proveder
+  // config={rollbarConfig} v Proveder
   // <ProviderRoll config={rollbarConfig}>
   // <ErrorBoundary>
   return (

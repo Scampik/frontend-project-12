@@ -31,26 +31,26 @@ const RemoveChannel = () => {
       <Modal
         show={isShow}
         onHide={handleClose}
-        dialogClassName='modal-dialog-centered'
+        dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>
           <Modal.Title>{t('deleteChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className='lead'>{t('confirm')}</p>
-          <div className='d-flex justify-content-end'>
+          <p className="lead">{t('confirm')}</p>
+          <div className="d-flex justify-content-end">
             <Button
-              className='me-2'
-              variant='secondary'
-              type='button'
+              className="me-2"
+              variant="secondary"
+              type="button"
               onClick={handleClose}
             >
               {t('cancel')}
             </Button>
             <button
-              className='btn btn-danger'
-              variant='primary'
-              type='submit'
+              className="btn btn-danger"
+              variant="primary"
+              type="submit"
               onClick={handleRemove}
             >
               {t('delete')}
