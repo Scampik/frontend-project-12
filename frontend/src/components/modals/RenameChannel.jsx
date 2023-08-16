@@ -5,11 +5,11 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 
 import { isClose } from '../../slices/modalSlice.js';
 import { selectors } from '../../slices/channelsSlice.js';
 import { useWSocket } from '../../hooks/index.jsx';
+import { getValidationSchema } from './AddChannel.jsx';
 
 const RenameChannel = () => {
   const dispatch = useDispatch();
@@ -27,16 +27,6 @@ const RenameChannel = () => {
     }, 0);
   }, []);
 
-  const getValidationSchema = (channelsName) => Yup.object().shape({
-    name: Yup
-      .string()
-      .trim()
-      .required(t('modal.required'))
-      .min(3, t('modal.min'))
-      .max(20, t('modal.max'))
-      .notOneOf(channelsName, t('modal.notoneof')),
-  });
-
   const handleClose = () => {
     dispatch(isClose());
   };
@@ -45,11 +35,11 @@ const RenameChannel = () => {
     initialValues: {
       name: extraData?.name || '',
     },
-    validationSchema: getValidationSchema(channels),
+    validationSchema: getValidationSchema(channels, t),
     onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
-        getValidationSchema(channels).validateSync({ name: cleanName });
+        getValidationSchema(channels, t).validateSync({ name: cleanName });
         await wsocket.emitRenameChannel(extraData.id, cleanName);
         formik.values.name = '';
         toast.info(t('toast.renameChannel'));

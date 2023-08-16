@@ -1,5 +1,3 @@
-/* eslint-disable arrow-body-style */
-
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
@@ -43,8 +41,7 @@ const ChannelForm = () => {
     dispatch(isOpen({ type: 'renaming', extraData: channel }));
   };
 
-  const renderMainChannels = (channel) => {
-    return (
+  const renderMainChannels = (channel) => (
       <Button
         type="button"
         variant={channel.id === currentChannel.id ? 'secondary' : ''}
@@ -54,19 +51,16 @@ const ChannelForm = () => {
         <span className="me-1">#</span>
         {channel.name}
       </Button>
-    );
-  };
+  );
 
-  const renderUsersChannels = (channel) => {
-    return (
+  const renderUsersChannels = (channel) => (
       <Channels
         handleCurrenChannel={handleCurrenChannel(channel)}
         handleRemoveChannel={handleRemoveChannel(channel)}
         handleRenameChannel={handleRenameChannel(channel)}
         channel={channel}
       />
-    );
-  };
+  );
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
@@ -97,5 +91,5 @@ const ChannelForm = () => {
     </div>
   );
 };
-// btn-secondary
+
 export default ChannelForm;

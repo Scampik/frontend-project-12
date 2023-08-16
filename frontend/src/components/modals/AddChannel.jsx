@@ -14,6 +14,16 @@ import {
 } from '../../slices/channelsSlice.js';
 import { useWSocket } from '../../hooks/index.jsx';
 
+export const getValidationSchema = (channelsName, t) => Yup.object().shape({
+  name: Yup
+    .string()
+    .trim()
+    .required(t('modal.required'))
+    .min(3, t('modal.min'))
+    .max(20, t('modal.max'))
+    .notOneOf(channelsName, t('modal.notoneof')),
+});
+
 const AddChannel = () => {
   const inputRef = useRef(null);
   const dispatch = useDispatch();
@@ -24,20 +34,9 @@ const AddChannel = () => {
   const channelsData = useSelector(selectors.selectAll);
   const channels = channelsData.map((el) => el.name);
 
-  // console.log('lol', channels)
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-
-  const getValidationSchema = (channelsName) => Yup.object().shape({
-    name: Yup
-      .string()
-      .trim()
-      .required(t('modal.required'))
-      .min(3, t('modal.min'))
-      .max(20, t('modal.max'))
-      .notOneOf(channelsName, t('modal.notoneof')),
-  });
 
   const handleClose = () => {
     dispatch(isClose());
@@ -47,11 +46,11 @@ const AddChannel = () => {
     initialValues: {
       name: '',
     },
-    validationSchema: getValidationSchema(channels),
+    validationSchema: getValidationSchema(channels, t),
     onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
-        getValidationSchema(channels).validateSync({ name: cleanName });
+        getValidationSchema(channels, t).validateSync({ name: cleanName });
         const data = await wsocket.emitAddChannel(cleanName);
         await dispatch(channelsActions.setCurrentChannel(data));
         formik.values.name = '';
