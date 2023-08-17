@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useAuth } from '../hooks/index.jsx';
+import { useAuth } from '../hooks/AuthContext.jsx';
 import routes from '../routes.js';
 
 import loginImage from '../assets/login.png';
@@ -117,7 +117,8 @@ const LoginPage = () => {
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>
-                  {t('invite')}{' '}
+                  {t('invite')}
+                  {' '}
                 </span>
                 <Link to="/signup">{t('registration')}</Link>
               </div>

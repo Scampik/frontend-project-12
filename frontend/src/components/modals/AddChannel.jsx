@@ -12,7 +12,7 @@ import {
   selectors,
   actions as channelsActions,
 } from '../../slices/channelsSlice.js';
-import { useWSocket } from '../../hooks/index.jsx';
+import { useWSocket } from '../../hooks/WScontext.jsx';
 
 export const getValidationSchema = (channelsName, t) => Yup.object().shape({
   name: Yup
@@ -68,7 +68,6 @@ const AddChannel = () => {
       <Modal
         show={isShow}
         onHide={handleClose}
-        
         dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>

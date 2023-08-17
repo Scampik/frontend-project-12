@@ -2,8 +2,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+
 import { isClose } from '../../slices/modalSlice.js';
-import { useWSocket } from '../../hooks/index.jsx';
+import { useWSocket } from '../../hooks/WScontext.jsx';
 
 const RemoveChannel = () => {
   const dispatch = useDispatch();

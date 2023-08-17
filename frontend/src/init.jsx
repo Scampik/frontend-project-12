@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as ProviderRoll, ErrorBoundary } from '@rollbar/react';
-import Rollbar from "rollbar";
+import Rollbar from 'rollbar';
 import React from 'react';
 import filter from 'leo-profanity';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,8 +11,8 @@ import { actions as channelsActions } from './slices/channelsSlice.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
 import store from './slices/index';
 import App from './components/App';
-import AuthProvider from './contexts/AuthContext';
-import WSocketProvider from './contexts/WScontext';
+import AuthProvider from './hooks/AuthContext';
+import WSocketProvider from './hooks/WScontext';
 import resources from './locales/index.js';
 
 const init = async (socket) => {
@@ -66,7 +66,7 @@ const init = async (socket) => {
   };
 
   const rollbar = new Rollbar(rollbarConfig);
-  
+
   return (
     <React.StrictMode>
       <ProviderRoll config={rollbar}>

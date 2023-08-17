@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ChannelForm from './ChannelForm';
+import ChannelForm from './ChannelForm.jsx';
 import ChatForm from './ChatForm.jsx';
 
 const ChatPage = () => (

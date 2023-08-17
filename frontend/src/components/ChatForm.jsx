@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import * as Yup from 'yup';
 import { selectors } from '../slices/messagesSlice.js';
-import { useWSocket } from '../hooks/index.jsx';
+import { useWSocket } from '../hooks/WScontext.jsx';
 
 const ChatForm = () => {
   const inputRef = useRef(null);
