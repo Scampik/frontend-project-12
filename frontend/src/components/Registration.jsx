@@ -156,13 +156,23 @@ const SignUp = () => {
                     {t('passwordConfirm')}
                   </Form.Label>
                 </Form.Group>
-                <Button
-                  type="submit"
-                  variant="outline-primary"
-                  className="w-100"
-                >
-                  Регистрироваться
-                </Button>
+                <div className="d-grid gap-2">
+                  <Button
+                    type="submit"
+                    variant="outline-primary"
+                    className="w-100"
+                  >
+                    Регистрироваться
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="outline-primary"
+                    className="w-100"
+                    onClick={() => navigate('/')}
+                  >
+                    Вернуться
+                  </Button>
+                </div>
               </Form>
             </div>
           </div>
