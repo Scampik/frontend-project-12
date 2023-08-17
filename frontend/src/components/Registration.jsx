@@ -165,7 +165,7 @@ const SignUp = () => {
                     Регистрироваться
                   </Button>
                   <Button
-                    type="submit"
+                    type="button"
                     variant="outline-primary"
                     className="w-100"
                     onClick={() => navigate('/')}

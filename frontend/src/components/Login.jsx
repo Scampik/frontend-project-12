@@ -117,7 +117,7 @@ const LoginPage = () => {
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>
-                  {t('invite')}
+                  {t('invite')}{' '}
                 </span>
                 <Link to="/signup">{t('registration')}</Link>
               </div>

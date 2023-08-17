@@ -68,6 +68,7 @@ const AddChannel = () => {
       <Modal
         show={isShow}
         onHide={handleClose}
+        
         dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>

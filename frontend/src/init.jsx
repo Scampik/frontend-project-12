@@ -1,8 +1,8 @@
 import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-// import { Provider as ProviderRoll, ErrorBoundary } from '@rollbar/react';
-// import Rollbar from "rollbar";
+import { Provider as ProviderRoll, ErrorBoundary } from '@rollbar/react';
+import Rollbar from "rollbar";
 import React from 'react';
 import filter from 'leo-profanity';
 import 'react-toastify/dist/ReactToastify.css';
@@ -58,27 +58,30 @@ const init = async (socket) => {
     );
   });
 
-  // const rollbarConfig = {
-  //   accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-  //   captureUncaught: true,
-  //   captureUnhandledRejections: true,
-  //   environment: 'production',
-  // };
-  // const rollbar = new Rollbar(rollbarConfig);
-  // config={rollbarConfig} v Proveder
-  // <ProviderRoll config={rollbarConfig}>
-  // <ErrorBoundary>
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    environment: 'production',
+  };
+
+  const rollbar = new Rollbar(rollbarConfig);
+  
   return (
     <React.StrictMode>
-      <Provider store={store}>
-        <WSocketProvider socket={socket}>
-          <AuthProvider>
-            <I18nextProvider i18n={i18n}>
-              <App />
-            </I18nextProvider>
-          </AuthProvider>
-        </WSocketProvider>
-      </Provider>
+      <ProviderRoll config={rollbar}>
+        <ErrorBoundary>
+          <Provider store={store}>
+            <WSocketProvider socket={socket}>
+              <AuthProvider>
+                <I18nextProvider i18n={i18n}>
+                  <App />
+                </I18nextProvider>
+              </AuthProvider>
+            </WSocketProvider>
+          </Provider>
+        </ErrorBoundary>
+      </ProviderRoll>
     </React.StrictMode>
   );
 };
