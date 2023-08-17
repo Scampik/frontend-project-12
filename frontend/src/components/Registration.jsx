@@ -22,17 +22,17 @@ const SignUp = () => {
   const validationSchema = Yup.object().shape({
     username: Yup.string()
       .trim()
-      .required(t('signup.username.required'))
-      .min(3, t('signup.username.min'))
-      .max(20, t('signup.username.max')),
+      .required('signup.username.required')
+      .min(3, 'signup.username.min')
+      .max(20, 'signup.username.max'),
     password: Yup.string()
       .trim()
-      .required(t('signup.password.required'))
-      .min(6, t('signup.password.min')),
+      .required('signup.password.required')
+      .min(6, 'signup.password.min'),
     confirmPassword: Yup.string()
       .trim()
-      .oneOf([Yup.ref('password'), null], t('signup.password.oneof'))
-      .required(t('signup.password.required')),
+      .oneOf([Yup.ref('password'), null], 'signup.password.oneof')
+      .required('signup.password.required'),
   });
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const SignUp = () => {
                   />
                   <Form.Label htmlFor="username">{t('username')}</Form.Label>
                   <Form.Control.Feedback type="invalid" placement="right">
-                    {formik.errors.username}
+                    {t(formik.errors.username)}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="form-floating mb-3">
@@ -128,7 +128,7 @@ const SignUp = () => {
                     }
                   />
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.password}
+                    {t(formik.errors.password)}
                   </Form.Control.Feedback>
                   <Form.Label htmlFor="password">{t('password')}</Form.Label>
                 </Form.Group>
@@ -150,7 +150,7 @@ const SignUp = () => {
                     }
                   />
                   <Form.Control.Feedback type="invalid">
-                    {failedMsg || formik.errors.confirmPassword}
+                    {failedMsg || t(formik.errors.confirmPassword)}
                   </Form.Control.Feedback>
                   <Form.Label htmlFor="confirmPassword">
                     {t('passwordConfirm')}

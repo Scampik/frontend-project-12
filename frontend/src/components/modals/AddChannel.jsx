@@ -18,10 +18,10 @@ export const getValidationSchema = (channelsName, t) => Yup.object().shape({
   name: Yup
     .string()
     .trim()
-    .required(t('modal.required'))
-    .min(3, t('modal.min'))
-    .max(20, t('modal.max'))
-    .notOneOf(channelsName, t('modal.notoneof')),
+    .required('modal.required')
+    .min(3, 'modal.min')
+    .max(20, 'modal.max')
+    .notOneOf(channelsName, 'modal.notoneof'),
 });
 
 const AddChannel = () => {
@@ -80,7 +80,6 @@ const AddChannel = () => {
                 className="mb-2"
                 onChange={formik.handleChange}
                 value={formik.values.name}
-                // onBlur={formik.handleBlur}
                 name="name"
                 id="name"
                 required
@@ -91,7 +90,7 @@ const AddChannel = () => {
                 {t('nameChannel')}
               </label>
               <Form.Control.Feedback type="invalid">
-                {formik.errors.name}
+                {t(formik.errors.name)}
               </Form.Control.Feedback>
               <div className="d-flex justify-content-end">
                 <Button

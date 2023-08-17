@@ -80,7 +80,7 @@ const RenameChannel = () => {
                 {t('nameChannel')}
               </label>
               <Form.Control.Feedback type="invalid">
-                {formik.errors.name}
+                {t(formik.errors.name)}
               </Form.Control.Feedback>
               <div className="d-flex justify-content-end">
                 <Button
