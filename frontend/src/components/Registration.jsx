@@ -54,7 +54,6 @@ const SignUp = () => {
           password: values.password,
         });
         auth.logIn(response.data);
-        localStorage.setItem('userId', JSON.stringify(response.data));
         navigate('/');
       } catch (err) {
         console.log(err);

@@ -62,6 +62,7 @@ const ChatForm = () => {
               <div key={mess.id} className="text-break mb-2">
                 <b>{mess.username}</b>
                 :
+                {' '}
                 {mess.body}
               </div>
             ))}
