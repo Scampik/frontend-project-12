@@ -10,10 +10,10 @@ import { Button, Navbar } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
-import LoginPage from './Login';
-import ChatPage from './MainPage';
-import PageNotFound from './PageNotFound.jsx';
-import SignUp from './Registration';
+import LoginPage from './loginPage/Login';
+import ChatPage from './chatPage/MainPage.jsx'
+import PageNotFound from './notFoundPage/PageNotFound.jsx';
+import SignUp from './registrationPage/Registration.jsx';
 import { useAuth } from '../hooks/AuthContext.jsx';
 
 const PrivateRoute = ({ children }) => {

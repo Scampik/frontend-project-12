@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
-import routes from '../routes.js';
-import { useAuth } from '../hooks/AuthContext.jsx';
+import routes from '../../routes.js';
+import { useAuth } from '../../hooks/AuthContext.jsx';
 
-import registration from '../assets/registration.webp';
+import registration from '../../assets/registration.webp';
 
 const SignUp = () => {
   const auth = useAuth();

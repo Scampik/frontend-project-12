@@ -2,7 +2,7 @@ import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-const Channels = ({
+const UserChannel = ({
   channel,
   handleCurrenChannel,
   handleRemoveChannel,
@@ -42,4 +42,4 @@ const Channels = ({
   );
 };
 
-export default Channels;
+export default UserChannel;

@@ -3,6 +3,7 @@ import modalReducer from './modalSlice';
 import messagesReducer from './messagesSlice';
 import channelsReducer from './channelsSlice';
 
+// export {};
 export default configureStore({
   reducer: {
     channels: channelsReducer,

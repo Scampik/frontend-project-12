@@ -1,41 +1,30 @@
-import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { Form, Button, Modal } from 'react-bootstrap';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 
-import { isClose } from '../../slices/modalSlice.js';
-import {
-  selectors,
-  actions as channelsActions,
-} from '../../slices/channelsSlice.js';
-import { useWSocket } from '../../hooks/WScontext.jsx';
+import { isClose } from '../../../slices/modalSlice.js';
+import { selectors } from '../../../slices/channelsSlice.js';
+import { useWSocket } from '../../../hooks/WScontext.jsx';
+import { getValidationSchema } from './AddChannel.jsx';
 
-export const getValidationSchema = (channelsName, t) => Yup.object().shape({
-  name: Yup
-    .string()
-    .trim()
-    .required('modal.required')
-    .min(3, 'modal.min')
-    .max(20, 'modal.max')
-    .notOneOf(channelsName, 'modal.notoneof'),
-});
-
-const AddChannel = () => {
-  const inputRef = useRef(null);
+const RenameChannel = () => {
   const dispatch = useDispatch();
   const wsocket = useWSocket();
+  const inputRef = useRef(null);
   const { t } = useTranslation();
 
-  const { isShow } = useSelector((state) => state.modalInfo);
+  const { isShow, extraData } = useSelector((state) => state.modalInfo);
   const channelsData = useSelector(selectors.selectAll);
   const channels = channelsData.map((el) => el.name);
 
   useEffect(() => {
-    inputRef.current.focus();
+    setTimeout(() => {
+      inputRef.current.select();
+    }, 0);
   }, []);
 
   const handleClose = () => {
@@ -44,17 +33,16 @@ const AddChannel = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: extraData?.name || '',
     },
     validationSchema: getValidationSchema(channels, t),
     onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
         getValidationSchema(channels, t).validateSync({ name: cleanName });
-        const data = await wsocket.emitAddChannel(cleanName);
-        await dispatch(channelsActions.setCurrentChannel(data));
+        await wsocket.emitRenameChannel(extraData.id, cleanName);
         formik.values.name = '';
-        toast.success(t('toast.createChannel'));
+        toast.info(t('toast.renameChannel'));
         handleClose();
       } catch (e) {
         console.log(e);
@@ -71,19 +59,21 @@ const AddChannel = () => {
         dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>
-          <Modal.Title>{t('addChannel')}</Modal.Title>
+          <Modal.Title>{t('renameChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group>
               <Form.Control
                 className="mb-2"
+                ref={inputRef}
+                disabled={formik.isSubmitting}
                 onChange={formik.handleChange}
                 value={formik.values.name}
+                // onBlur={formik.handleBlur}
                 name="name"
                 id="name"
                 required
-                ref={inputRef}
                 isInvalid={formik.errors.name && formik.touched.name}
               />
               <label className="visually-hidden" htmlFor="name">
@@ -101,7 +91,11 @@ const AddChannel = () => {
                 >
                   {t('cancel')}
                 </Button>
-                <Button variant="primary" type="submit">
+                <Button
+                  variant="primary"
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                >
                   {t('send')}
                 </Button>
               </div>
@@ -113,4 +107,4 @@ const AddChannel = () => {
   );
 };
 
-export default AddChannel;
+export default RenameChannel;

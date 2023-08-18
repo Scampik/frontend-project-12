@@ -7,19 +7,18 @@ import {
   actions as channelsActions,
   getChannels,
   selectors,
-} from '../slices/channelsSlice.js';
-import { isOpen } from '../slices/modalSlice.js';
+} from '../../../slices/channelsSlice.js';
+import { isOpen } from '../../../slices/modalSlice.js';
 
-import getModal from './modals/index.jsx';
-import Channels from './Channels.jsx';
+import ModalForm from '../modals/index.jsx';
+import UserChannel from './UserChannel.jsx';
 
 const ChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const channels = useSelector(selectors.selectAll);
+  const channels = useSelector(selectors.selectAll)
   const { currentChannel } = useSelector((state) => state.channels);
-  const { type } = useSelector((state) => state.modalInfo);
 
   useEffect(() => {
     dispatch(getChannels());
@@ -54,7 +53,7 @@ const ChannelForm = () => {
   );
 
   const renderUsersChannels = (channel) => (
-    <Channels
+    <UserChannel
       handleCurrenChannel={handleCurrenChannel(channel)}
       handleRemoveChannel={handleRemoveChannel(channel)}
       handleRenameChannel={handleRenameChannel(channel)}
@@ -74,7 +73,7 @@ const ChannelForm = () => {
           <PlusSquare width="22" height="22" />
           <span className="visually-hidden">+</span>
         </button>
-        {getModal({ type })}
+        <ModalForm />
       </div>
       <ul
         id="channels-box"

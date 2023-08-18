@@ -1,30 +1,41 @@
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { Form, Button, Modal } from 'react-bootstrap';
-import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
-import { isClose } from '../../slices/modalSlice.js';
-import { selectors } from '../../slices/channelsSlice.js';
-import { useWSocket } from '../../hooks/WScontext.jsx';
-import { getValidationSchema } from './AddChannel.jsx';
+import { isClose } from '../../../slices/modalSlice.js';
+import {
+  selectors,
+  actions as channelsActions,
+} from '../../../slices/channelsSlice.js';
+import { useWSocket } from '../../../hooks/WScontext.jsx';
 
-const RenameChannel = () => {
+export const getValidationSchema = (channelsName, t) => Yup.object().shape({
+  name: Yup
+    .string()
+    .trim()
+    .required('modal.required')
+    .min(3, 'modal.min')
+    .max(20, 'modal.max')
+    .notOneOf(channelsName, 'modal.notoneof'),
+});
+
+const AddChannel = () => {
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
   const wsocket = useWSocket();
-  const inputRef = useRef(null);
   const { t } = useTranslation();
 
-  const { isShow, extraData } = useSelector((state) => state.modalInfo);
+  const { isShow } = useSelector((state) => state.modalInfo);
   const channelsData = useSelector(selectors.selectAll);
   const channels = channelsData.map((el) => el.name);
 
   useEffect(() => {
-    setTimeout(() => {
-      inputRef.current.select();
-    }, 0);
+    inputRef.current.focus();
   }, []);
 
   const handleClose = () => {
@@ -33,16 +44,17 @@ const RenameChannel = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: extraData?.name || '',
+      name: '',
     },
     validationSchema: getValidationSchema(channels, t),
     onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
         getValidationSchema(channels, t).validateSync({ name: cleanName });
-        await wsocket.emitRenameChannel(extraData.id, cleanName);
+        const data = await wsocket.emitAddChannel(cleanName);
+        await dispatch(channelsActions.setCurrentChannel(data));
         formik.values.name = '';
-        toast.info(t('toast.renameChannel'));
+        toast.success(t('toast.createChannel'));
         handleClose();
       } catch (e) {
         console.log(e);
@@ -59,21 +71,19 @@ const RenameChannel = () => {
         dialogClassName="modal-dialog-centered"
       >
         <Modal.Header closeButton>
-          <Modal.Title>{t('renameChannel')}</Modal.Title>
+          <Modal.Title>{t('addChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={formik.handleSubmit}>
             <Form.Group>
               <Form.Control
                 className="mb-2"
-                ref={inputRef}
-                disabled={formik.isSubmitting}
                 onChange={formik.handleChange}
                 value={formik.values.name}
-                // onBlur={formik.handleBlur}
                 name="name"
                 id="name"
                 required
+                ref={inputRef}
                 isInvalid={formik.errors.name && formik.touched.name}
               />
               <label className="visually-hidden" htmlFor="name">
@@ -91,20 +101,16 @@ const RenameChannel = () => {
                 >
                   {t('cancel')}
                 </Button>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={formik.isSubmitting}
-                >
+                <Button variant="primary" type="submit">
                   {t('send')}
                 </Button>
               </div>
             </Form.Group>
           </Form>
         </Modal.Body>
-      </Modal>
+      </Modal>  
     </>
   );
 };
 
-export default RenameChannel;
+export default AddChannel;
