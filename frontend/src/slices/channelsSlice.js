@@ -7,14 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../routes.js';
-
-const getAuthHeader = () => {
-  const userId = JSON.parse(localStorage.getItem('userId'));
-  if (userId && userId.token) {
-    return { Authorization: `Bearer ${userId.token}` };
-  }
-  return {};
-};
+import { getAuthHeader } from '../hooks/AuthContext.jsx'
 
 export const getChannels = createAsyncThunk(
   'channels/getChannels',

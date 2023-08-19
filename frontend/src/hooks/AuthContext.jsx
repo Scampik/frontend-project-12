@@ -3,8 +3,9 @@ import React, { createContext, useState, useContext } from 'react';
 const AuthContext = createContext({});
 export const useAuth = () => useContext(AuthContext);
 
+const currentUser = JSON.parse(localStorage.getItem('userId'));
+
 const AuthProvider = ({ children }) => {
-  const currentUser = JSON.parse(localStorage.getItem('userId'));
   const [userName, setUserName] = useState(currentUser ? { username: currentUser.username } : null);
   const logIn = (name) => {
     localStorage.setItem('userId', JSON.stringify(name));
@@ -20,6 +21,13 @@ const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const getAuthHeader = () => {
+  if (currentUser && currentUser.token) {
+    return { Authorization: `Bearer ${currentUser.token}` };
+  }
+  return {};
 };
 
 export default AuthProvider;

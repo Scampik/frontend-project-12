@@ -17,7 +17,7 @@ const RenameChannel = () => {
   const inputRef = useRef(null);
   const { t } = useTranslation();
 
-  const { isShow, extraData } = useSelector((state) => state.modalInfo);
+  const { extraData } = useSelector((state) => state.modalInfo);
   const channelsData = useSelector(selectors.selectAll);
   const channels = channelsData.map((el) => el.name);
 
@@ -35,7 +35,7 @@ const RenameChannel = () => {
     initialValues: {
       name: extraData?.name || '',
     },
-    validationSchema: getValidationSchema(channels, t),
+    validationSchema: getValidationSchema(channels),
     onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
@@ -53,56 +53,50 @@ const RenameChannel = () => {
 
   return (
     <>
-      <Modal
-        show={isShow}
-        onHide={handleClose}
-        dialogClassName="modal-dialog-centered"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{t('renameChannel')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Group>
-              <Form.Control
-                className="mb-2"
-                ref={inputRef}
+      <Modal.Header closeButton>
+        <Modal.Title>{t('renameChannel')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group>
+            <Form.Control
+              className="mb-2"
+              ref={inputRef}
+              disabled={formik.isSubmitting}
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              // onBlur={formik.handleBlur}
+              name="name"
+              id="name"
+              required
+              isInvalid={formik.errors.name && formik.touched.name}
+            />
+            <label className="visually-hidden" htmlFor="name">
+              {t('nameChannel')}
+            </label>
+            <Form.Control.Feedback type="invalid">
+              {t(formik.errors.name)}
+            </Form.Control.Feedback>
+            <div className="d-flex justify-content-end">
+              <Button
+                className="me-2"
+                variant="secondary"
+                type="button"
+                onClick={handleClose}
+              >
+                {t('cancel')}
+              </Button>
+              <Button
+                variant="primary"
+                type="submit"
                 disabled={formik.isSubmitting}
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                // onBlur={formik.handleBlur}
-                name="name"
-                id="name"
-                required
-                isInvalid={formik.errors.name && formik.touched.name}
-              />
-              <label className="visually-hidden" htmlFor="name">
-                {t('nameChannel')}
-              </label>
-              <Form.Control.Feedback type="invalid">
-                {t(formik.errors.name)}
-              </Form.Control.Feedback>
-              <div className="d-flex justify-content-end">
-                <Button
-                  className="me-2"
-                  variant="secondary"
-                  type="button"
-                  onClick={handleClose}
-                >
-                  {t('cancel')}
-                </Button>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  disabled={formik.isSubmitting}
-                >
-                  {t('send')}
-                </Button>
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-      </Modal>
+              >
+                {t('send')}
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
     </>
   );
 };

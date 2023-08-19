@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { PlusSquare } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
 import {
   actions as channelsActions,
-  getChannels,
   selectors,
 } from '../../../slices/channelsSlice.js';
 import { isOpen } from '../../../slices/modalSlice.js';
@@ -17,12 +16,8 @@ const ChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const channels = useSelector(selectors.selectAll)
+  const channels = useSelector(selectors.selectAll);
   const { currentChannel } = useSelector((state) => state.channels);
-
-  useEffect(() => {
-    dispatch(getChannels());
-  }, [dispatch]);
 
   const handleAddChannel = () => {
     dispatch(isOpen({ type: 'adding', extraData: '' }));

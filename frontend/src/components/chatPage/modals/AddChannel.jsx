@@ -14,7 +14,7 @@ import {
 } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../hooks/WScontext.jsx';
 
-export const getValidationSchema = (channelsName, t) => Yup.object().shape({
+export const getValidationSchema = (channelsName) => Yup.object().shape({
   name: Yup
     .string()
     .trim()
@@ -30,7 +30,6 @@ const AddChannel = () => {
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
-  const { isShow } = useSelector((state) => state.modalInfo);
   const channelsData = useSelector(selectors.selectAll);
   const channels = channelsData.map((el) => el.name);
 
@@ -46,7 +45,7 @@ const AddChannel = () => {
     initialValues: {
       name: '',
     },
-    validationSchema: getValidationSchema(channels, t),
+    validationSchema: getValidationSchema(channels),
     onSubmit: async (values) => {
       try {
         const cleanName = filter.clean(values.name);
@@ -65,50 +64,44 @@ const AddChannel = () => {
 
   return (
     <>
-      <Modal
-        show={isShow}
-        onHide={handleClose}
-        dialogClassName="modal-dialog-centered"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{t('addChannel')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={formik.handleSubmit}>
-            <Form.Group>
-              <Form.Control
-                className="mb-2"
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                name="name"
-                id="name"
-                required
-                ref={inputRef}
-                isInvalid={formik.errors.name && formik.touched.name}
-              />
-              <label className="visually-hidden" htmlFor="name">
-                {t('nameChannel')}
-              </label>
-              <Form.Control.Feedback type="invalid">
-                {t(formik.errors.name)}
-              </Form.Control.Feedback>
-              <div className="d-flex justify-content-end">
-                <Button
-                  className="me-2"
-                  variant="secondary"
-                  type="button"
-                  onClick={handleClose}
-                >
-                  {t('cancel')}
-                </Button>
-                <Button variant="primary" type="submit">
-                  {t('send')}
-                </Button>
-              </div>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-      </Modal>  
+      <Modal.Header closeButton>
+        <Modal.Title>{t('addChannel')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Group>
+            <Form.Control
+              className="mb-2"
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              name="name"
+              id="name"
+              required
+              ref={inputRef}
+              isInvalid={formik.errors.name && formik.touched.name}
+            />
+            <label className="visually-hidden" htmlFor="name">
+              {t('nameChannel')}
+            </label>
+            <Form.Control.Feedback type="invalid">
+              {t(formik.errors.name)}
+            </Form.Control.Feedback>
+            <div className="d-flex justify-content-end">
+              <Button
+                className="me-2"
+                variant="secondary"
+                type="button"
+                onClick={handleClose}
+              >
+                {t('cancel')}
+              </Button>
+              <Button variant="primary" type="submit">
+                {t('send')}
+              </Button>
+            </div>
+          </Form.Group>
+        </Form>
+      </Modal.Body>
     </>
   );
 };
