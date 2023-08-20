@@ -9,13 +9,11 @@ import axios from 'axios';
 import routes from '../routes.js';
 import { createSelector } from 'reselect';
 
-import { getAuthHeader } from '../hooks/AuthContext.jsx'
-
 export const getChannels = createAsyncThunk(
   'channels/getChannels',
-  async () => {
+  async (authHeader) => {
     const { data } = await axios.get(routes.dataPath(), {
-      headers: getAuthHeader(),
+      headers: authHeader,
     });
     return data;
   },

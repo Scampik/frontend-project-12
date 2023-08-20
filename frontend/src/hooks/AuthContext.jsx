@@ -6,7 +6,7 @@ export const useAuth = () => useContext(AuthContext);
 const currentUser = JSON.parse(localStorage.getItem('userId'));
 
 const AuthProvider = ({ children }) => {
-  const [userName, setUserName] = useState(currentUser ? { username: currentUser.username } : null);
+  const [userName, setUserName] = useState(currentUser ? currentUser : null);
   const logIn = (name) => {
     localStorage.setItem('userId', JSON.stringify(name));
     setUserName(name);
@@ -23,7 +23,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export const getAuthHeader = () => {
+export const getAuthHeader = (currentUser) => {
   if (currentUser && currentUser.token) {
     return { Authorization: `Bearer ${currentUser.token}` };
   }

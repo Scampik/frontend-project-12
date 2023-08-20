@@ -10,7 +10,6 @@ import {
   currentChannelSelector,
 } from '../../../slices/channelsSlice.js';
 import { isOpen } from '../../../slices/modalsSlice.js';
-
 import ModalForm from '../modals/index.jsx';
 import UserChannel from './UserChannel.jsx';
 
@@ -20,7 +19,7 @@ const ChannelForm = () => {
 
   const currentChannel = useSelector(currentChannelSelector);
   const channels = useSelector(selectors.selectAll);
-  
+
   const handleAddChannel = () => {
     dispatch(isOpen({ type: 'adding', extraData: '' }));
   };

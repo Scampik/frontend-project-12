@@ -67,22 +67,21 @@ const init = async (socket) => {
 
   const rollbar = new Rollbar(rollbarConfig);
 
+  // <React.StrictMode></React.StrictMode>
   return (
-    <React.StrictMode>
-      <ProviderRoll config={rollbar}>
-        <ErrorBoundary>
-          <Provider store={store}>
-            <WSocketProvider socket={socket}>
-              <AuthProvider>
-                <I18nextProvider i18n={i18n}>
-                  <App />
-                </I18nextProvider>
-              </AuthProvider>
-            </WSocketProvider>
-          </Provider>
-        </ErrorBoundary>
-      </ProviderRoll>
-    </React.StrictMode>
+    <ProviderRoll config={rollbar}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <WSocketProvider socket={socket}>
+            <AuthProvider>
+              <I18nextProvider i18n={i18n}>
+                <App />
+              </I18nextProvider>
+            </AuthProvider>
+          </WSocketProvider>
+        </Provider>
+      </ErrorBoundary>
+    </ProviderRoll>
   );
 };
 
