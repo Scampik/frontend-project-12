@@ -27,10 +27,10 @@ const modalSlice = createSlice({
   },
 });
 
-export const selector = state => state.modalInfo;
-export const modalSelector = createSelector(  
+export const selector = (state) => state.modalInfo;
+export const modalSelector = createSelector(
   selector,
-  modalInfo => modalInfo
+  (modalInfo) => modalInfo,
 );
 export default modalSlice.reducer;
 export const { isOpen, isClose } = modalSlice.actions;

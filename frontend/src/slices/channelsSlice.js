@@ -6,8 +6,9 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
-import routes from '../routes.js';
 import { createSelector } from 'reselect';
+
+import routes from '../routes.js';
 
 export const getChannels = createAsyncThunk(
   'channels/getChannels',
@@ -58,9 +59,9 @@ const channelsSlice = createSlice({
 
 export default channelsSlice.reducer;
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
-export const channelsSelector = state => state.channels;
-export const currentChannelSelector = createSelector(  
+export const channelsSelector = (state) => state.channels;
+export const currentChannelSelector = createSelector(
   channelsSelector,
-  channels => channels.currentChannel
+  (channels) => channels.currentChannel,
 );
 export const { actions } = channelsSlice;

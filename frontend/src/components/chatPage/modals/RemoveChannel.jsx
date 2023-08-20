@@ -11,7 +11,7 @@ const RemoveChannel = () => {
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
-  const { extraData }  = useSelector(modalSelector);
+  const { extraData } = useSelector(modalSelector);
 
   const handleClose = () => {
     dispatch(isClose());

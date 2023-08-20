@@ -17,7 +17,7 @@ const RenameChannel = () => {
   const inputRef = useRef(null);
   const { t } = useTranslation();
 
-  const { extraData }  = useSelector(modalSelector);
+  const { extraData } = useSelector(modalSelector);
   const channelsData = useSelector(selectors.selectAll);
   const channels = channelsData.map((el) => el.name);
 

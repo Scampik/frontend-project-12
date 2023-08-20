@@ -31,8 +31,8 @@ const ModalForm = () => {
       onHide={handleClose}
       dialogClassName="modal-dialog-centered"
     >
-       <Component />
-    </Modal>  
+      <Component />
+    </Modal>
   );
 };
 export default ModalForm;
