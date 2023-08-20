@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
-import { 
+import {
   Link,
   useNavigate,
   Navigate,
-  useLocation
+  useLocation,
 } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
@@ -119,9 +119,9 @@ const LoginPage = () => {
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>
-                    {t('invite')}
-                    {' '}
-                  </span>
+                  {t('invite')}
+                  {' '}
+                </span>
                 <Link to="/signup">{t('registration')}</Link>
               </div>
             </div>
