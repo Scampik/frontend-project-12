@@ -19,7 +19,7 @@ const ChatPage = () => {
 
   return (
     <>
-      {!data ? (
+      { data.length === 0 ? (
         <div className="d-flex justify-content-center h-100 align-items-center">
           <Spinner animation="border" variant="info" />
         </div>
