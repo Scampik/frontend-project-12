@@ -5,18 +5,22 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import * as Yup from 'yup';
+
 import { selectors } from '../../../slices/messagesSlice.js';
+import { useAuth } from '../../../hooks/AuthContext.jsx';
+import { currentChannelSelector } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../hooks/WScontext.jsx';
 
 const ChatForm = () => {
+  const auth = useAuth();
   const inputRef = useRef(null);
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
-  const { currentChannel } = useSelector((state) => state.channels);
+  const currentChannel = useSelector(currentChannelSelector);
   const allMessages = useSelector(selectors.selectAll);
   const messages = allMessages.filter((el) => el.channelId === currentChannel.id);
-  const userId = JSON.parse(localStorage.getItem('userId'));
+  const userId = auth.userName;
 
   useEffect(() => {
     inputRef.current.focus();

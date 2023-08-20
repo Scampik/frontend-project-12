@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 
-import { isClose } from '../../../slices/modalSlice.js';
+import { isClose, modalSelector } from '../../../slices/modalsSlice.js';
 import AddChannel from './AddChannel.jsx';
 import RemoveChannel from './RemoveChannel.jsx';
 import RenameChannel from './RenameChannel.jsx';
@@ -15,7 +15,7 @@ const modals = {
 const ModalForm = () => {
   const dispatch = useDispatch();
 
-  const { isShow, type } = useSelector((state) => state.modalInfo);
+  const { isShow, type } = useSelector(modalSelector);
 
   const handleClose = () => {
     dispatch(isClose());

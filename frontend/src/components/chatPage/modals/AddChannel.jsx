@@ -7,7 +7,7 @@ import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
-import { isClose } from '../../../slices/modalSlice.js';
+import { isClose } from '../../../slices/modalsSlice.js';
 import {
   selectors,
   actions as channelsActions,

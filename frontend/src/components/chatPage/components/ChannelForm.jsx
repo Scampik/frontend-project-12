@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import { PlusSquare } from 'react-bootstrap-icons';
 import { useTranslation } from 'react-i18next';
+
 import {
   actions as channelsActions,
   selectors,
+  currentChannelSelector,
 } from '../../../slices/channelsSlice.js';
-import { isOpen } from '../../../slices/modalSlice.js';
+import { isOpen } from '../../../slices/modalsSlice.js';
 
 import ModalForm from '../modals/index.jsx';
 import UserChannel from './UserChannel.jsx';
@@ -16,9 +18,9 @@ const ChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const currentChannel = useSelector(currentChannelSelector);
   const channels = useSelector(selectors.selectAll);
-  const { currentChannel } = useSelector((state) => state.channels);
-
+  
   const handleAddChannel = () => {
     dispatch(isOpen({ type: 'adding', extraData: '' }));
   };

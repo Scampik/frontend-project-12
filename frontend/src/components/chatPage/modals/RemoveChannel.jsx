@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { isClose } from '../../../slices/modalSlice.js';
+import { isClose, modalSelector } from '../../../slices/modalsSlice.js';
 import { useWSocket } from '../../../hooks/WScontext.jsx';
 
 const RemoveChannel = () => {
@@ -11,7 +11,7 @@ const RemoveChannel = () => {
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
-  const { extraData } = useSelector((state) => state.modalInfo);
+  const { extraData }  = useSelector(modalSelector);
 
   const handleClose = () => {
     dispatch(isClose());

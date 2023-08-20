@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 
-import { isClose } from '../../../slices/modalSlice.js';
+import { isClose, modalSelector } from '../../../slices/modalsSlice.js';
 import { selectors } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../hooks/WScontext.jsx';
 import { getValidationSchema } from './AddChannel.jsx';
@@ -17,7 +17,7 @@ const RenameChannel = () => {
   const inputRef = useRef(null);
   const { t } = useTranslation();
 
-  const { extraData } = useSelector((state) => state.modalInfo);
+  const { extraData }  = useSelector(modalSelector);
   const channelsData = useSelector(selectors.selectAll);
   const channels = channelsData.map((el) => el.name);
 

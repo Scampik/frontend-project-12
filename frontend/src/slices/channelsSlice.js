@@ -7,6 +7,8 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 import routes from '../routes.js';
+import { createSelector } from 'reselect';
+
 import { getAuthHeader } from '../hooks/AuthContext.jsx'
 
 export const getChannels = createAsyncThunk(
@@ -58,4 +60,9 @@ const channelsSlice = createSlice({
 
 export default channelsSlice.reducer;
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
+export const channelsSelector = state => state.channels;
+export const currentChannelSelector = createSelector(  
+  channelsSelector,
+  channels => channels.currentChannel
+);
 export const { actions } = channelsSlice;

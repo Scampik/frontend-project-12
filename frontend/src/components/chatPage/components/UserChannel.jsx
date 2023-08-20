@@ -2,6 +2,8 @@ import { Button, Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
+import { currentChannelSelector } from '../../../slices/channelsSlice.js';
+
 const UserChannel = ({
   channel,
   handleCurrenChannel,
@@ -9,7 +11,7 @@ const UserChannel = ({
   handleRenameChannel,
 }) => {
   const { t } = useTranslation();
-  const { currentChannel } = useSelector((state) => state.channels);
+  const currentChannel = useSelector(currentChannelSelector);
 
   return (
     <Dropdown as={ButtonGroup} className="d-flex">

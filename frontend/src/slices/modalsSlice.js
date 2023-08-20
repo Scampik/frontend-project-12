@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 
 const initialState = {
   isShow: false,
@@ -26,5 +27,10 @@ const modalSlice = createSlice({
   },
 });
 
+export const selector = state => state.modalInfo;
+export const modalSelector = createSelector(  
+  selector,
+  modalInfo => modalInfo
+);
 export default modalSlice.reducer;
 export const { isOpen, isClose } = modalSlice.actions;

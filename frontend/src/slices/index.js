@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import modalReducer from './modalSlice';
+import modalReducer from './modalsSlice';
 import messagesReducer from './messagesSlice';
 import channelsReducer from './channelsSlice';
 
