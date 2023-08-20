@@ -19,7 +19,7 @@ const init = async (socket) => {
   const i18n = i18next.createInstance();
 
   await i18n
-    .use(initReactI18next) // passes i18n down to react-i18next
+    .use(initReactI18next)
     .init({
       resources,
       lng: 'ru',
@@ -67,21 +67,22 @@ const init = async (socket) => {
 
   const rollbar = new Rollbar(rollbarConfig);
 
-  // <React.StrictMode></React.StrictMode>
   return (
-    <ProviderRoll config={rollbar}>
-      <ErrorBoundary>
-        <Provider store={store}>
-          <WSocketProvider socket={socket}>
-            <AuthProvider>
-              <I18nextProvider i18n={i18n}>
-                <App />
-              </I18nextProvider>
-            </AuthProvider>
-          </WSocketProvider>
-        </Provider>
-      </ErrorBoundary>
-    </ProviderRoll>
+    <React.StrictMode>
+      <ProviderRoll config={rollbar}>
+        <ErrorBoundary>
+          <Provider store={store}>
+            <WSocketProvider socket={socket}>
+              <AuthProvider>
+                <I18nextProvider i18n={i18n}>
+                  <App />
+                </I18nextProvider>
+              </AuthProvider>
+            </WSocketProvider>
+          </Provider>
+        </ErrorBoundary>
+      </ProviderRoll>
+    </React.StrictMode>
   );
 };
 
