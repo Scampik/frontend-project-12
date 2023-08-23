@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
+
 import routes from '../../routes.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 
@@ -54,7 +55,7 @@ const SignUp = () => {
           password: values.password,
         });
         auth.logIn(response.data);
-        navigate('/');
+        navigate(routes.loginPage());
       } catch (err) {
         console.log(err);
         if (!err.isAxiosError) {

@@ -15,15 +15,16 @@ import LoginPage from './loginPage/Login';
 import ChatPage from './chatPage/MainPage.jsx';
 import PageNotFound from './notFoundPage/PageNotFound.jsx';
 import SignUp from './registrationPage/Registration.jsx';
+import routes from '../routes.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
-const PrivateRoute = ({ children }) => {
+const PrivateRoute = () => {
   const auth = useAuth();
   const location = useLocation();
   return auth.userName ? (
     <Outlet />
   ) : (
-    <Navigate to="/login" state={{ from: location }} />
+    <Navigate to={routes.loginPage()} state={{ from: location }} />
   );
 };
 
@@ -52,10 +53,10 @@ const App = () => {
         </Navbar>
         <Routes>
           <Route element={<div>{t('noPageSelected')}</div>} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="signup" element={<SignUp />} />
-          <Route path="/" element={<PrivateRoute />}>
+          <Route path={routes.loginPage()} element={<LoginPage />} />
+          <Route path={routes.notFoundPage()} element={<PageNotFound />} />
+          <Route path={routes.signupPage()} element={<SignUp />} />
+          <Route path={routes.chatPage()} element={<PrivateRoute />}>
             <Route path="" element={<ChatPage />} />
           </Route>
         </Routes>

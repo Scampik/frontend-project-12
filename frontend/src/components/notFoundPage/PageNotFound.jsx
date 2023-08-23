@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import routes from '../../routes.js';
+
 const PageNotFound = () => {
   const { t } = useTranslation();
   return (
@@ -15,7 +17,7 @@ const PageNotFound = () => {
         <p className="text-muted">
           {t('pageNotFound.msg2')}
           {' '}
-          <a href="/">
+          <a href={routes.loginPage()}>
             {t('pageNotFound.msg3')}
           </a>
         </p>
