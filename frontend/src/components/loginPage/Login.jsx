@@ -11,7 +11,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { useAuth } from '../../hooks/AuthContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import routes from '../../routes.js';
 import loginImage from '../../assets/login.png';
 

@@ -7,9 +7,9 @@ import filter from 'leo-profanity';
 import * as Yup from 'yup';
 
 import { selectors } from '../../../slices/messagesSlice.js';
-import { useAuth } from '../../../hooks/AuthContext.jsx';
+import { useAuth } from '../../../context/AuthContext.jsx';
 import { currentChannelSelector } from '../../../slices/channelsSlice.js';
-import { useWSocket } from '../../../hooks/WScontext.jsx';
+import { useWSocket } from '../../../context/WScontext.jsx';
 
 const ChatForm = () => {
   const auth = useAuth();

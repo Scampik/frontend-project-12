@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 import { isClose, modalSelector } from '../../../slices/modalsSlice.js';
-import { useWSocket } from '../../../hooks/WScontext.jsx';
+import { useWSocket } from '../../../context/WScontext.jsx';
 
 const RemoveChannel = () => {
   const dispatch = useDispatch();

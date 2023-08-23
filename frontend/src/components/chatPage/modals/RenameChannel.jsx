@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 import { isClose, modalSelector } from '../../../slices/modalsSlice.js';
 import { selectors } from '../../../slices/channelsSlice.js';
-import { useWSocket } from '../../../hooks/WScontext.jsx';
+import { useWSocket } from '../../../context/WScontext.jsx';
 import { getValidationSchema } from './AddChannel.jsx';
 
 const RenameChannel = () => {

@@ -14,7 +14,7 @@ import LoginPage from './loginPage/Login';
 import ChatPage from './chatPage/MainPage.jsx';
 import PageNotFound from './notFoundPage/PageNotFound.jsx';
 import SignUp from './registrationPage/Registration.jsx';
-import { useAuth } from '../hooks/AuthContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();

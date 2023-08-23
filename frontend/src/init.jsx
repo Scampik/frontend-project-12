@@ -11,8 +11,8 @@ import { actions as channelsActions } from './slices/channelsSlice.js';
 import { actions as messagesActions } from './slices/messagesSlice.js';
 import store from './slices/index';
 import App from './components/App';
-import AuthProvider from './hooks/AuthContext';
-import WSocketProvider from './hooks/WScontext';
+import AuthProvider from './context/AuthContext';
+import WSocketProvider from './context/WScontext';
 import resources from './locales/index.js';
 
 const init = async (socket) => {

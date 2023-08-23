@@ -12,7 +12,7 @@ import {
   selectors,
   actions as channelsActions,
 } from '../../../slices/channelsSlice.js';
-import { useWSocket } from '../../../hooks/WScontext.jsx';
+import { useWSocket } from '../../../context/WScontext.jsx';
 
 export const getValidationSchema = (channelsName) => Yup.object().shape({
   name: Yup

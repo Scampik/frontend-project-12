@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import axios from 'axios';
 import routes from '../../routes.js';
-import { useAuth } from '../../hooks/AuthContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 import registration from '../../assets/registration.webp';
 

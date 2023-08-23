@@ -5,7 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import ChannelForm from './components/ChannelForm.jsx';
 import ChatForm from './components/ChatForm.jsx';
 import { getChannels, selectors } from '../../slices/channelsSlice.js';
-import { getAuthHeader, useAuth } from '../../hooks/AuthContext.jsx';
+import { getAuthHeader, useAuth } from '../../context/AuthContext.jsx';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
