@@ -57,14 +57,15 @@ const SignUp = () => {
         auth.logIn(response.data);
         navigate(routes.loginPage());
       } catch (err) {
+        formik.setSubmitting(false);
         console.log(err);
         if (!err.isAxiosError) {
           throw err;
         }
         if (err.response.status === 409) {
           inputRef.current.select();
-          setFailedMsg('Такой пользователь уже существует');
-          throw new Error('Такой пользователь уже существует');
+          setFailedMsg(t('toast.duplicateUser'));
+          throw new Error(t('toast.duplicateUser'));
         }
         toast.warn(t('toast.networkProblem'));
         throw err;
@@ -96,7 +97,7 @@ const SignUp = () => {
                   <Form.Control
                     onChange={formik.handleChange}
                     value={formik.values.username}
-                    placeholder="Имя пользователя"
+                    placeholder={t('username')}
                     name="username"
                     id="username"
                     autoComplete="username"
@@ -106,6 +107,7 @@ const SignUp = () => {
                       (formik.errors.username && formik.touched.username)
                       || failedMsg
                     }
+                    disabled={formik.isSubmitting}
                   />
                   <Form.Label htmlFor="username">{t('username')}</Form.Label>
                   <Form.Control.Feedback type="invalid" placement="right">
@@ -118,7 +120,7 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     onBlur={formik.handleBlur}
-                    placeholder="Пароль"
+                    placeholder={t('password')}
                     name="password"
                     id="password"
                     aria-describedby="passwordHelpBlock"
@@ -128,6 +130,7 @@ const SignUp = () => {
                       (formik.errors.password && formik.touched.password)
                       || failedMsg
                     }
+                    disabled={formik.isSubmitting}
                   />
                   <Form.Control.Feedback type="invalid">
                     {t(formik.errors.password)}
@@ -140,7 +143,7 @@ const SignUp = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.confirmPassword}
-                    placeholder="Подтвердите пароль"
+                    placeholder={t('passwordConfirm')}
                     name="confirmPassword"
                     id="confirmPassword"
                     required
@@ -150,6 +153,7 @@ const SignUp = () => {
                         && formik.touched.confirmPassword)
                         || failedMsg
                     }
+                    disabled={formik.isSubmitting}
                   />
                   <Form.Control.Feedback type="invalid">
                     {failedMsg || t(formik.errors.confirmPassword)}
@@ -163,6 +167,7 @@ const SignUp = () => {
                     type="submit"
                     variant="outline-primary"
                     className="w-100"
+                    disabled={formik.isSubmitting}
                   >
                     {t('signupPage.registration')}
                   </Button>
