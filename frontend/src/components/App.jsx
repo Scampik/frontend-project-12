@@ -45,7 +45,7 @@ const App = () => {
       <div className="d-flex flex-column h-100">
         <Navbar className="shadow-sm" bg="white" expand="lg">
           <div className="container">
-            <Navbar.Brand as={Link} to="/">
+            <Navbar.Brand as={Link} to={routes.chatPage()}>
               {t('siteName')}
             </Navbar.Brand>
             <AuthButton />
