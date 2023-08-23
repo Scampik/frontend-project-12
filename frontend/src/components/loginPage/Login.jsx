@@ -71,7 +71,7 @@ const LoginPage = () => {
                 onSubmit={formik.handleSubmit}
                 className="col-12 col-md-6 mt-3 mt-mb-0"
               >
-                <h1 className="text-center mb-4">{t('enter')}</h1>
+                <h1 className="text-center mb-4">{t('loginPage.enter')}</h1>
                 <fieldset disabled={formik.isSubmitting}>
                   <Form.Group className="form-floating mb-3">
                     <Form.Control
@@ -111,7 +111,7 @@ const LoginPage = () => {
                     className="w-100 mb-3 btn btn-outline-primary"
                     variant="outline-primary"
                   >
-                    {t('enter')}
+                    {t('loginPage.enter')}
                   </Button>
                 </fieldset>
               </Form>
@@ -119,10 +119,10 @@ const LoginPage = () => {
             <div className="card-footer p-4">
               <div className="text-center">
                 <span>
-                  {t('invite')}
+                  {t('loginPage.invite')}
                   {' '}
                 </span>
-                <Link to="/signup">{t('registration')}</Link>
+                <Link to={routes.signupPage()}>{t('loginPage.regLink')}</Link>
               </div>
             </div>
           </div>
