@@ -39,6 +39,7 @@ const AuthButton = () => {
 };
 
 const App = () => {
+  const auth = useAuth();
   const { t } = useTranslation();
   return (
     <Router>
@@ -53,9 +54,9 @@ const App = () => {
         </Navbar>
         <Routes>
           <Route element={<div>{t('noPageSelected')}</div>} />
-          <Route path={routes.loginPage()} element={<LoginPage />} />
-          <Route path={routes.notFoundPage()} element={<PageNotFound />} />
-          <Route path={routes.signupPage()} element={<SignUp />} />
+          <Route path={routes.loginPage()} element={auth.userName ? <ChatPage />:<LoginPage />} />
+          <Route path={routes.notFoundPage()} element={auth.userName ? <ChatPage />:<PageNotFound />} />
+          <Route path={routes.signupPage()} element={auth.userName ? <ChatPage />:<SignUp />} />
           <Route path={routes.chatPage()} element={<PrivateRoute />}>
             <Route path="" element={<ChatPage />} />
           </Route>

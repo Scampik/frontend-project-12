@@ -3,8 +3,6 @@ import React, { useRef, useState } from 'react';
 import {
   Link,
   useNavigate,
-  Navigate,
-  useLocation,
 } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Button, Form } from 'react-bootstrap';
@@ -17,7 +15,6 @@ import loginImage from '../../assets/login.png';
 
 const LoginPage = () => {
   const auth = useAuth();
-  const location = useLocation();
   const [authFailed, setAuthFailed] = useState(false);
   const inputRef = useRef();
   const navigate = useNavigate();
@@ -50,9 +47,7 @@ const LoginPage = () => {
     },
   });
 
-  return auth.userName ? (
-    <Navigate to="/" state={{ from: location }} />
-  ) : (
+  return (
     <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
