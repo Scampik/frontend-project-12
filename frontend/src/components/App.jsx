@@ -5,6 +5,7 @@ import {
   Link,
   Navigate,
   useLocation,
+  Outlet,
 } from 'react-router-dom';
 import { Button, Navbar } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
@@ -20,7 +21,7 @@ const PrivateRoute = ({ children }) => {
   const auth = useAuth();
   const location = useLocation();
   return auth.userName ? (
-    children
+    <Outlet />
   ) : (
     <Navigate to="/login" state={{ from: location }} />
   );
@@ -54,14 +55,9 @@ const App = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="signup" element={<SignUp />} />
-          <Route
-            path="/"
-            element={(
-              <PrivateRoute>
-                <ChatPage />
-              </PrivateRoute>
-            )}
-          />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="" element={<ChatPage />} />
+          </Route>
         </Routes>
       </div>
       <ToastContainer />
