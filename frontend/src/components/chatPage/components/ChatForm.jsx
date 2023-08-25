@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import * as Yup from 'yup';
 
-import { selectors } from '../../../slices/messagesSlice.js';
+import { currentChannelMessages } from '../../../slices/messagesSlice.js';
 import { useAuth } from '../../../context/AuthContext.jsx';
 import { currentChannelSelector } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../context/WScontext.jsx';
@@ -18,16 +18,15 @@ const ChatForm = () => {
   const { t } = useTranslation();
 
   const currentChannel = useSelector(currentChannelSelector);
-  const allMessages = useSelector(selectors.selectAll);
-  const messages = allMessages.filter((el) => el.channelId === currentChannel.id);
-  const userId = auth.userName;
+  const currentMessages = useSelector(currentChannelMessages);
+  const user = auth.userName;
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [currentChannel, allMessages]);
+  }, [currentChannel, currentMessages]);
 
   const validationSchema = Yup.object().shape({
-    body: Yup.string().trim().required('Обязательное поле'),
+    body: Yup.string().trim().required(),
   });
 
   const formik = useFormik({
@@ -40,7 +39,7 @@ const ChatForm = () => {
       wsocket.emitNewMessage({
         body: cleanBody,
         channelId: currentChannel.id,
-        username: userId.username,
+        username: user.username,
       });
       formik.values.body = '';
     },
@@ -58,11 +57,11 @@ const ChatForm = () => {
               </b>
             </p>
             <span className="text-muted">
-              {t('messages.counter.count', { count: messages.length })}
+              {t('messages.counter.count', { count: currentMessages.length })}
             </span>
           </div>
           <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-            {messages.map((mess) => (
+            {currentMessages.map((mess) => (
               <div key={mess.id} className="text-break mb-2">
                 <b>{mess.username}</b>
                 :
