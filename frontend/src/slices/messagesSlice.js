@@ -1,4 +1,5 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 
 import { getChannels, actions as channelsActions } from './channelsSlice.js';
 
@@ -31,7 +32,11 @@ const messagesSlice = createSlice({
 export default messagesSlice.reducer;
 export const selectors = messagesAdapter.getSelectors((state) => state.messages);
 export const { actions } = messagesSlice;
-export const currentChannelMessages = (state) => selectors
-  .selectAll(state)
-  .filter((msg) => msg.channelId === state.channels.currentChannel.id);
+const selectCurrentChannel = (state) => state.channels.currentChannel;
+const selectAllMessages = (state) => selectors.selectAll(state);
+export const currentChannelMessages = createSelector(
+  [selectAllMessages, selectCurrentChannel],
+  (messages, currentChannel) =>
+    messages.filter((msg) => msg.channelId === currentChannel.id)
+);
 

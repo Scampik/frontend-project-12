@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+// import { ScrollArea } from 'react-scrollbar';
 import filter from 'leo-profanity';
 import * as Yup from 'yup';
 
@@ -16,14 +17,17 @@ const ChatForm = () => {
   const inputRef = useRef(null);
   const wsocket = useWSocket();
   const { t } = useTranslation();
+  
 
   const currentChannel = useSelector(currentChannelSelector);
   const currentMessages = useSelector(currentChannelMessages);
+  // console.log(currentChannel)
   const user = auth.userName;
 
   useEffect(() => {
     inputRef.current.focus();
   }, [currentChannel, currentMessages]);
+
 
   const validationSchema = Yup.object().shape({
     body: Yup.string().trim().required(),
