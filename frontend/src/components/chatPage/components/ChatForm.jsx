@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-// import { ScrollArea } from 'react-scrollbar';
 import filter from 'leo-profanity';
 import * as Yup from 'yup';
 
@@ -15,19 +14,22 @@ import { useWSocket } from '../../../context/WScontext.jsx';
 const ChatForm = () => {
   const auth = useAuth();
   const inputRef = useRef(null);
+  const scrollbarRef = useRef(null);
   const wsocket = useWSocket();
   const { t } = useTranslation();
   
 
   const currentChannel = useSelector(currentChannelSelector);
-  const currentMessages = useSelector(currentChannelMessages);
-  // console.log(currentChannel)
+  const messages = useSelector(currentChannelMessages);
   const user = auth.userName;
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [currentChannel, currentMessages]);
+  }, [currentChannel, messages]);
 
+  useEffect(() => {
+    scrollbarRef.current.scrollIntoView();
+  }, [messages.length]);
 
   const validationSchema = Yup.object().shape({
     body: Yup.string().trim().required(),
@@ -61,12 +63,12 @@ const ChatForm = () => {
               </b>
             </p>
             <span className="text-muted">
-              {t('messages.counter.count', { count: currentMessages.length })}
+              {t('messages.counter.count', { count: messages.length })}
             </span>
           </div>
-          <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-            {currentMessages.map((mess) => (
-              <div key={mess.id} className="text-break mb-2">
+          <div id="messages-box" className="chat-messages overflow-auto px-5">
+            {messages.map((mess) => (
+              <div key={mess.id} className="text-break mb-2" ref={scrollbarRef}>
                 <b>{mess.username}</b>
                 :
                 {' '}
