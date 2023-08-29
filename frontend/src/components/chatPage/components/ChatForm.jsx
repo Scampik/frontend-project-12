@@ -17,7 +17,7 @@ const ChatForm = () => {
   const scrollbarRef = useRef(null);
   const wsocket = useWSocket();
   const { t } = useTranslation();
-  
+
   const currentChannel = useSelector(currentChannelSelector);
   const messages = useSelector(currentChannelMessages);
   const user = auth.userName;

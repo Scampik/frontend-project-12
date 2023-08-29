@@ -21,7 +21,6 @@ const ChatPage = () => {
     dispatch(getChannels(authHeader))
       .then(unwrapResult)
       .catch((rejected) => {
-        console.log('error__',rejected);
         if (rejected.message === 'Request failed with status code 401') {
           auth.logOut();
         } else {
