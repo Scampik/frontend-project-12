@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import ChannelForm from './components/ChannelForm.jsx';
 import ChatForm from './components/ChatForm.jsx';
@@ -11,11 +14,21 @@ const ChatPage = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectors.selectAll);
   const auth = useAuth();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const authHeader = getAuthHeader(auth.userName);
-    dispatch(getChannels(authHeader));
-  }, [auth.userName, dispatch]);
+    dispatch(getChannels(authHeader))
+    .then(unwrapResult)
+    .catch((rejected) => {
+      console.log('error__',rejected)
+      if (rejected.message === 'Request failed with status code 401') {
+        auth.logOut()
+      } else {
+        toast.warn(t('toast.networkProblem'));
+      }
+    })
+  }, [auth.userName, dispatch, auth, t]);
 
   return (
     <>
