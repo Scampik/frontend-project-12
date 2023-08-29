@@ -28,7 +28,7 @@ const ChatForm = () => {
   }, [currentChannel, messages]);
 
   useEffect(() => {
-    scrollbarRef.current.scrollIntoView();
+    scrollbarRef.current?.scrollIntoView();
   }, [messages.length]);
 
   const validationSchema = Yup.object().shape({
