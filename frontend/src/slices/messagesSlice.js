@@ -36,7 +36,5 @@ const selectCurrentChannel = (state) => state.channels.currentChannel;
 const selectAllMessages = (state) => selectors.selectAll(state);
 export const currentChannelMessages = createSelector(
   [selectAllMessages, selectCurrentChannel],
-  (messages, currentChannel) =>
-    messages.filter((msg) => msg.channelId === currentChannel.id)
+  (messages, currentChannel) => messages.filter((msg) => msg.channelId === currentChannel.id),
 );
-

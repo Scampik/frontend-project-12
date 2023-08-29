@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   translation: {
-    loginPage: {  
+    loginPage: {
       enter: 'Войти',
       regLink: 'Регистрация',
       invite: 'Нет аккаунта?',
@@ -40,9 +40,7 @@ export default {
     delete: 'Удалить',
     deleteChannel: 'Удалить канал',
     exit: 'Выйти',
-    
     failedLogin: 'Неверные имя пользователя или пароль',
-    
     inviteLogin: 'Уже есть аккаунт?',
     login: 'Авторизация',
     noPageSelected: 'No page is selected.',
