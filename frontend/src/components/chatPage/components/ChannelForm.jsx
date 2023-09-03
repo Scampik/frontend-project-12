@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import {
   actions as channelsActions,
   selectors,
-  currentChannelSelector,
+  channelIdSelector,
 } from '../../../slices/channelsSlice.js';
 import { isOpen } from '../../../slices/modalsSlice.js';
 import ModalForm from '../modals/index.jsx';
@@ -17,7 +17,7 @@ const ChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const currentChannel = useSelector(currentChannelSelector);
+  const currentIdChannel = useSelector(channelIdSelector);
   const channels = useSelector(selectors.selectAll);
 
   const handleAddChannel = () => {
@@ -25,7 +25,7 @@ const ChannelForm = () => {
   };
 
   const handleCurrenChannel = (channel) => () => {
-    dispatch(channelsActions.setCurrentChannel(channel));
+    dispatch(channelsActions.setCurrentChannel({id: channel.id}));
   };
 
   const handleRemoveChannel = (channel) => () => {
@@ -39,7 +39,7 @@ const ChannelForm = () => {
   const renderMainChannels = (channel) => (
     <Button
       type="button"
-      variant={channel.id === currentChannel.id ? 'secondary' : ''}
+      variant={channel.id === currentIdChannel ? 'secondary' : ''}
       className="w-100 rounded-0 text-start"
       onClick={handleCurrenChannel(channel)}
     >

@@ -35,7 +35,6 @@ const LoginPage = () => {
       } catch (err) {
         formik.setSubmitting(false);
         console.log(err);
-        // toast.error(t("toast.networkProblem"));
         if (err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();

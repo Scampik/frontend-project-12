@@ -68,7 +68,7 @@ const init = async (socket) => {
   const rollbar = new Rollbar(rollbarConfig);
 
   return (
-    <React.StrictMode>
+    // <React.StrictMode>
       <ProviderRoll config={rollbar}>
         <ErrorBoundary>
           <Provider store={store}>
@@ -82,7 +82,7 @@ const init = async (socket) => {
           </Provider>
         </ErrorBoundary>
       </ProviderRoll>
-    </React.StrictMode>
+    // </React.StrictMode>
   );
 };
 

@@ -28,7 +28,7 @@ const ChatPage = () => {
         }
       });
   }, [auth.userName, dispatch, auth, t]);
-
+  // console.log(data)
   return (
     <>
       { data.length === 0 ? (

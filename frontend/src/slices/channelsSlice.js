@@ -25,7 +25,7 @@ const channelsAdapter = createEntityAdapter();
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: channelsAdapter.getInitialState({
-    currentChannel: { id: 1, name: 'general', removable: false },
+    currentChannel: { id: 1},
   }),
   reducers: {
     addChannels: channelsAdapter.addMany,
@@ -33,7 +33,7 @@ const channelsSlice = createSlice({
     removeChannel(state, action) {
       channelsAdapter.removeOne(state, action);
       if (state.currentChannel.id === action.payload) {
-        state.currentChannel = { id: 1, name: 'general', removable: false };
+        state.currentChannel = { id: 1};
       }
     },
     renameChannel: channelsAdapter.updateOne,
@@ -59,9 +59,20 @@ const channelsSlice = createSlice({
 
 export default channelsSlice.reducer;
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
-export const channelsSelector = (state) => state.channels;
-export const currentChannelSelector = createSelector(
-  channelsSelector,
-  (channels) => channels.currentChannel,
+export const currenIdChannel = (state) => state.channels.currentChannel.id;
+export const channels = (state) => Object.values(state.channels.entities);
+export const channelIdSelector = createSelector(
+  currenIdChannel,
+  (id) => id,
+);
+export const channelNameSelector = createSelector(
+  channels,
+  channelIdSelector,
+  (channels, id) => {
+    const channel = channels.find((el) => el.id === id);
+    if (channel !== undefined) {
+      return channel.name
+    }
+  },
 );
 export const { actions } = channelsSlice;

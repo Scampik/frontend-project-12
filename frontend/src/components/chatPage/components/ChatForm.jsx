@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 
 import { currentChannelMessages } from '../../../slices/messagesSlice.js';
 import { useAuth } from '../../../context/AuthContext.jsx';
-import { currentChannelSelector } from '../../../slices/channelsSlice.js';
+import { channelIdSelector, channelNameSelector } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../context/WScontext.jsx';
 
 const ChatForm = () => {
@@ -18,13 +18,14 @@ const ChatForm = () => {
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
-  const currentChannel = useSelector(currentChannelSelector);
+  const currentIdChannel = useSelector(channelIdSelector);
+  const currentNameChannel = useSelector(channelNameSelector);
   const messages = useSelector(currentChannelMessages);
   const user = auth.userName;
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [currentChannel, messages]);
+  }, [currentIdChannel, messages]);
 
   useEffect(() => {
     scrollbarRef.current?.scrollIntoView();
@@ -43,7 +44,7 @@ const ChatForm = () => {
       const cleanBody = filter.clean(values.body);
       wsocket.emitNewMessage({
         body: cleanBody,
-        channelId: currentChannel.id,
+        channelId: currentIdChannel,
         username: user.username,
       });
       formik.values.body = '';
@@ -58,7 +59,7 @@ const ChatForm = () => {
             <p className="m-0">
               <b>
                 {'# '}
-                {currentChannel.name}
+                {currentNameChannel}
               </b>
             </p>
             <span className="text-muted">
