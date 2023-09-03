@@ -60,19 +60,19 @@ const channelsSlice = createSlice({
 export default channelsSlice.reducer;
 export const selectors = channelsAdapter.getSelectors((state) => state.channels);
 export const currenIdChannel = (state) => state.channels.currentChannel.id;
-export const channels = (state) => Object.values(state.channels.entities);
 export const channelIdSelector = createSelector(
   currenIdChannel,
   (id) => id,
 );
 export const channelNameSelector = createSelector(
-  channels,
+  selectors.selectAll,
   channelIdSelector,
   (channels, id) => {
     const channel = channels.find((el) => el.id === id);
     if (channel !== undefined) {
-      return channel.name
+      return channel.name;
     }
+    return null;
   },
 );
 export const { actions } = channelsSlice;

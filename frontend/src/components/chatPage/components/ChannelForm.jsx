@@ -25,7 +25,7 @@ const ChannelForm = () => {
   };
 
   const handleCurrenChannel = (channel) => () => {
-    dispatch(channelsActions.setCurrentChannel({id: channel.id}));
+    dispatch(channelsActions.setCurrentChannel({ id: channel.id }));
   };
 
   const handleRemoveChannel = (channel) => () => {
