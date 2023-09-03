@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
 import { unwrapResult } from '@reduxjs/toolkit';
@@ -9,26 +10,33 @@ import ChannelForm from './components/ChannelForm.jsx';
 import ChatForm from './components/ChatForm.jsx';
 import { getChannels, selectors } from '../../slices/channelsSlice.js';
 import { getAuthHeader, useAuth } from '../../context/AuthContext.jsx';
+import routes from '../../routes.js';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectors.selectAll);
   const auth = useAuth();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const authHeader = getAuthHeader(auth.userName);
     dispatch(getChannels(authHeader))
       .then(unwrapResult)
-      .catch((rejected) => {
-        if (rejected.message === 'Request failed with status code 401') {
-          auth.logOut();
-        } else {
-          toast.warn(t('toast.networkProblem'));
+      .catch((error) => {
+        console.log(error,'___')
+        switch (error.status) {
+          // case 401:
+            // return auth.logOut();
+          case 0:
+            return  toast.warn(t('toast.networkProblem'));
+          default:
+              console.log('lol')
+              navigate(routes.notFoundPage());
         }
       });
   }, [auth.userName, dispatch, auth, t]);
-  // console.log(data)
+
   return (
     <>
       { data.length === 0 ? (

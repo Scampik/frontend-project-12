@@ -4,7 +4,6 @@ import {
   Route,
   Link,
   Navigate,
-  useLocation,
   Outlet,
 } from 'react-router-dom';
 import { Button, Navbar } from 'react-bootstrap';
@@ -20,12 +19,22 @@ import { useAuth } from '../context/AuthContext.jsx';
 
 const PrivateRoute = () => {
   const auth = useAuth();
-  const location = useLocation();
-  return auth.userName ? (
-    <Outlet />
-  ) : (
-    <Navigate to={routes.loginPage()} state={{ from: location }} />
-  );
+  return auth.userName ? <Outlet /> : <Navigate to={routes.loginPage()} />;
+};
+
+const SignUpRoute = () => {
+  const auth = useAuth();
+  return auth.userName ? <Navigate to={routes.chatPage()} /> : <SignUp />;
+};
+
+const LoginRoute = () => {
+  const auth = useAuth();
+  return auth.userName ? <Navigate to={routes.chatPage()} /> : <LoginPage />;
+};
+
+const PageNotFoundRoute = () => {
+  const auth = useAuth();
+  return auth.userName ? <Navigate to={routes.chatPage()} /> : <PageNotFound />;
 };
 
 const AuthButton = () => {
@@ -39,7 +48,6 @@ const AuthButton = () => {
 };
 
 const App = () => {
-  const auth = useAuth();
   const { t } = useTranslation();
   return (
     <Router>
@@ -54,13 +62,9 @@ const App = () => {
         </Navbar>
         <Routes>
           <Route element={<div>{t('noPageSelected')}</div>} />
-          <Route path={routes.loginPage()} element={auth.userName ? <ChatPage /> : <LoginPage />} />
-          <Route
-            path={routes.notFoundPage()}
-            element={auth.userName
-              ? <ChatPage /> : <PageNotFound />}
-          />
-          <Route path={routes.signupPage()} element={auth.userName ? <ChatPage /> : <SignUp />} />
+          <Route path={routes.loginPage()} element={<LoginRoute />} />
+          <Route path={routes.notFoundPage()} element={<PageNotFoundRoute />} />
+          <Route path={routes.signupPage()} element={<SignUpRoute />} />
           <Route path={routes.chatPage()} element={<PrivateRoute />}>
             <Route path="" element={<ChatPage />} />
           </Route>

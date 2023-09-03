@@ -12,11 +12,21 @@ import routes from '../routes.js';
 
 export const getChannels = createAsyncThunk(
   'channels/getChannels',
-  async (authHeader) => {
+  async (authHeader, { rejectWithValue }) => {
+    try {
     const { data } = await axios.get(routes.dataPath(), {
       headers: authHeader,
     });
     return data;
+  } catch(error) {
+    if (error.response) {
+      return rejectWithValue({ status: error.response.status, message: error.response.data });
+    } else if (error.request) {
+      return rejectWithValue({ status: 0, message: 'Network error' });
+    } else {
+      return rejectWithValue({ status: -1, message: error.message });
+    }
+  }
   },
 );
 
