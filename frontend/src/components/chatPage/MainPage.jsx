@@ -1,57 +1,48 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Spinner from 'react-bootstrap/Spinner';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
-import ChannelForm from './components/ChannelForm.jsx';
-import ChatForm from './components/ChatForm.jsx';
-import { getChannels, selectors } from '../../slices/channelsSlice.js';
+import { getChannels } from '../../slices/channelsSlice.js';
+import { loadingSelector, setStatus } from '../../slices/loadingSlice.js';
 import { getAuthHeader, useAuth } from '../../context/AuthContext.jsx';
-import routes from '../../routes.js';
+import SpinnerForm from './components/SpinnerForm.jsx';
+import UndefinedErrorForm from './components/undefinedErrorForm.jsx';
+import MainForm from './components/MainForm.jsx';
+
+const uiState = {
+  loading: SpinnerForm,
+  success: MainForm,
+  failed: UndefinedErrorForm,
+  null: UndefinedErrorForm,
+};
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const data = useSelector(selectors.selectAll);
+  const { loadingStatus } = useSelector(loadingSelector);
   const auth = useAuth();
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const authHeader = getAuthHeader(auth.userName);
     dispatch(getChannels(authHeader))
       .then(unwrapResult)
       .catch((error) => {
-        console.log(error,'___')
-        switch (error.status) {
-          // case 401:
-            // return auth.logOut();
-          case 0:
-            return  toast.warn(t('toast.networkProblem'));
-          default:
-              console.log('lol')
-              navigate(routes.notFoundPage());
+        if (error.status === 401) {
+          return auth.logOut();
+        } if (error.status === 0) {
+          toast.warn(t('toast.networkProblem'));
+          return dispatch(setStatus('undefinedError'));
         }
+        return dispatch(setStatus('undefinedError'));
       });
   }, [auth.userName, dispatch, auth, t]);
 
+  const Component = uiState[loadingStatus];
+
   return (
-    <>
-      { data.length === 0 ? (
-        <div className="d-flex justify-content-center h-100 align-items-center">
-          <Spinner animation="border" variant="info" />
-        </div>
-      ) : (
-        <div className="container h-100 my-4 overflow-hidden rounded shadow">
-          <div className="row h-100 bg-white flex-md-row">
-            <ChannelForm />
-            <ChatForm />
-          </div>
-        </div>
-      )}
-    </>
+    <Component />
   );
 };
 

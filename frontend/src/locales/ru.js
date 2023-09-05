@@ -54,6 +54,9 @@ export default {
     rename: 'Переименовать',
     yourNickname: 'Ваш ник',
     username: 'Имя пользователя',
+    dataLoadFail: 'Что-то пошло не так',
+    refreshMsg1: 'Но вы можете',
+    refreshMsg2: 'обновить страницу',
 
     pageNotFound: {
       msg1: 'Страница не найдена',
