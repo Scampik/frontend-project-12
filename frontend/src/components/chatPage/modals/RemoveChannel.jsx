@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { isClose, modalSelector } from '../../../slices/modalsSlice.js';
+import { closeModal, modalSelector } from '../../../slices/modalsSlice.js';
 import { useWSocket } from '../../../context/WScontext.jsx';
 
 const RemoveChannel = () => {
@@ -14,13 +14,13 @@ const RemoveChannel = () => {
   const { extraData } = useSelector(modalSelector);
 
   const handleClose = () => {
-    dispatch(isClose());
+    dispatch(closeModal());
   };
 
   const handleRemove = async () => {
     try {
       wsocket.emitRemoveChannel(extraData.id);
-      dispatch(isClose());
+      dispatch(closeModal());
       toast.warn(t('toast.removeChannel'));
     } catch (e) {
       console.log(e);

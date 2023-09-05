@@ -7,7 +7,7 @@ import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
-import { isClose } from '../../../slices/modalsSlice.js';
+import { closeModal } from '../../../slices/modalsSlice.js';
 import {
   selectors,
   actions as channelsActions,
@@ -38,7 +38,7 @@ const AddChannel = () => {
   }, []);
 
   const handleClose = () => {
-    dispatch(isClose());
+    dispatch(closeModal());
   };
 
   const formik = useFormik({

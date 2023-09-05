@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 
-import { isClose, modalSelector } from '../../../slices/modalsSlice.js';
+import { closeModal, modalSelector } from '../../../slices/modalsSlice.js';
 import { selectors } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../context/WScontext.jsx';
 import { getValidationSchema } from './AddChannel.jsx';
@@ -28,7 +28,7 @@ const RenameChannel = () => {
   }, []);
 
   const handleClose = () => {
-    dispatch(isClose());
+    dispatch(closeModal());
   };
 
   const formik = useFormik({

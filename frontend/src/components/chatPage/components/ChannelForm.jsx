@@ -9,7 +9,7 @@ import {
   selectors,
   channelIdSelector,
 } from '../../../slices/channelsSlice.js';
-import { isOpen } from '../../../slices/modalsSlice.js';
+import { openModal } from '../../../slices/modalsSlice.js';
 import ModalForm from '../modals/index.jsx';
 import UserChannel from './UserChannel.jsx';
 
@@ -21,7 +21,7 @@ const ChannelForm = () => {
   const channels = useSelector(selectors.selectAll);
 
   const handleAddChannel = () => {
-    dispatch(isOpen({ type: 'adding', extraData: '' }));
+    dispatch(openModal({ type: 'adding', extraData: '' }));
   };
 
   const handleCurrenChannel = (channel) => () => {
@@ -29,11 +29,11 @@ const ChannelForm = () => {
   };
 
   const handleRemoveChannel = (channel) => () => {
-    dispatch(isOpen({ type: 'removing', extraData: channel }));
+    dispatch(openModal({ type: 'removing', extraData: channel }));
   };
 
   const handleRenameChannel = (channel) => () => {
-    dispatch(isOpen({ type: 'renaming', extraData: channel }));
+    dispatch(openModal({ type: 'renaming', extraData: channel }));
   };
 
   const renderMainChannels = (channel) => (
