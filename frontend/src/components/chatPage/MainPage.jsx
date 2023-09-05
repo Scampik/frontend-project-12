@@ -15,7 +15,6 @@ const uiState = {
   loading: SpinnerForm,
   success: MainForm,
   failed: UndefinedErrorForm,
-  null: UndefinedErrorForm,
 };
 
 const ChatPage = () => {
@@ -39,6 +38,10 @@ const ChatPage = () => {
       });
   }, [auth.userName, dispatch, auth, t]);
 
+  if (loadingStatus === null) {
+    return null;
+  }
+  
   const Component = uiState[loadingStatus];
 
   return (

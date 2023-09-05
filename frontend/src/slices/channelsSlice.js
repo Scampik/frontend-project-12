@@ -53,17 +53,11 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getChannels.pending, () => {
-        console.log('fetching data');
-      })
       .addCase(getChannels.fulfilled, (state, { payload }) => {
         console.log('fetched data successfully!{channels}');
         const { channels } = payload;
         channelsAdapter.setMany(state, channels);
       })
-      .addCase(getChannels.rejected, () => {
-        console.log('failed');
-      });
   },
 });
 
