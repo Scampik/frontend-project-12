@@ -35,7 +35,7 @@ const loadingSlice = createSlice({
         state.loadingStatus = 'failed';
         state.messageError = payload.message;
         state.typeError = payload.status;
-      })
+      });
   },
 });
 
