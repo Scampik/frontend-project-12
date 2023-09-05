@@ -32,12 +32,10 @@ const loadingSlice = createSlice({
         state.typeError = null;
       })
       .addCase(getChannels.rejected, (state, { payload }) => {
-        console.log('reject__+', payload);
         state.loadingStatus = 'failed';
         state.messageError = payload.message;
         state.typeError = payload.status;
       })
-
   },
 });
 

@@ -41,7 +41,7 @@ const ChatPage = () => {
   if (loadingStatus === null) {
     return null;
   }
-  
+
   const Component = uiState[loadingStatus];
 
   return (

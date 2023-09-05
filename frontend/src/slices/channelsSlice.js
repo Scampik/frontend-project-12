@@ -14,19 +14,18 @@ export const getChannels = createAsyncThunk(
   'channels/getChannels',
   async (authHeader, { rejectWithValue }) => {
     try {
-    const { data } = await axios.get(routes.dataPath(), {
-      headers: authHeader,
-    });
-    return data;
-  } catch(error) {
-    if (error.response) {
-      return rejectWithValue({ status: error.response.status, message: error.response.data });
-    } else if (error.request) {
-      return rejectWithValue({ status: 0, message: 'Network error' });
-    } else {
+      const { data } = await axios.get(routes.dataPath(), {
+        headers: authHeader,
+      });
+      return data;
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue({ status: error.response.status, message: error.response.data });
+      } if (error.request) {
+        return rejectWithValue({ status: 0, message: 'Network error' });
+      }
       return rejectWithValue({ status: -1, message: error.message });
     }
-  }
   },
 );
 
@@ -35,7 +34,7 @@ const channelsAdapter = createEntityAdapter();
 const channelsSlice = createSlice({
   name: 'channels',
   initialState: channelsAdapter.getInitialState({
-    currentChannel: { id: 1},
+    currentChannel: { id: 1 },
   }),
   reducers: {
     addChannels: channelsAdapter.addMany,
@@ -43,7 +42,7 @@ const channelsSlice = createSlice({
     removeChannel(state, action) {
       channelsAdapter.removeOne(state, action);
       if (state.currentChannel.id === action.payload) {
-        state.currentChannel = { id: 1};
+        state.currentChannel = { id: 1 };
       }
     },
     renameChannel: channelsAdapter.updateOne,
@@ -57,7 +56,7 @@ const channelsSlice = createSlice({
         console.log('fetched data successfully!{channels}');
         const { channels } = payload;
         channelsAdapter.setMany(state, channels);
-      })
+      });
   },
 });
 
