@@ -44,14 +44,13 @@ const RemoveChannel = () => {
           >
             {t('cancel')}
           </Button>
-          <button
-            className="btn btn-danger"
-            variant="primary"
-            type="submit"
+          <Button
+            variant="danger"
+            type="button"
             onClick={handleRemove}
           >
             {t('delete')}
-          </button>
+          </Button>
         </div>
       </Modal.Body>
     </>
