@@ -4,13 +4,14 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { Bug } from 'react-bootstrap-icons';
 
 import { getChannels } from '../../slices/channelsSlice.js';
 import { loadingSelector, setStatus } from '../../slices/loadingSlice.js';
 import { getAuthHeader, useAuth } from '../../context/AuthContext.jsx';
 import SpinnerForm from './components/SpinnerForm.jsx';
 import MainForm from './components/MainForm.jsx';
-import errorImage from '../../assets/unknown.svg';
+// import errorImage from '../../assets/unknown.svg';
 
 const uiState = {
   loading: SpinnerForm,
@@ -31,11 +32,9 @@ const ChatPage = () => {
         if (error.status === 401) {
           return auth.logOut();
         } if (error.status === 0) {
-          console.log('tyt__+');
           toast.warn(t('toast.networkProblem'));
           return dispatch(setStatus('undefinedError'));
         }
-        console.log('ne tut');
         return dispatch(setStatus('undefinedError'));
       });
   }, [auth.userName, dispatch, auth, t]);
@@ -49,12 +48,10 @@ const ChatPage = () => {
 
   return (
     Component ? <Component /> : (
-      <div className="text-center">
-        <img
-          alt={t('dataLoadFail')}
-          className="img-fluid h-25"
-          src={errorImage}
-        />
+      <div className="text-center row justify-content-center align-content-center h-100">
+        <div className="m-2">
+          <Bug size={50} />
+        </div>
         <h1 className="h4 text-muted">{t('dataLoadFail')}</h1>
         <p className="text-muted">
           {t('refreshMsg1')}
