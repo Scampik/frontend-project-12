@@ -16,6 +16,7 @@ import PageNotFound from './notFoundPage/PageNotFound.jsx';
 import SignUp from './registrationPage/Registration.jsx';
 import routes from '../routes.js';
 import { useAuth } from '../context/AuthContext.jsx';
+import loginImage from '../assets/login.webp';
 
 const PrivateRoute = () => {
   const auth = useAuth();
@@ -54,8 +55,15 @@ const App = () => {
       <div className="d-flex flex-column h-100">
         <Navbar className="shadow-sm" bg="white" expand="lg">
           <div className="container">
-            <Navbar.Brand as={Link} to={routes.chatPage()}>
+            <Navbar.Brand as={Link} to={routes.chatPage()} className="text-dark fs-4 fw-semibold">
               {t('siteName')}
+              <img
+                src={loginImage}
+                height={20}
+                width={20}
+                className="rounded-circle"
+                alt={t('enter')}
+              />
             </Navbar.Brand>
             <AuthButton />
           </div>

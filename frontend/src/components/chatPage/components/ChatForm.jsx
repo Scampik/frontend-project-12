@@ -10,6 +10,7 @@ import { currentChannelMessages } from '../../../slices/messagesSlice.js';
 import { useAuth } from '../../../context/AuthContext.jsx';
 import { channelIdSelector, channelNameSelector } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../context/WScontext.jsx';
+import bgChatImage from '../../../assets/bg-chat.svg';
 
 const ChatForm = () => {
   const auth = useAuth();
@@ -22,6 +23,8 @@ const ChatForm = () => {
   const currentNameChannel = useSelector(channelNameSelector);
   const messages = useSelector(currentChannelMessages);
   const user = auth.userName;
+
+  console.log(messages, auth.userName.username);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -59,7 +62,15 @@ const ChatForm = () => {
   return (
     <>
       <div className="col p-0 h-100">
-        <div className="d-flex flex-column h-100">
+        <div
+          className="d-flex flex-column h-100 bg-success bg-opacity-10"
+          style={{
+            backgroundImage: `url(${bgChatImage})`,
+            // backgroundSize: 'cover',
+            backgroundRepeat: 'repeat',
+            backgroundOpacity: '50',
+          }}
+        >
           <div className="bg-light mb-4 p-3 shadow-sm small">
             <p className="m-0">
               <b>
@@ -72,20 +83,33 @@ const ChatForm = () => {
             </span>
           </div>
           <div id="messages-box" className="chat-messages overflow-auto px-5">
-            {messages.map((mess) => (
-              <div key={mess.id} className="text-break mb-2" ref={scrollbarRef}>
-                <b>{mess.username}</b>
-                :
-                {' '}
-                {mess.body}
+            {messages.map((mess) => (mess.username === auth.userName.username ? (
+              <div key={mess.id} className="text-break mb-2 d-flex justify-content-end" ref={scrollbarRef}>
+                <div className="text-break border bg-info-subtle p-2 rounded">
+                  <b>{mess.username}</b>
+                  :
+                  {' '}
+                  {mess.body}
+                </div>
               </div>
-            ))}
+            ) : (
+              <div key={mess.id} className="text-break mb-2" ref={scrollbarRef}>
+                <div className="d-inline-flex bg-white p-2 rounded border">
+                  <div>
+                    <b>{mess.username}</b>
+                  </div>
+                  :
+                  {' '}
+                  {mess.body}
+                </div>
+              </div>
+            )))}
           </div>
           <div className="mt-auto px-5 py-3">
             <Form
               onSubmit={formik.handleSubmit}
               noValidate
-              className="py-1 border rounded-2"
+              className="py-1 border rounded-2 bg-white"
             >
               <Form.Group className="input-group has-validation">
                 <Form.Control

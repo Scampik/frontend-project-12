@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 import { useAuth } from '../../context/AuthContext.jsx';
 import routes from '../../routes.js';
-import loginImage from '../../assets/login.png';
+import loginImage from '../../assets/login.webp';
 
 const LoginPage = () => {
   const auth = useAuth();

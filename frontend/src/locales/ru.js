@@ -49,7 +49,7 @@ export default {
     renameChannel: 'Переименовать канал',
     password: 'Пароль',
     passwordConfirm: 'Подтвердите пароль',
-    siteName: 'HeXlet Chat',
+    siteName: 'FunTalk',
     send: 'Отправить',
     rename: 'Переименовать',
     yourNickname: 'Ваш ник',
