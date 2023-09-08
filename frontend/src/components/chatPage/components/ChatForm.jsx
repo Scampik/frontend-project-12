@@ -22,9 +22,7 @@ const ChatForm = () => {
   const currentChannelId = useSelector(channelIdSelector);
   const currentNameChannel = useSelector(channelNameSelector);
   const messages = useSelector(currentChannelMessages);
-  const user = auth.userName;
-
-  // console.log(messages, auth.userName.username);
+  const userData = auth.user;
 
   useEffect(() => {
     inputRef.current.focus();
@@ -49,7 +47,7 @@ const ChatForm = () => {
         await wsocket.emitNewMessage({
           body: cleanBody,
           channelId: currentChannelId,
-          username: user.username,
+          username: userData.username,
         });
         formik.resetForm();
       } catch (err) {
@@ -83,24 +81,24 @@ const ChatForm = () => {
             </span>
           </div>
           <div id="messages-box" className="chat-messages overflow-auto px-5">
-            {messages.map((mess) => (mess.username === auth.userName.username ? (
-              <div key={mess.id} className="text-break mb-2 d-flex justify-content-end" ref={scrollbarRef}>
+            {messages.map((msg) => (msg.username === auth.user.username ? (
+              <div key={msg.id} className="text-break mb-2 d-flex justify-content-end" ref={scrollbarRef}>
                 <div className="text-break border bg-info-subtle p-2 rounded">
-                  <b>{mess.username}</b>
+                  <b>{msg.username}</b>
                   :
                   {' '}
-                  {mess.body}
+                  {msg.body}
                 </div>
               </div>
             ) : (
-              <div key={mess.id} className="text-break mb-2" ref={scrollbarRef}>
+              <div key={msg.id} className="text-break mb-2" ref={scrollbarRef}>
                 <div className="d-inline-flex bg-white p-2 rounded border">
                   <div>
-                    <b>{mess.username}</b>
+                    <b>{msg.username}</b>
                   </div>
                   :
                   {' '}
-                  {mess.body}
+                  {msg.body}
                 </div>
               </div>
             )))}

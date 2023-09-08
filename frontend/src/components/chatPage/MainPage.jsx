@@ -19,14 +19,12 @@ const ChatPage = () => {
   const auth = useAuth();
   const { t } = useTranslation();
 
-  console.log(dataFetchStatus);
-
   useEffect(() => {
-    const authHeader = getAuthHeader(auth.userName);
+    const authHeader = getAuthHeader(auth.user);
     dispatch(getChannels(authHeader))
       .then(unwrapResult)
       .catch((error) => {
-        if (error.status === 4011) {
+        if (error.status === 401) {
           return auth.logOut();
         } if (error.status === 0) {
           toast.warn(t('toast.networkProblem'));
@@ -34,7 +32,7 @@ const ChatPage = () => {
         }
         return dispatch(setStatus('failed'));
       });
-  }, [auth.userName, dispatch, auth, t]);
+  }, [auth.user, dispatch, auth, t]);
 
   const handleRefresh = () => window.location.reload();
 

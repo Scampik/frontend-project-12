@@ -22,20 +22,20 @@ const PrivatePage = ({ isLoginPage = false, isSignUpPage = false }) => {
   const auth = useAuth();
 
   if (isLoginPage) {
-    return auth.userName ? <Navigate to={routes.chatPage()} /> : <Outlet />;
+    return auth.user ? <Navigate to={routes.chatPage()} /> : <Outlet />;
   }
 
   if (isSignUpPage) {
-    return auth.userName ? <Navigate to={routes.chatPage()} /> : <Outlet />;
+    return auth.user ? <Navigate to={routes.chatPage()} /> : <Outlet />;
   }
 
-  return auth.userName ? <Outlet /> : <Navigate to={routes.loginPage()} />;
+  return auth.user ? <Outlet /> : <Navigate to={routes.loginPage()} />;
 };
 
 const AuthButton = () => {
   const { t } = useTranslation();
   const auth = useAuth();
-  return auth.userName ? (
+  return auth.user ? (
     <Button onClick={auth.logOut}>{t('exit')}</Button>
   ) : (
     <></>
