@@ -7,7 +7,7 @@ import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
-import { closeModal } from '../../../slices/modalsSlice.js';
+// import { closeModal } from '../../../slices/modalsSlice.js';
 import {
   selectors,
   actions as channelsActions,
@@ -24,7 +24,7 @@ export const getValidationSchema = (channelsName) => Yup.object().shape({
     .notOneOf(channelsName, 'modal.notoneof'),
 });
 
-const AddChannel = () => {
+const AddChannel = ({ handleClose }) => {
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   const wsocket = useWSocket();
@@ -36,10 +36,6 @@ const AddChannel = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-
-  const handleClose = () => {
-    dispatch(closeModal());
-  };
 
   const formik = useFormik({
     initialValues: {

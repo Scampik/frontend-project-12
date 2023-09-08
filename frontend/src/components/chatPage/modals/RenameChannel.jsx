@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { Form, Button, Modal } from 'react-bootstrap';
 import React, { useEffect, useRef } from 'react';
@@ -6,13 +6,12 @@ import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
 
-import { closeModal, modalSelector } from '../../../slices/modalsSlice.js';
+import { modalSelector } from '../../../slices/modalsSlice.js';
 import { selectors } from '../../../slices/channelsSlice.js';
 import { useWSocket } from '../../../context/WScontext.jsx';
 import { getValidationSchema } from './AddChannel.jsx';
 
-const RenameChannel = () => {
-  const dispatch = useDispatch();
+const RenameChannel = ({ handleClose }) => {
   const wsocket = useWSocket();
   const inputRef = useRef(null);
   const { t } = useTranslation();
@@ -26,10 +25,6 @@ const RenameChannel = () => {
       inputRef.current.select();
     }, 0);
   }, []);
-
-  const handleClose = () => {
-    dispatch(closeModal());
-  };
 
   const formik = useFormik({
     initialValues: {

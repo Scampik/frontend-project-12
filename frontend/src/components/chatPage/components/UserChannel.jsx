@@ -12,7 +12,7 @@ const UserChannel = ({
 }) => {
   const { t } = useTranslation();
   const currentChannelId = useSelector(channelIdSelector);
-  console.log(currentChannelId);
+
   return (
     <Dropdown as={ButtonGroup} className="d-flex">
       <Button

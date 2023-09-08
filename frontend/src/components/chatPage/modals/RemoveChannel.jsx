@@ -1,26 +1,21 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
-import { closeModal, modalSelector } from '../../../slices/modalsSlice.js';
+import { modalSelector } from '../../../slices/modalsSlice.js';
 import { useWSocket } from '../../../context/WScontext.jsx';
 
-const RemoveChannel = () => {
-  const dispatch = useDispatch();
+const RemoveChannel = ({ handleClose }) => {
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
   const { extraData } = useSelector(modalSelector);
 
-  const handleClose = () => {
-    dispatch(closeModal());
-  };
-
   const handleRemove = async () => {
     try {
       wsocket.emitRemoveChannel(extraData.id);
-      dispatch(closeModal());
+      handleClose();
       toast.warn(t('toast.removeChannel'));
     } catch (e) {
       console.log(e);

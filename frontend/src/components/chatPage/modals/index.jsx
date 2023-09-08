@@ -17,7 +17,7 @@ const ModalForm = () => {
 
   const { isShow, type } = useSelector(modalSelector);
 
-  const handleClose = () => {
+  const handleClose = () => () => {
     dispatch(closeModal());
   };
 
@@ -28,10 +28,10 @@ const ModalForm = () => {
   return (
     <Modal
       show={isShow}
-      onHide={handleClose}
+      onHide={() => dispatch(closeModal())}
       dialogClassName="modal-dialog-centered"
     >
-      <Component />
+      <Component handleClose={handleClose()} />
     </Modal>
   );
 };
