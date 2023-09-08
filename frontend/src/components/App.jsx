@@ -13,29 +13,23 @@ import { useTranslation } from 'react-i18next';
 import LoginPage from './loginPage/Login';
 import ChatPage from './chatPage/MainPage.jsx';
 import PageNotFound from './notFoundPage/PageNotFound.jsx';
-import SignUp from './registrationPage/Registration.jsx';
+import SignUpPage from './signUpPage/signUp.jsx';
 import routes from '../routes.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import loginImage from '../assets/login.webp';
 
-const PrivateRoute = () => {
+const PrivatePage = ({ isLoginPage = false, isSignUpPage = false }) => {
   const auth = useAuth();
+
+  if (isLoginPage) {
+    return auth.userName ? <Navigate to={routes.chatPage()} /> : <Outlet />;
+  }
+
+  if (isSignUpPage) {
+    return auth.userName ? <Navigate to={routes.chatPage()} /> : <Outlet />;
+  }
+
   return auth.userName ? <Outlet /> : <Navigate to={routes.loginPage()} />;
-};
-
-const SignUpRoute = () => {
-  const auth = useAuth();
-  return auth.userName ? <Navigate to={routes.chatPage()} /> : <SignUp />;
-};
-
-const LoginRoute = () => {
-  const auth = useAuth();
-  return auth.userName ? <Navigate to={routes.chatPage()} /> : <LoginPage />;
-};
-
-const PageNotFoundRoute = () => {
-  const auth = useAuth();
-  return auth.userName ? <Navigate to={routes.chatPage()} /> : <PageNotFound />;
 };
 
 const AuthButton = () => {
@@ -69,13 +63,16 @@ const App = () => {
           </div>
         </Navbar>
         <Routes>
-          <Route element={<div>{t('noPageSelected')}</div>} />
-          <Route path={routes.loginPage()} element={<LoginRoute />} />
-          <Route path={routes.notFoundPage()} element={<PageNotFoundRoute />} />
-          <Route path={routes.signupPage()} element={<SignUpRoute />} />
-          <Route path={routes.chatPage()} element={<PrivateRoute />}>
+          <Route path={routes.loginPage()} element={<PrivatePage isLoginPage />}>
+            <Route path="" element={<LoginPage />} />
+          </Route>
+          <Route path={routes.signupPage()} element={<PrivatePage isSignUpPage />}>
+            <Route path="" element={<SignUpPage />} />
+          </Route>
+          <Route path={routes.chatPage()} element={<PrivatePage />}>
             <Route path="" element={<ChatPage />} />
           </Route>
+          <Route path={routes.notFoundPage()} element={<PageNotFound />} />
         </Routes>
       </div>
       <ToastContainer />

@@ -24,7 +24,7 @@ const ChatForm = () => {
   const messages = useSelector(currentChannelMessages);
   const user = auth.userName;
 
-  console.log(messages, auth.userName.username);
+  // console.log(messages, auth.userName.username);
 
   useEffect(() => {
     inputRef.current.focus();

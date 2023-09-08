@@ -12,7 +12,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 
 import registration from '../../assets/registration.webp';
 
-const SignUp = () => {
+const SignUpPage = () => {
   const auth = useAuth();
   const inputRef = useRef();
   const navigate = useNavigate();
@@ -190,4 +190,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpPage;
