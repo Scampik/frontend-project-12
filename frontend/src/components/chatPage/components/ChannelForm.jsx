@@ -17,15 +17,15 @@ const ChannelForm = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const currentIdChannel = useSelector(channelIdSelector);
+  const currentChannelId = useSelector(channelIdSelector);
   const channels = useSelector(selectors.selectAll);
 
   const handleAddChannel = () => {
     dispatch(openModal({ type: 'adding', extraData: '' }));
   };
 
-  const handleCurrenChannel = (channel) => () => {
-    dispatch(channelsActions.setCurrentChannel({ id: channel.id }));
+  const handleCurrenChannel = (id) => () => {
+    dispatch(channelsActions.setCurrentChannel(id));
   };
 
   const handleRemoveChannel = (channel) => () => {
@@ -39,9 +39,9 @@ const ChannelForm = () => {
   const renderMainChannels = (channel) => (
     <Button
       type="button"
-      variant={channel.id === currentIdChannel ? 'secondary' : ''}
+      variant={channel.id === currentChannelId ? 'secondary' : ''}
       className="w-100 rounded-0 text-start"
-      onClick={handleCurrenChannel(channel)}
+      onClick={handleCurrenChannel(channel.id)}
     >
       <span className="me-1">#</span>
       {channel.name}
@@ -50,7 +50,7 @@ const ChannelForm = () => {
 
   const renderUsersChannels = (channel) => (
     <UserChannel
-      handleCurrenChannel={handleCurrenChannel(channel)}
+      handleCurrenChannel={handleCurrenChannel(channel.id)}
       handleRemoveChannel={handleRemoveChannel(channel)}
       handleRenameChannel={handleRenameChannel(channel)}
       channel={channel}

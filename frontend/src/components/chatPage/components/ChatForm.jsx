@@ -19,7 +19,7 @@ const ChatForm = () => {
   const wsocket = useWSocket();
   const { t } = useTranslation();
 
-  const currentIdChannel = useSelector(channelIdSelector);
+  const currentChannelId = useSelector(channelIdSelector);
   const currentNameChannel = useSelector(channelNameSelector);
   const messages = useSelector(currentChannelMessages);
   const user = auth.userName;
@@ -28,7 +28,7 @@ const ChatForm = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [currentIdChannel, messages]);
+  }, [currentChannelId, messages]);
 
   useEffect(() => {
     scrollbarRef.current?.scrollIntoView();
@@ -48,7 +48,7 @@ const ChatForm = () => {
       try {
         await wsocket.emitNewMessage({
           body: cleanBody,
-          channelId: currentIdChannel,
+          channelId: currentChannelId,
           username: user.username,
         });
         formik.resetForm();

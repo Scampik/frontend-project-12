@@ -11,13 +11,13 @@ const UserChannel = ({
   handleRenameChannel,
 }) => {
   const { t } = useTranslation();
-  const currentIdChannel = useSelector(channelIdSelector);
-
+  const currentChannelId = useSelector(channelIdSelector);
+  console.log(currentChannelId);
   return (
     <Dropdown as={ButtonGroup} className="d-flex">
       <Button
         type="button"
-        variant={channel.id === currentIdChannel ? 'secondary' : ''}
+        variant={channel.id === currentChannelId ? 'secondary' : ''}
         key={channel.id}
         className="w-100 rounded-0 text-start text-truncate"
         onClick={handleCurrenChannel}
@@ -28,7 +28,7 @@ const UserChannel = ({
       <Dropdown.Toggle
         split
         className="flex-grow-0"
-        variant={channel.id === currentIdChannel ? 'secondary' : ''}
+        variant={channel.id === currentChannelId ? 'secondary' : ''}
       >
         <span className="visually-hidden">{t('menu')}</span>
       </Dropdown.Toggle>

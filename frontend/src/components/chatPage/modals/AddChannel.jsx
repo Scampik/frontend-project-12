@@ -51,7 +51,7 @@ const AddChannel = () => {
         const cleanName = filter.clean(values.name);
         getValidationSchema(channels, t).validateSync({ name: cleanName });
         const data = await wsocket.emitAddChannel(cleanName);
-        await dispatch(channelsActions.setCurrentChannel(data));
+        await dispatch(channelsActions.setCurrentChannel(data.id));
         formik.values.name = '';
         toast.success(t('toast.createChannel'));
         handleClose();
