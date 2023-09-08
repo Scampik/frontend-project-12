@@ -10,7 +10,8 @@ import SpinnerElement from 'react-bootstrap/Spinner';
 import { getChannels } from '../../slices/channelsSlice.js';
 import { loadingStatusSelector, setStatus } from '../../slices/loadingSlice.js';
 import { getAuthHeader, useAuth } from '../../context/AuthContext.jsx';
-import MainForm from './components/MainForm.jsx';
+import ChannelForm from './components/ChannelForm.jsx';
+import ChatForm from './components/ChatForm.jsx';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,12 @@ const ChatPage = () => {
 
   const handleRefresh = () => window.location.reload();
 
+  const Spinner = () => (
+    <div className="d-flex justify-content-center h-100 align-items-center">
+      <SpinnerElement animation="border" variant="info" />
+    </div>
+  );
+
   const CommonError = () => (
     <div className="text-center row justify-content-center align-content-center h-100">
       <div className="m-2">
@@ -53,11 +60,15 @@ const ChatPage = () => {
     </div>
   );
 
-  const Spinner = () => (
-    <div className="d-flex justify-content-center h-100 align-items-center">
-      <SpinnerElement animation="border" variant="info" />
+  const MainElements = () => (
+    <div className="container h-100 my-4 overflow-hidden rounded shadow">
+      <div className="row h-100 bg-white flex-md-row">
+        <ChannelForm />
+        <ChatForm />
+      </div>
     </div>
   );
+
   const loadResultComponent = () => {
     if (dataFetchStatus === 'loading' || dataFetchStatus === null) {
       return <Spinner />;
@@ -67,7 +78,7 @@ const ChatPage = () => {
       return <CommonError />;
     }
 
-    return <MainForm />;
+    return <MainElements />;
   };
 
   return loadResultComponent(dataFetchStatus);
