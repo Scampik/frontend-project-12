@@ -32,9 +32,9 @@ const messagesSlice = createSlice({
 export default messagesSlice.reducer;
 export const selectors = messagesAdapter.getSelectors((state) => state.messages);
 export const { actions } = messagesSlice;
-const selectCurrentChannel = (state) => state.channels.currentChannel;
+const selectCurrentChannelId = (state) => state.channels.currentChannelId;
 const selectAllMessages = (state) => selectors.selectAll(state);
 export const currentChannelMessages = createSelector(
-  [selectAllMessages, selectCurrentChannel],
-  (messages, currentChannel) => messages.filter((msg) => msg.channelId === currentChannel.id),
+  [selectAllMessages, selectCurrentChannelId],
+  (messages, currentChannelId) => messages.filter((msg) => msg.channelId === currentChannelId),
 );

@@ -5,64 +5,72 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Bug } from 'react-bootstrap-icons';
+import SpinnerElement from 'react-bootstrap/Spinner';
 
 import { getChannels } from '../../slices/channelsSlice.js';
-import { loadingSelector, setStatus } from '../../slices/loadingSlice.js';
+import { loadingStatusSelector, setStatus } from '../../slices/loadingSlice.js';
 import { getAuthHeader, useAuth } from '../../context/AuthContext.jsx';
-import SpinnerForm from './components/SpinnerForm.jsx';
 import MainForm from './components/MainForm.jsx';
-// import errorImage from '../../assets/unknown.svg';
-
-const uiState = {
-  loading: SpinnerForm,
-  success: MainForm,
-};
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const { loadingStatus } = useSelector(loadingSelector);
+  const dataFetchStatus = useSelector(loadingStatusSelector);
   const auth = useAuth();
   const { t } = useTranslation();
+
+  console.log(dataFetchStatus);
 
   useEffect(() => {
     const authHeader = getAuthHeader(auth.userName);
     dispatch(getChannels(authHeader))
       .then(unwrapResult)
       .catch((error) => {
-        if (error.status === 401) {
+        if (error.status === 4011) {
           return auth.logOut();
         } if (error.status === 0) {
           toast.warn(t('toast.networkProblem'));
-          return dispatch(setStatus('undefinedError'));
+          return dispatch(setStatus('failed'));
         }
-        return dispatch(setStatus('undefinedError'));
+        return dispatch(setStatus('failed'));
       });
   }, [auth.userName, dispatch, auth, t]);
 
-  if (loadingStatus === null) {
-    return null;
-  }
-
   const handleRefresh = () => window.location.reload();
-  const Component = uiState[loadingStatus];
 
-  return (
-    Component ? <Component /> : (
-      <div className="text-center row justify-content-center align-content-center h-100">
-        <div className="m-2">
-          <Bug size={50} />
-        </div>
-        <h1 className="h4 text-muted">{t('dataLoadFail')}</h1>
-        <p className="text-muted">
-          {t('refreshMsg1')}
-          {' '}
-          <Link to="/" onClick={handleRefresh}>
-            {t('refreshMsg2')}
-          </Link>
-        </p>
+  const CommonError = () => (
+    <div className="text-center row justify-content-center align-content-center h-100">
+      <div className="m-2">
+        <Bug size={50} />
       </div>
-    )
+      <h1 className="h4 text-muted">{t('dataLoadFail')}</h1>
+      <p className="text-muted">
+        {t('refreshMsg1')}
+        {' '}
+        <Link to="/" onClick={handleRefresh}>
+          {t('refreshMsg2')}
+        </Link>
+      </p>
+    </div>
   );
+
+  const Spinner = () => (
+    <div className="d-flex justify-content-center h-100 align-items-center">
+      <SpinnerElement animation="border" variant="info" />
+    </div>
+  );
+  const loadResultComponent = () => {
+    if (dataFetchStatus === 'loading' || dataFetchStatus === null) {
+      return <Spinner />;
+    }
+
+    if (dataFetchStatus === 'failed') {
+      return <CommonError />;
+    }
+
+    return <MainForm />;
+  };
+
+  return loadResultComponent(dataFetchStatus);
 };
 
 export default ChatPage;

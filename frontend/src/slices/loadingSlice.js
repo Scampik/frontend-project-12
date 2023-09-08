@@ -39,10 +39,10 @@ const loadingSlice = createSlice({
   },
 });
 
-export const selector = (state) => state.loadingInfo;
-export const loadingSelector = createSelector(
+export const selector = (state) => state.loadingInfo.loadingStatus;
+export const loadingStatusSelector = createSelector(
   selector,
-  (loadingInfo) => loadingInfo,
+  (loadingStatus) => loadingStatus,
 );
 export default loadingSlice.reducer;
 export const { setStatus } = loadingSlice.actions;
