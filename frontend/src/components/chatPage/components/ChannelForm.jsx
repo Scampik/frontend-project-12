@@ -58,7 +58,7 @@ const ChannelForm = () => {
   );
 
   return (
-    <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
+    <div className="col-4 col-md-2 border-end border-dark-secondary px-0 flex-column h-100 d-flex bg-body-tertiary">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
         <b>{t('channels')}</b>
         <button

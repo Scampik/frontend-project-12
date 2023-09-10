@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,9 +7,10 @@ import {
   Navigate,
   Outlet,
 } from 'react-router-dom';
-import { Button, Navbar } from 'react-bootstrap';
+import { Button, Navbar, Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { MoonStars, SunFill } from 'react-bootstrap-icons';
 
 import LoginPage from './loginPage/Login';
 import ChatPage from './chatPage/MainPage.jsx';
@@ -42,14 +44,42 @@ const AuthButton = () => {
   );
 };
 
+const ThemeButton = () => {
+  const [theme, setTheme] = useState('dark');
+  const handleTheme = () => (theme === 'light' ? setTheme('dark') : setTheme('light'));
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+    body.removeAttribute('data-bs-theme');
+    body.setAttribute('data-bs-theme', theme);
+  }, [theme]);
+
+  return (
+    <div className="m-2 ps-3 pe-3">
+      { theme === 'light'
+        ? (
+          <SunFill
+            size={20}
+            onClick={handleTheme}
+          />
+        ) : (
+          <MoonStars
+            size={20}
+            onClick={handleTheme}
+          />
+        )}
+    </div>
+  );
+};
+
 const App = () => {
   const { t } = useTranslation();
   return (
     <Router>
-      <div className="d-flex flex-column h-100">
-        <Navbar className="shadow-sm" bg="white" expand="lg">
-          <div className="container">
-            <Navbar.Brand as={Link} to={routes.chatPage()} className="text-dark fs-4 fw-semibold">
+      <div className="d-flex flex-column h-100 bg-body">
+        <Navbar className="shadow-sm bg-body-tertiary justify-content-between" expand="lg">
+          <Container className="pe-0 me-0">
+            <Navbar.Brand as={Link} to={routes.chatPage()} className="fs-4 fw-semibold mr-auto">
               {t('siteName')}
               <img
                 src={loginImage}
@@ -60,7 +90,8 @@ const App = () => {
               />
             </Navbar.Brand>
             <AuthButton />
-          </div>
+          </Container>
+          <ThemeButton />
         </Navbar>
         <Routes>
           <Route path={routes.loginPage()} element={<PrivatePage isLoginPage />}>
