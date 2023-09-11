@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 import { useAuth } from '../../context/AuthContext.jsx';
 import routes from '../../routes.js';
-import loginImage from '../../assets/login.webp';
+import loginImage from '../../assets/login.png';
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -57,7 +57,7 @@ const LoginPage = () => {
                   src={loginImage}
                   height={180}
                   width={180}
-                  className="rounded-circle bg-light border border-opacity-25 border-light-emphasis m-2"
+                  className="m-2"
                   alt={t('enter')}
                 />
               </div>
