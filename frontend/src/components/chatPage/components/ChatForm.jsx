@@ -82,7 +82,7 @@ const ChatForm = () => {
           <div id="messages-box" className="chat-messages overflow-auto px-5">
             {messages.map((msg) => (msg.username === auth.user.username ? (
               <div key={msg.id} className="text-break mb-2 d-flex justify-content-end" ref={scrollbarRef}>
-                <div className="text-break border bg-info-subtle p-2 rounded">
+                <div className="text-break border bg-light-subtle text-primary-emphasis  p-2 rounded">
                   <b>{msg.username}</b>
                   :
                   {' '}
@@ -91,7 +91,7 @@ const ChatForm = () => {
               </div>
             ) : (
               <div key={msg.id} className="text-break mb-2" ref={scrollbarRef}>
-                <div className="d-inline-flex bg-white p-2 rounded border">
+                <div className="d-inline-flex bg-body p-2 rounded border">
                   <div>
                     <b>{msg.username}</b>
                   </div>
