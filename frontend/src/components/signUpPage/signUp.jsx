@@ -9,8 +9,7 @@ import axios from 'axios';
 
 import routes from '../../routes.js';
 import { useAuth } from '../../context/AuthContext.jsx';
-
-import registration from '../../assets/registration.webp';
+import registration from '../../assets/login.webp';
 
 const SignUpPage = () => {
   const auth = useAuth();

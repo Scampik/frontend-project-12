@@ -83,9 +83,9 @@ const App = () => {
               {t('siteName')}
               <img
                 src={loginImage}
-                height={20}
-                width={20}
-                className="rounded-circle"
+                height={30}
+                width={30}
+                className="rounded-circle bg-light m-2 border border-opacity-25 border-light-emphasis"
                 alt={t('enter')}
               />
             </Navbar.Brand>

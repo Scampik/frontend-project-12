@@ -55,9 +55,9 @@ const LoginPage = () => {
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img
                   src={loginImage}
-                  height={150}
-                  width={150}
-                  className="rounded-circle"
+                  height={180}
+                  width={180}
+                  className="rounded-circle bg-light border border-opacity-25 border-light-emphasis m-2"
                   alt={t('enter')}
                 />
               </div>
