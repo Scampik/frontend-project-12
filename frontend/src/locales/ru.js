@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   translation: {
+    siteName: 'FunTalk',
     loginPage: {
       enter: 'Войти',
       regLink: 'Регистрация',
@@ -49,7 +50,6 @@ export default {
     renameChannel: 'Переименовать канал',
     password: 'Пароль',
     passwordConfirm: 'Подтвердите пароль',
-    siteName: 'Hexlet Chat',
     send: 'Отправить',
     rename: 'Переименовать',
     yourNickname: 'Ваш ник',
