@@ -19,4 +19,4 @@ real-time приложение на React/Redux, используя AJAX, REST, 
 
 <img align="left" src="https://media4.giphy.com/media/KszkcokOMwO6s2aJ99/giphy.gif?cid=ecf05e472ebbng6mfx5ggrj0pk7zj387ep8hf5z7n3nvz88n&ep=v1_gifs_search&rid=giphy.gif&ct=g" alt="" style="width:180px;height:130px;">
 
-# <a href="https://frontend-project-12-production-934d.up.railway.app/" size="20" target=_blank> try to write something!</a>
+# <a href="https://frontend-project-12-production-48af.up.railway.app/" size="20" target=_blank> try to write something!</a>
